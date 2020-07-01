@@ -27,21 +27,42 @@ class App extends React.Component {
     super(props);
     this.state = {
       value: '',
-      signIn: " "
+      signIn: " ",
+      logIn: false,
+      userData: []
     };
 
     this.handleSignUpState = this.handleSignUpState.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.handleSignInState = this.handleSignInState.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.getLoginRes = this.getLoginRes.bind(this);
   }
 
-  componentDidUpdate() {
-    console.log('update detected!')
-  }
+ 
   componentDidMount() {
     console.log('initial render detected')
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log("onAuthStateChanged?")
+
+      if (user) {
+        console.log("login")
+        this.setState({ logIn: true })
+      } else {
+        console.log("logout")
+        this.setState({ logIn: false })
+      }
+    });
+  } 
+
+  swithLogState() {
+    if (this.state.logIn) {
+      this.setState({logIn:true})
+    } else {
+      this.setState({logIn:false})
+    }
   }
+
 
   handleSignUpState(event) {
     this.setState({ value: event.target.value });
@@ -74,6 +95,8 @@ class App extends React.Component {
         console.log(err)
       })
   }
+  
+
 
 
   render() {
@@ -124,10 +147,13 @@ class App extends React.Component {
             Sign Out
         </button>
           <FirebaseAuthConsumer>
+
             {({ isSignedIn, user, providerId }) => {
+
               return (
                 <pre style={{ height: 300, overflow: "auto" }}>
                   {JSON.stringify({ isSignedIn, user, providerId }, null, 2)}
+                  {/* I cant set state and store login data here !*/}
                 </pre>
               );
             }}
