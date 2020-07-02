@@ -108,7 +108,6 @@ class Auth extends React.Component {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
-          this.setState({ userData: [res] })
           this.manageUserData(res, this.state.name)
         })
         .catch((err) => {
@@ -128,7 +127,6 @@ class Auth extends React.Component {
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
-          this.setState({ userData: [res] })
         })
         .catch((err) => {
           console.log(err)
@@ -141,21 +139,24 @@ class Auth extends React.Component {
   manageUserData(userData,name) {
     console.log(userData.user.uid)
 
+    let nameEdited
+
     if (userData.user.displayName === null) {
-      name = name
+      nameEdited = name
     } else {
-      name = userData.user.displayName 
+      nameEdited = userData.user.displayName 
     }
 
-    console.log(name)
+    console.log(nameEdited)
 
 
-    let data =
+    let data = []
+    data =
 
     {
       uid: userData.user.uid,
       email: userData.user.email,
-      name: name,
+      name: nameEdited,
       ownedBook: ["bookID-1"],
       savedBook: ["bookID-1"],
       userExp: {
@@ -180,19 +181,25 @@ class Auth extends React.Component {
       }
     }
     //send data
+    console.log(data)
     this.storeToUser(data) 
   }
 
 
   storeToUser(data) {
+    console.log('storeToUser is triggered!')
 
-    db.collection("users").doc(data.uid).set(data)
+      db.collection("users").doc(data.uid).set(data)
       .then(function () {
-        console.log("fisrt signup: "+data.uid+" is setted!")
+        console.log("fisrt signup: " + data.uid + " is setted!")
+        location.reload();
       })
       .catch(function (error) {
         console.error("Error adding document: ", error);
       });
+    //problem here: set db can't be triggered more than once in a time
+    //unless reload
+
   }
 
 
@@ -230,7 +237,10 @@ class Auth extends React.Component {
               firebase.auth().signInWithPopup(googleAuthProvider)
                 .then((res) => {
                   console.log(res)
-                  this.setState({ userData: [res] })
+                  if (res.additionalUserInfo.isNewUser) {
+                    console.log("google new user!")
+                    this.manageUserData(res, "name")
+                  }
                 })
                 .catch((err) => { console.log(err) })
             }}>Sign In with Google
@@ -245,7 +255,10 @@ class Auth extends React.Component {
               const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
               firebase.auth().signInWithPopup(facebookAuthProvider).then((res) => {
                 console.log(res)
-                this.setState({ userData: [res] })
+                if (res.additionalUserInfo.isNewUser) {
+                  console.log("faebook new user!")
+                  this.manageUserData(res, "name")
+                }
               })
                 .catch((err) => { console.log(err) })
             }}>Sign In with Facebook
