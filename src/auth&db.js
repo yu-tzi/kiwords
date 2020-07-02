@@ -207,7 +207,8 @@ class Auth extends React.Component {
   
   render() {
     return (
-      <div>
+    <div>
+      <div className="logBlockHide">
 
         <form onSubmit={
             this.handleSignUp
@@ -270,7 +271,7 @@ class Auth extends React.Component {
           </button>
         </div>
 
-        
+        </div>
       <Main/>
       </div>
     )
