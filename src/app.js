@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Auth from "./firebaseAuth"
+import Auth from "./firebaseAuth&DB"
 
 class App extends React.Component {
   constructor(props) {
@@ -10,17 +10,12 @@ class App extends React.Component {
     };
   }
 
-
-
   render() {
     return (
       <Auth/>
     )
   }
 }
-
-
-
 
 //=========================
 ReactDOM.render(

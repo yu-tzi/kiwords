@@ -1,8 +1,9 @@
 import React from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
-
+//================== Initialize Firebase ================
 var firebaseConfig = {
   apiKey: "AIzaSyAgpVLf1iNb1RJmq3QBIuHdDnMUYObYqKo",
   authDomain: "kiwords-c058b.firebaseapp.com",
@@ -13,30 +14,43 @@ var firebaseConfig = {
   appId: "1:959153092087:web:278807305aad9aa00caaf2",
   measurementId: "G-1GYNCR5WYZ"
 };
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+
+
+
+
+//================== Auth + DB setting ================
 
 class Auth extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      signUp: "", //for passing input data 
-      signIn: "", //for passing input data 
+      email: "", //for passing input data 
+      password: "", //for passing input data 
+      name:"",
       logIn: false,
       userData: []
     };
 
-    this.handleSignUpState = this.handleSignUpState.bind(this);
+    this.passingEmail = this.passingEmail.bind(this);
+    this.passingPassword = this.passingPassword.bind(this);
+    this.passingName = this.passingName.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
-    this.handleSignInState = this.handleSignInState.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.manageUserData = this.manageUserData.bind(this)
+    this.storeToUser = this.storeToUser.bind(this)
+   
+
 
   }
 
-
+//================== state change : log state swith & DB get item ================
+  
   componentDidMount() {
+
     console.log('initial render detected')
     firebase.auth().onAuthStateChanged((user) => {
       console.log("onAuthStateChanged?")
@@ -46,8 +60,9 @@ class Auth extends React.Component {
         this.setState({ logIn: true })
 
         var user = firebase.auth().currentUser;
+
         if (user != null) {
-          this.setState({ userData: [user]}) 
+          this.setState({ userData: [user] }) 
         } else {
           console.log("user is null")
         }
@@ -59,6 +74,8 @@ class Auth extends React.Component {
     }); 
   }
 
+//================== log functions ================
+
   swithLogState() {
     if (this.state.logIn) {
       this.setState({ logIn: true })
@@ -66,24 +83,33 @@ class Auth extends React.Component {
       this.setState({ logIn: false })
     }
   }
-
-
-  handleSignUpState(event) {
-    console.log(event.target.value)
-    this.setState({ signUp: event.target.value });
+  
+  passingEmail(event) {
+    this.setState({ email: event.target.value });
   }
+
+  passingPassword(event) {
+    this.setState({ password: event.target.value });
+  }
+
+  passingName(event) {
+    this.setState({ name: event.target.value });
+  }
+
+
 
   handleSignUp(event) {
     if (this.state.logIn) {
       alert('you have already signin in!')
       event.preventDefault();
     } else {
-      alert('A name was submitted: ' + this.state.signUp);
+      alert('A name was submitted: ' + this.state.name);
       event.preventDefault();
-      firebase.auth().createUserWithEmailAndPassword(this.state.signUp, this.state.signUp)
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
           this.setState({ userData: [res] })
+          this.manageUserData(res, this.state.name)
         })
         .catch((err) => {
           console.log(err)
@@ -91,19 +117,15 @@ class Auth extends React.Component {
     }
   }
 
-  handleSignInState(event) {
-    this.setState({ signIn: event.target.value });
-  }
-
+ 
   handleSignIn(event) {
     if (this.state.logIn) {
       alert('you have already signin in!')
       event.preventDefault();
     } else {
-
-      alert('A name was submitted: ' + this.state.signIn);
+      alert('A name was submitted: ' + this.state.name);
       event.preventDefault();
-      firebase.auth().signInWithEmailAndPassword(this.state.signIn, this.state.signIn)
+      firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
           this.setState({ userData: [res] })
@@ -114,7 +136,68 @@ class Auth extends React.Component {
     }
   }
 
+  //================== DB functions ================
 
+  manageUserData(userData,name) {
+    console.log(userData.user.uid)
+
+    if (userData.user.displayName === null) {
+      name = name
+    } else {
+      name = userData.user.displayName 
+    }
+
+    console.log(name)
+
+
+    let data =
+
+    {
+      uid: userData.user.uid,
+      email: userData.user.email,
+      name: name,
+      ownedBook: ["bookID-1"],
+      savedBook: ["bookID-1"],
+      userExp: {
+        quizHis: [
+          {
+            time: "time-1",
+            score: "score-1"
+          }
+        ],
+        likeBook: [
+          {
+            bookID: "likebook-1",
+            bookScore: "bookScore-1"
+          }
+        ],
+        addCards: [
+          {
+            time: "time-1",
+            amount: "amount-1"
+          }
+        ]
+      }
+    }
+    //send data
+    this.storeToUser(data) 
+  }
+
+
+  storeToUser(data) {
+
+    db.collection("users").doc(data.uid).set(data)
+      .then(function () {
+        console.log("fisrt signup: "+data.uid+" is setted!")
+      })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      });
+  }
+
+
+//==================render item : log page ================
+  
   render() {
     return (
       <div>
@@ -122,14 +205,17 @@ class Auth extends React.Component {
         <form onSubmit={
             this.handleSignUp
           }>
-          <input type="text" onChange={(e) => this.handleSignUpState(e)} />
+          email<input type="text" onChange={(e) => this.passingEmail(e)} />
+          password<input type="text" onChange={(e) => this.passingPassword(e)} />
+          name<input type="text" onChange={(e) => this.passingName(e)} />
           <input type="submit" value="sign upppp" />
         </form>
 
         <form onSubmit={
           this.handleSignIn
         }>
-          <input type="text" onChange={(e) => this.handleSignInState(e)}/>
+          email<input type="text" onChange={(e) => this.passingEmail(e)} />
+          password<input type="text" onChange={(e) => this.passingPassword(e)} />
           <input type="submit" value="sign innnn" />
         </form>
 
@@ -174,6 +260,9 @@ class Auth extends React.Component {
       </div>
     )
   }
+
+
+  
 
 }
 
