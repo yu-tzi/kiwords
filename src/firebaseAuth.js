@@ -57,9 +57,6 @@ class Auth extends React.Component {
         this.setState({ userData: [] }) 
       }
     }); 
-
-
-
   }
 
   swithLogState() {
@@ -72,11 +69,15 @@ class Auth extends React.Component {
 
 
   handleSignUpState(event) {
+    console.log(event.target.value)
     this.setState({ signUp: event.target.value });
   }
 
   handleSignUp(event) {
-
+    if (this.state.logIn) {
+      alert('you have already signin in!')
+      event.preventDefault();
+    } else {
       alert('A name was submitted: ' + this.state.signUp);
       event.preventDefault();
       firebase.auth().createUserWithEmailAndPassword(this.state.signUp, this.state.signUp)
@@ -87,7 +88,7 @@ class Auth extends React.Component {
         .catch((err) => {
           console.log(err)
         })
-    
+    }
   }
 
   handleSignInState(event) {
@@ -95,6 +96,10 @@ class Auth extends React.Component {
   }
 
   handleSignIn(event) {
+    if (this.state.logIn) {
+      alert('you have already signin in!')
+      event.preventDefault();
+    } else {
 
       alert('A name was submitted: ' + this.state.signIn);
       event.preventDefault();
@@ -106,7 +111,7 @@ class Auth extends React.Component {
         .catch((err) => {
           console.log(err)
         })
-    
+    }
   }
 
 
@@ -114,16 +119,19 @@ class Auth extends React.Component {
     return (
       <div>
 
-        <form onSubmit={this.handleSignUp}>
-          <input type="text" onChange={() => { this.handleSignUpState }} />
+        <form onSubmit={
+            this.handleSignUp
+          }>
+          <input type="text" onChange={(e) => this.handleSignUpState(e)} />
           <input type="submit" value="sign upppp" />
         </form>
 
-        <form onSubmit={this.handleSignIn}>
-          <input type="text" onChange={() => { this.handleSignInState }} />
+        <form onSubmit={
+          this.handleSignIn
+        }>
+          <input type="text" onChange={(e) => this.handleSignInState(e)}/>
           <input type="submit" value="sign innnn" />
         </form>
-      {/* 目前卡在上面兩個選項，無法阻擋重複登入者（會重新跳一次頁面，且沒有出現警告標示） */}
 
         <div>
           <button
@@ -149,7 +157,11 @@ class Auth extends React.Component {
                 return
               }
               const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
-              firebase.auth().signInWithPopup(facebookAuthProvider);
+              firebase.auth().signInWithPopup(facebookAuthProvider).then((res) => {
+                console.log(res)
+                this.setState({ userData: [res] })
+              })
+                .catch((err) => { console.log(err) })
             }}>Sign In with Facebook
           </button>
           <button
