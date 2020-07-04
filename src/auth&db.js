@@ -2,7 +2,7 @@ import React from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import LogPage from "./logIn"
+import RouteNav from "./route"
 /* import firebaseConfig from "./firebaseConfig" */
 
 
@@ -33,7 +33,7 @@ class Auth extends React.Component {
     this.state = {
       email: "", //for passing input data 
       password: "", //for passing input data 
-      name:"",
+      name: "",
       logIn: false,
       userData: []
     };
@@ -103,6 +103,7 @@ class Auth extends React.Component {
           this.setState({userData:res})
           event.persist();
           this.manageUserData(this.state.userData, this.state.name)
+          window.location.href="/"
         })
         .catch((err) => {
           alert(err.message)
@@ -125,6 +126,7 @@ class Auth extends React.Component {
         .then((res) => {
           console.log(res)
           event.persist();
+          window.location.href = "/"
         })
         .catch((err) => {
           alert(err.message)
@@ -211,7 +213,7 @@ class Auth extends React.Component {
     {/* <firebaseConfig/> */}
     return(
       <div>
-        <LogPage handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData}/>
+        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData}/>
       </div>
     )
   }

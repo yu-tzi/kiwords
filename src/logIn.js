@@ -81,6 +81,7 @@ class LogPage extends React.Component {
                       console.log("google new user!")
                       this.props.manageUserData(res, "name")
                     }
+                    window.location.href = "/"
                   })
                   .catch((err) => { console.log(err), alert(err.message) })
               }}>Sign In with Google
@@ -99,6 +100,7 @@ class LogPage extends React.Component {
                     console.log("faebook new user!")
                     this.props.manageUserData(res, "name")
                   }
+                  window.location.href = "/"
                 })
                   .catch((err) => { console.log(err), alert(err.message) })
               }}>Sign In with Facebook
@@ -109,6 +111,7 @@ class LogPage extends React.Component {
           <button
             onClick={() => {
               firebase.auth().signOut();
+              window.location.href = "/"
             }}>Sign Out
           </button>
         </div>
