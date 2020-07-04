@@ -2,7 +2,9 @@ import React from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-import Main from "./route"
+import LogPage from "./logIn"
+/* import firebaseConfig from "./firebaseConfig" */
+
 
 //================== Initialize Firebase ================
 var firebaseConfig = {
@@ -16,7 +18,7 @@ var firebaseConfig = {
   measurementId: "G-1GYNCR5WYZ"
 };
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig); 
 var db = firebase.firestore();
 
 
@@ -36,15 +38,14 @@ class Auth extends React.Component {
       userData: []
     };
 
-    this.passingEmail = this.passingEmail.bind(this);
-    this.passingPassword = this.passingPassword.bind(this);
-    this.passingName = this.passingName.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
-    this.handleSignIn = this.handleSignIn.bind(this);
-    this.manageUserData = this.manageUserData.bind(this)
+    this.passingEmail = this.passingEmail.bind(this)
+    this.passingPassword = this.passingPassword.bind(this)
+    this.passingName = this.passingName.bind(this)
+    this.handleSignUp = this.handleSignUp.bind(this)
+    this.handleSignIn = this.handleSignIn.bind(this)
     this.storeToUser = this.storeToUser.bind(this)
-   
-
+    this.manageUserData = this.manageUserData.bind(this)
+  
 
   }
 
@@ -59,14 +60,8 @@ class Auth extends React.Component {
       if (user) {
         console.log("login")
         this.setState({ logIn: true })
+        this.setState({ userData: [user] }) 
 
-        var user = firebase.auth().currentUser;
-
-        if (user != null) {
-          this.setState({ userData: [user] }) 
-        } else {
-          console.log("user is null")
-        }
       } else {
         console.log("logout")
         this.setState({ logIn: false })
@@ -75,77 +70,84 @@ class Auth extends React.Component {
     }); 
   }
 
+
 //================== log functions ================
 
-  swithLogState() {
-    if (this.state.logIn) {
-      this.setState({ logIn: true })
-    } else {
-      this.setState({ logIn: false })
-    }
-  }
   
-  passingEmail(event) {
-    this.setState({ email: event.target.value });
-  }
-
-  passingPassword(event) {
-    this.setState({ password: event.target.value });
-  }
-
-  passingName(event) {
+  passingName() {
     this.setState({ name: event.target.value });
+    
+  }
+
+  passingEmail() {
+    this.setState({ email:event.target.value});
   }
 
 
+  passingPassword() {
+    this.setState({ password: event.target.value});
+  }
 
   handleSignUp(event) {
+    console.log(this.state.logIn)
     if (this.state.logIn) {
       alert('you have already signin in!')
       event.preventDefault();
     } else {
-      alert('A name was submitted: ' + this.state.name);
       event.preventDefault();
+      console.log(this.state.name)
+      alert('A name was submitted: ' + this.state.name);
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
-          this.manageUserData(res, this.state.name)
+          this.setState({userData:res})
+          event.persist();
+          this.manageUserData(this.state.userData, this.state.name)
         })
         .catch((err) => {
-          console.log(err)
+          alert(err.message)
+          console.log(err.message)
+          event.persist();
         })
     }
   }
 
  
   handleSignIn(event) {
+    console.log(this.state.logIn)
     if (this.state.logIn) {
       alert('you have already signin in!')
       event.preventDefault();
     } else {
-      alert('A name was submitted: ' + this.state.name);
+      alert('handle signin activated!');
       event.preventDefault();
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
+          event.persist();
         })
         .catch((err) => {
+          alert(err.message)
           console.log(err)
+          event.persist();
         })
     }
   }
 
   //================== DB functions ================
-
-  manageUserData(userData,name) {
+  manageUserData(userData, name) {
+    console.log(userData)
+    console.log(name)
     console.log(userData.user.uid)
+    console.log(userData.user.email)
+    console.log(userData.user.displayName)
 
     let nameEdited
 
     if (userData.user.displayName === null) {
       nameEdited = name
     } else {
-      nameEdited = userData.user.displayName 
+      nameEdited = userData.user.displayName
     }
 
     console.log(nameEdited)
@@ -183,8 +185,8 @@ class Auth extends React.Component {
     }
     //send data
     console.log(data)
-    this.storeToUser(data) 
-  }
+    this.storeToUser(data)
+  } 
 
 
   storeToUser(data) {
@@ -193,92 +195,26 @@ class Auth extends React.Component {
       db.collection("users").doc(data.uid).set(data)
       .then(function () {
         console.log("fisrt signup: " + data.uid + " is setted!")
-        location.reload();
+        /* location.reload(); */
       })
       .catch(function (error) {
         console.error("Error adding document: ", error);
+        alert(err.message);
       });
     
 
   }
 
-
 //==================render item : log page ================
   
   render() {
-    return (
-    <div>
-      <div className="logBlockHide">
-
-        <form onSubmit={
-            this.handleSignUp
-          }>
-          email<input type="text" onChange={(e) => this.passingEmail(e)} />
-          password<input type="text" onChange={(e) => this.passingPassword(e)} />
-          name<input type="text" onChange={(e) => this.passingName(e)} />
-          <input type="submit" value="sign upppp" />
-        </form>
-
-        <form onSubmit={
-          this.handleSignIn
-        }>
-          email<input type="text" onChange={(e) => this.passingEmail(e)} />
-          password<input type="text" onChange={(e) => this.passingPassword(e)} />
-          <input type="submit" value="sign innnn" />
-        </form>
-
-        <div>
-          <button
-            onClick={() => {
-              if (this.state.logIn) {
-                alert('you are already log in!')
-                return
-              }
-              const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-              firebase.auth().signInWithPopup(googleAuthProvider)
-                .then((res) => {
-                  console.log(res)
-                  if (res.additionalUserInfo.isNewUser) {
-                    console.log("google new user!")
-                    this.manageUserData(res, "name")
-                  }
-                })
-                .catch((err) => { console.log(err) })
-            }}>Sign In with Google
-          </button>
-
-          <button
-            onClick={() => {
-              if (this.state.logIn) {
-                alert('you are already log in!')
-                return
-              }
-              const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
-              firebase.auth().signInWithPopup(facebookAuthProvider).then((res) => {
-                console.log(res)
-                if (res.additionalUserInfo.isNewUser) {
-                  console.log("faebook new user!")
-                  this.manageUserData(res, "name")
-                }
-              })
-                .catch((err) => { console.log(err) })
-            }}>Sign In with Facebook
-          </button>
-          <button
-            onClick={() => {
-              firebase.auth().signOut();
-            }}>Sign Out
-          </button>
-        </div>
-
-        </div>
-      <Main/>
+    {/* <firebaseConfig/> */}
+    return(
+      <div>
+        <LogPage handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData}/>
       </div>
     )
   }
-
-
-  
 
 }
 
