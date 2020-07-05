@@ -6,6 +6,21 @@
   text-decoration: none;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.content{
+  min-height: 100vh;
+  margin: 0 auto -50px;
+}
+
+.footer{
+  height: 50px;
+  background-color: rgb(58, 58, 58);
+}
+
 .navBox{
   background-color: rgb(58, 58, 58);
 }
@@ -73,10 +88,6 @@
   transition: 0.5s;
 }
 
-.signOut{
-  display: none;
-}
-
 
 .memberLogin{
   color: white;
@@ -116,6 +127,75 @@
   height: 30px;
   padding: 15px 0;
 }
+
+.memPop{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 5vw;
+  top:80px;
+  background-color: #e4e4e4;
+  box-shadow: 2px 2px 5px rgb(213, 213, 213);
+  z-index: 10; 
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.menuPop{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 5vw;
+  top:80px;
+  background-color: #e4e4e4;
+  box-shadow: 2px 2px 5px rgb(213, 213, 213);
+  z-index: 10; 
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.trianglePop{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 30px 10px;
+  border-color: transparent transparent #e4e4e4 transparent;
+  position: absolute;
+  right: 5.5vw;
+  top:55px;
+  z-index: 15;
+}
+
+.trianglePopMenu{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 30px 10px;
+  border-color: transparent transparent #e4e4e4 transparent;
+  position: absolute;
+  left: 6vw;
+  top:55px;
+  z-index: 15;
+}
+
+.memPop a, .signOut, .menuPop a{
+  color: rgb(43, 43, 43);
+  padding: 10px 40px;
+  text-align: center;
+  letter-spacing: 5px;
+  border-radius: 10px;
+}
+
+.memPop a:hover, .signOut:hover, .menuPop a:hover{
+  color: rgb(135, 135, 135);
+  transition: 0.5s;
+}
+
+.signOut{
+  background-color: rgb(63, 63, 63);
+  color: white;
+}
+
 
 
 
@@ -170,7 +250,9 @@ margin-left: 5px;
 }
 
 
+}
 
+@media (max-width: 500px) {
 
 
 }

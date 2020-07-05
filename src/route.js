@@ -122,17 +122,18 @@ class RoutePage extends React.Component{
   } */
     
   }
-
-  
 };
 
 
-class RouteNav extends React.Component{
-
-  clickMemberBtn() {
-    console.log("click member!")
+class MemberPop extends React.Component { 
+  
+  render() {
     return (
-      <div>
+    <div> 
+      <span className="trianglePop"></span>
+      <div className="memPop">
+        <a href="./dashboard">個人資料</a>
+        <a href="./statistics">學習統計</a>
         <div className="signOut"
           onClick={() => {
             firebase.auth().signOut();
@@ -140,46 +141,101 @@ class RouteNav extends React.Component{
           }}>登出
         </div>
       </div>
+      </div>
     )
+  }
+
+}
+
+class MenuPop extends React.Component {
+  
+  render() {
+    return (
+    <div>
+      <span className="trianglePopMenu"></span>
+      <div className="menuPop">
+        <a href="./addWords">新增卡片</a>
+        <a href="./wordBooks">單字本</a>
+        <a href="./quiz">測驗</a>
+      </div>
+    </div>
+
+    )
+  }
+
+}
+
+
+class RouteNav extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuPop: false,
+      memberPop:false
+    }
   }
 
   memberSwitch() {
     if (this.props.logIn) {
       return (
-        <div className="memberFrame">
-        <div className="memberImgFrame">
+      <div className="memberFrame">
+          <div className="memberImgFrame" onClick={this.toggleMemberPop.bind(this)}>
             <div className="memberImg">K</div>
             <div className="memberImgWord">Kiki Luo</div>
           </div>
-          <div className="triangle" onClick={
-            () => { this.clickMemberBtn() }
-          }></div>
+          <div className="triangle"></div>
+          {this.state.memberPop ? <MemberPop /> : null}
       </div>
       )
     } else {
       return (
       <div className="memLoginFrame">
         <img src="https://i.imgur.com/zGQkuFg.png" alt="" className="memberLogImg"></img>
-        <div className="triangle"></div>
+          <div className="triangle"></div>
         <a href="/login" className="memberLogin">登入/註冊</a>
       </div>
       )
     }
   }
 
+  toggleMenuPop() {
+    console.log('toggleMenuPop')
+    if (this.state.memberPop){
+      this.setState({ memberPop: false })
+      this.setState({ menuPop: !this.state.menuPop})
+    }
+    this.setState({ menuPop: !this.state.menuPop })
+  }
+
+  toggleMemberPop() {
+    console.log('toggleMemberPop')
+    if (this.state.menuPop) {
+      this.setState({ menuPop: false })
+      this.setState({ memberPop: !this.state.memberPop })
+    }
+    this.setState({ memberPop: !this.state.memberPop })
+  }
+
   render() {
     let logIn = this.props.logIn
     return (
-    <div>
+      <div>
+    <div className="content">
       <div className="navBox">
         <nav className="nav">
           <ul className="menu">
-            <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"></img>
+                <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"
+                  onClick={this.toggleMenuPop.bind(this)}></img>
+            {this.state.menuPop ? <MenuPop /> : null}  
             <a href={logIn ? "/addwords" : "/login"} className="menuItem">新增卡片</a>
             <a href={logIn ? "/wordbooks" : "/login"} className="menuItem">單字本</a>
             <a href={logIn ? "/quiz" : "/login"} className="menuItem">測驗</a>
-          </ul>
-          <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logo"></img>
+              </ul>
+              <a href="./">
+                <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logo"></img>
+              </a>
+          
 
           <ul className="member">
             {this.memberSwitch()}
@@ -187,7 +243,9 @@ class RouteNav extends React.Component{
         </nav>
       </div>
 
-        <RoutePage />
+        
+          <RoutePage />
+        </div>
 
         <footer className="footer"></footer>
       </div>

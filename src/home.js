@@ -7,7 +7,7 @@ class Home extends React.Component {
   render() {
     return (
     <div>
-      <div>Home</div>
+        <div>Home</div>
       {/* <button
         onClick={() => {
           firebase.auth().signOut();
