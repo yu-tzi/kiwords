@@ -8,12 +8,12 @@ class Home extends React.Component {
     return (
     <div>
       <div>Home</div>
-      <button
+      {/* <button
         onClick={() => {
           firebase.auth().signOut();
           window.location.href = "/"
         }}>Sign Out
-      </button>
+      </button> */}
     </div>
     )
   }

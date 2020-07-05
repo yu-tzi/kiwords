@@ -12,12 +12,15 @@ import Statistics from "./statistics"
 import WordBook from "./wordBooks"
 import Home from "./home"
 import LogPage from "./logIn"
+import './style/route.scss';
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import { render } from "react-dom";
 
 
 
-
-
-class RouteNav extends React.Component{
+class RoutePage extends React.Component{
   
   constructor(props) {
     super(props);
@@ -28,21 +31,24 @@ class RouteNav extends React.Component{
 
   render() {
 
-    if (this.props.logIn) {
+   /*  if (this.props.logIn) { */
       return (
         <Router>
 
-          <Link to="/">Home</Link>
-          <Link to="/login">login</Link>
-          <Link to="/dashboard">Dashboard</Link>
-          <Link to="/addwords">Add</Link>
-          <Link to="/wordbooks">Books</Link>
-          <Link to="/quiz">quiz</Link>
-          <Link to="/statistics">Statistics</Link>
+          <Link to="/"></Link>
+          <Link to="/login"></Link>
+          <Link to="/dashboard"></Link>
+          <Link to="/addwords"></Link>
+          <Link to="/wordbooks"></Link>
+          <Link to="/quiz"></Link>
+          <Link to="/statistics"></Link>
 
           <Switch>
             <Route exact path="/">
               <Home />
+              {/* 測試模式用，之後刪掉 */}
+              <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
+              {/* 測試模式用，之後刪掉 */}
             </Route>
             <Route path="/login">
               <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
@@ -67,18 +73,18 @@ class RouteNav extends React.Component{
 
         </Router>
       )
-
+/* 
     } else {
       return(
       <Router>
 
-        <Link to="/">Home</Link>
-        <Link to="/login">login</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/addwords">Add</Link>
-        <Link to="/wordbooks">Books</Link>
-        <Link to="/quiz">quiz</Link>
-        <Link to="/statistics">Statistics</Link>
+        <Link to="/"></Link>
+        <Link to="/login"></Link>
+        <Link to="/dashboard"></Link>
+        <Link to="/addwords"></Link>
+        <Link to="/wordbooks"></Link>
+        <Link to="/quiz"></Link>
+        <Link to="/statistics"></Link>
 
         <Switch>
           <Route exact path="/">
@@ -113,13 +119,81 @@ class RouteNav extends React.Component{
 
       </Router>
       )  
-  }
+  } */
     
   }
 
   
 };
 
+
+class RouteNav extends React.Component{
+
+  clickMemberBtn() {
+    console.log("click member!")
+    return (
+      <div>
+        <div className="signOut"
+          onClick={() => {
+            firebase.auth().signOut();
+            window.location.href = "/"
+          }}>登出
+        </div>
+      </div>
+    )
+  }
+
+  memberSwitch() {
+    if (this.props.logIn) {
+      return (
+        <div className="memberFrame">
+        <div className="memberImgFrame">
+            <div className="memberImg">K</div>
+            <div className="memberImgWord">Kiki Luo</div>
+          </div>
+          <div className="triangle" onClick={
+            () => { this.clickMemberBtn() }
+          }></div>
+      </div>
+      )
+    } else {
+      return (
+      <div className="memLoginFrame">
+        <img src="https://i.imgur.com/zGQkuFg.png" alt="" className="memberLogImg"></img>
+        <div className="triangle"></div>
+        <a href="/login" className="memberLogin">登入/註冊</a>
+      </div>
+      )
+    }
+  }
+
+  render() {
+    let logIn = this.props.logIn
+    return (
+    <div>
+      <div className="navBox">
+        <nav className="nav">
+          <ul className="menu">
+            <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"></img>
+            <a href={logIn ? "/addwords" : "/login"} className="menuItem">新增卡片</a>
+            <a href={logIn ? "/wordbooks" : "/login"} className="menuItem">單字本</a>
+            <a href={logIn ? "/quiz" : "/login"} className="menuItem">測驗</a>
+          </ul>
+          <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logo"></img>
+
+          <ul className="member">
+            {this.memberSwitch()}
+          </ul>
+        </nav>
+      </div>
+
+        <RoutePage />
+
+        <footer className="footer"></footer>
+      </div>
+    )
+  }
+}
 
 
 

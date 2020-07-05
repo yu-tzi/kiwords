@@ -1,0 +1,176 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: verdana, Arial, Helvetica, sans-serif;
+  list-style: none;
+  text-decoration: none;
+}
+
+.navBox{
+  background-color: rgb(58, 58, 58);
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width:90%;
+  margin: auto;
+
+}
+
+.menu{
+  display: flex;
+  color: white;
+  width: 40%;
+}
+
+.menu>a{
+  color: white;
+  letter-spacing: 5px;
+  margin: 0 13px;
+}
+
+.menu>a:hover{
+  color: rgb(194, 194, 194);
+  transition: 0.5s;
+}
+
+.memberImgFrame{
+  border-color: white;
+  border-width: 1px;
+  border-style: solid;
+  height: 30px;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+}
+
+.memberImgFrame:hover{
+  transition: 0.5s;
+  background-color: rgb(194, 194, 194);
+}
+
+
+.memberImg{
+  height: 25px;
+  width: 25px;
+  border-radius: 25px;
+  margin: 1.5px 0px 0px 5px;
+  color: white;
+  background-color: rgb(30, 161, 37);
+  text-align: center;
+  line-height: 25px;
+}
+
+.memberImgWord{
+  color: rgb(40, 40, 40);
+  margin: 0 10px;
+  line-height: 30px;
+}
+
+.memberImgWord:hover{
+  color: rgb(72, 72, 72);
+  transition: 0.5s;
+}
+
+.signOut{
+  display: none;
+}
+
+
+.memberLogin{
+  color: white;
+  letter-spacing: 5px;
+}
+
+.memberLogImg{
+  display: none;
+}
+
+.memberLogin:hover{
+  color: rgb(194, 194, 194);
+  transition: 0.5s;
+}
+
+
+.menuHam{
+  display: none;
+}
+
+.member{
+  display: flex;
+  width: 40%;
+  justify-content: flex-end;
+}
+
+
+.memberFrame{
+  display: flex;
+}
+
+.memberImgFrame{
+  display: flex;
+}
+
+.logo{
+  height: 30px;
+  padding: 15px 0;
+}
+
+
+
+@media (max-width: 1000px) {
+
+.menuHam{
+  display: block;
+  height: 20px;
+}
+
+.menuItem{
+  display: none;
+}
+
+.memberImgWord{
+  display: none;
+}
+
+.memberImgFrame{
+  width: 30px;
+  border-width: 3px;
+}
+
+.memberImg{
+  margin: 0px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.triangle{
+border-style: solid;
+border-width: 10px 6px 0 6px;
+border-color: #ffffff transparent transparent transparent;
+margin-top:15px;
+margin-left: 5px;
+}
+
+.memberLogin{
+  display: none;
+}
+
+.memberLogImg{
+  display: block;
+  height: 35px;
+}
+
+.memLoginFrame{
+  display: flex;
+}
+
+
+
+
+
+}
