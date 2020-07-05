@@ -190,9 +190,13 @@ class RouteNav extends React.Component{
       )
     } else {
       return (
-      <div className="memLoginFrame">
-        <img src="https://i.imgur.com/zGQkuFg.png" alt="" className="memberLogImg"></img>
-          <div className="triangle"></div>
+        <div className="memLoginFrame">
+          <a href="/login" >
+            <img src="https://i.imgur.com/zGQkuFg.png" alt="" className="memberLogImg"></img>
+          </a>
+          <a href="/login" >
+            <div className="triangle"></div>
+          </a>
         <a href="/login" className="memberLogin">登入/註冊</a>
       </div>
       )
@@ -206,6 +210,10 @@ class RouteNav extends React.Component{
       this.setState({ menuPop: !this.state.menuPop})
     }
     this.setState({ menuPop: !this.state.menuPop })
+  }
+
+  redirectToLogin() {
+    window.location.replace("./login");
   }
 
   toggleMemberPop() {
@@ -226,7 +234,7 @@ class RouteNav extends React.Component{
         <nav className="nav">
           <ul className="menu">
                 <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"
-                  onClick={this.toggleMenuPop.bind(this)}></img>
+                  onClick={logIn ? this.toggleMenuPop.bind(this) : this.redirectToLogin.bind(this)}></img>
             {this.state.menuPop ? <MenuPop /> : null}  
             <a href={logIn ? "/addwords" : "/login"} className="menuItem">新增卡片</a>
             <a href={logIn ? "/wordbooks" : "/login"} className="menuItem">單字本</a>
