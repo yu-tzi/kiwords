@@ -30,7 +30,7 @@ class WordBook extends React.Component {
       let bookUrl = "/wordBooks/" + bookID
       return (
         <Route exact path={bookUrl} key={bookID} id={bookID}>
-          <BookDtail />
+          <div>book id : {bookID}</div>
         </Route>
       )
     })
