@@ -1,0 +1,32 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: verdana, Arial, Helvetica, sans-serif;
+  list-style: none;
+  text-decoration: none;
+}
+
+.carouselContainer{
+  display: flex;
+
+}
+
+.cardContainer{
+  display: flex;
+  width: 600px;
+  overflow: hidden;
+}
+
+.flexContainer> .card{
+  height: 200px;
+  width: 200px;
+  border-color: blue;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.flexContainer{
+  display:flex;
+  flex-flow: row nowrap;
+  
+}
