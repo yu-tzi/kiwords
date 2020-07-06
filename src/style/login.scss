@@ -2,7 +2,19 @@
 
 .logInComtainer{
   background-color: rgb(187, 187, 187);
+  width: 300px;
+  height: 450px;
+  position: absolute;
+  left: calc(50% - 150px);
+  top: 10%;
+  background-color: #fafafa;
 }
+
+.signUpComtainer{
+
+  background-color: #fafafa;
+}
+
 
 
 .logInBack{
@@ -14,10 +26,88 @@
   height: 1373px;
 }
 
-@media (max-width: 500px) {
+.logBtnBlock{
+  display: flex;
+  justify-content: center;
+}
+
+.logTitle{
+  font-size: 23px;
+  font-weight:500;
+  letter-spacing: 3px;
+  text-align: center;
+  margin: 25px 0 15px 0;
+}
+
+.signInComtainer form,.signUpComtainer form{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+}
+
+.signInComtainer form>input{
+  margin: 10px 0;
+  border-width: 0px;
+  padding: 5px;
+}
+
+.signInComtainer form>input:last-child,.signInSend{
+  padding: 5px 0;
+  background-color: rgb(58, 58, 58);
+  border-radius: 7px;
+  width: 90%;
+  margin: 20px auto;
+  color:white;
+  font-size: 16px;
+  border-style: none;
+}
+
+.signInInput{
+  margin: 10px 0;
+  border-width: 0px;
+  padding: 5px;
+}
 
 
 
 
+
+.signUpBtn,.signInBtn{
+  font-size: 14px;
+  text-align: center;
+  color: rgb(16, 72, 145);
+  font-weight: 500;
 
 }
+
+.normal{
+  color: rgb(113, 113, 113);
+  margin: 10px 0 15px;
+  font-weight: 400;
+}
+
+.signInComtainer button{
+  display: block;
+  background-color: rgb(197, 65, 56);
+  border-style: none;
+  border-radius: 7px;
+  width: 216px;
+  margin: 10px auto;
+  color:white;
+  font-size: 16px;
+  height: 32px;
+}
+
+.signInComtainer button:last-child{
+  background-color: rgb(42, 47, 114);
+}
+
+.logClose{
+  position: absolute;
+  right: 8px;
+  font-size: 30px;
+}
+
+
+

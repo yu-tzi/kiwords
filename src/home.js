@@ -98,7 +98,7 @@ class Carousel extends React.Component {
       } else {
         index = i
       }
-      console.log("index : "+ index)//然而 render 出來的還是 4 個
+      //console.log("index : "+ index)
       cards.push(<div key={index} className={"card card" + index}>
         {items[index]}
       </div>)

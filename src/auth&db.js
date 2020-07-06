@@ -137,12 +137,11 @@ class Auth extends React.Component {
 
   //================== DB functions ================
   manageUserData(userData, name) {
-    console.log("manageUserData!")
     console.log(userData)
     console.log(name)
     console.log(userData.user.uid)
     console.log(userData.user.email)
-    console.log(userData.user.displayName)
+    
 
     let nameEdited
 
@@ -150,6 +149,16 @@ class Auth extends React.Component {
       nameEdited = name
     } else {
       nameEdited = userData.user.displayName
+    }
+
+    let image = ""
+
+    if (userData.user.photoURL===null) {
+      image = ""
+    } else if (userData.user.photoURL.includes("google")) {
+      image = userData.user.photoURL
+    } else if (userData.user.photoURL.includes("facebook")) {
+      image = userData.user.photoURL + "?height=500"
     }
 
     console.log(nameEdited)
@@ -162,6 +171,7 @@ class Auth extends React.Component {
       uid: userData.user.uid,
       email: userData.user.email,
       name: nameEdited,
+      image: image,
       ownedBook: ["bookID-1"],
       savedBook: ["bookID-1"],
       userExp: {
@@ -187,6 +197,7 @@ class Auth extends React.Component {
     }
     //send data
     console.log(data)
+    alert('store to data!')
     this.storeToUser(data)
   } 
 
@@ -198,6 +209,7 @@ class Auth extends React.Component {
       .then(function () {
         console.log("fisrt signup: " + data.uid + " is setted!")
         window.location.href="/"
+      
       })
       .catch(function (error) {
         console.error("Error adding document: ", error);

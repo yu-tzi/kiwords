@@ -46,9 +46,6 @@ class RoutePage extends React.Component{
           <Switch>
             <Route exact path="/">
               <Home />
-              {/* 測試模式用，之後刪掉 */}
-              <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
-              {/* 測試模式用，之後刪掉 */}
             </Route>
             <Route path="/login">
               <Home />
