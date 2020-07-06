@@ -49,7 +49,7 @@ class Bottom extends React.Component {
 }
 
 
-let items = ["apple", "banannna", "cherry", "doge"]
+let items = ["apple", "banannna", "cherry", "doge","elephant","fish","gold","hello"]
 class Carousel extends React.Component {
 
   constructor(props) {
@@ -63,19 +63,6 @@ class Carousel extends React.Component {
 
   toleft() {
     let newIndex = this.state.nowIndex
-    if (newIndex +1 >= items.length) {
-      newIndex = 0
-      /* console.log("too big : " + this.state.nowIndex) */
-      this.setState({ nowIndex: newIndex})
-    } else if (newIndex + 1 < items.length) {
-      this.setState({ nowIndex: newIndex + 1 });
-      /* console.log("small enough : " + this.state.nowIndex) */
-    }
- 
-  }
-
-  toRight() {
-    let newIndex = this.state.nowIndex
     if (newIndex - 1 < 0) {
       newIndex = items.length - 1
       /* console.log("too small : " + this.state.nowIndex) */
@@ -86,6 +73,19 @@ class Carousel extends React.Component {
     }
 
   }
+
+  toRight() {
+  let newIndex = this.state.nowIndex
+  if (newIndex + 1 >= items.length) {
+    newIndex = 0
+    /* console.log("too big : " + this.state.nowIndex) */
+    this.setState({ nowIndex: newIndex })
+  } else if (newIndex + 1 < items.length) {
+    this.setState({ nowIndex: newIndex + 1 });
+    /* console.log("small enough : " + this.state.nowIndex) */
+  }
+
+}
 
 
   itemRender() {
@@ -110,13 +110,13 @@ class Carousel extends React.Component {
     return (
       <div className="container"> 
       <div className="carouselContainer">
-          <div className="arrowLeft" onClick={this.toleft}>◀︎</div>
+          <div className="arrowLeft" onClick={this.toleft}></div>
         <div className="cardContainer">
           <div className="flexContainer">
             {this.itemRender()}
           </div>
         </div>
-          <div className="arrowRigth" onClick={this.toRight}>►</div>
+          <div className="arrowRigth" onClick={this.toRight}></div>
       </div>
     </div>
 
