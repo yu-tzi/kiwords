@@ -3,6 +3,8 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import firebaseConfig from "./firebaseConfig"
+import './style/login.scss';
+
 
 //================== Initialize Firebase ================
 /*  var firebaseConfig = {
@@ -45,7 +47,9 @@ class LogPage extends React.Component {
     //className="logBlockHide" style={redirect ? { display: "none" } : { display: "block" }}
     {/* <firebaseConfig /> */}
     return (
-      <div>
+    <div className="logInBack">
+    
+      <div className="logInComtainer">
         <div className="logBlock" >
           <form onSubmit={
             this.props.handleSignUp
@@ -81,7 +85,6 @@ class LogPage extends React.Component {
                       console.log("google new user!")
                       this.props.manageUserData(res, "name")
                     }
-                    window.location.href = "/"
                   })
                   .catch((err) => { console.log(err), alert(err.message) })
               }}>Sign In with Google
@@ -100,7 +103,6 @@ class LogPage extends React.Component {
                     console.log("faebook new user!")
                     this.props.manageUserData(res, "name")
                   }
-                  window.location.href = "/"
                 })
                   .catch((err) => { console.log(err), alert(err.message) })
               }}>Sign In with Facebook
@@ -118,6 +120,8 @@ class LogPage extends React.Component {
 
 
 
+        </div>
+        
       </div>
     )
   }

@@ -136,6 +136,7 @@
   height: 300px;
   background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%);
   position: relative;
+  margin: 0 0 50px 0;
 
 }
 
@@ -157,6 +158,9 @@
 @media (max-width: 500px) {
 
 
+  .bottomArea {
+    height: 450px;
+  }
 
   .logoH{
     display: none;
@@ -177,8 +181,8 @@
 
  .journey{
   width: 250px;
-  left: calc(50%-150px);
-  top: calc(50%);
+  left: calc(50% - 125px); 
+  top: calc(50% - 15px);
  }
 
 

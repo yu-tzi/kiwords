@@ -103,7 +103,6 @@ class Auth extends React.Component {
           this.setState({userData:res})
           event.persist();
           this.manageUserData(this.state.userData, this.state.name)
-          window.location.href="/"
         })
         .catch((err) => {
           alert(err.message)
@@ -138,6 +137,7 @@ class Auth extends React.Component {
 
   //================== DB functions ================
   manageUserData(userData, name) {
+    console.log("manageUserData!")
     console.log(userData)
     console.log(name)
     console.log(userData.user.uid)
@@ -197,7 +197,7 @@ class Auth extends React.Component {
       db.collection("users").doc(data.uid).set(data)
       .then(function () {
         console.log("fisrt signup: " + data.uid + " is setted!")
-        /* location.reload(); */
+        window.location.href="/"
       })
       .catch(function (error) {
         console.error("Error adding document: ", error);

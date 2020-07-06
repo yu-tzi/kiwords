@@ -51,6 +51,7 @@ class RoutePage extends React.Component{
               {/* 測試模式用，之後刪掉 */}
             </Route>
             <Route path="/login">
+              <Home />
               <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
             </Route>
             <Route path="/dashboard">
@@ -252,7 +253,7 @@ class RouteNav extends React.Component{
       </div>
 
         
-          <RoutePage />
+          <RoutePage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData}/>
         </div>
 
         <footer className="footer"></footer>
