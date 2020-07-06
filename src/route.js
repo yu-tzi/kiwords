@@ -18,7 +18,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { render } from "react-dom";
 
-
+let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
 class RoutePage extends React.Component{
   
@@ -132,12 +132,12 @@ class MemberPop extends React.Component {
     <div> 
       <span className="trianglePop"></span>
       <div className="memPop">
-        <a href="./dashboard">個人資料</a>
-        <a href="./statistics">學習統計</a>
+          <a href={rootURL+"/dashboard"}>個人資料</a>
+          <a href={rootURL+"/statistics"}>學習統計</a>
         <div className="signOut"
           onClick={() => {
             firebase.auth().signOut();
-            window.location.href = "/"
+            window.location.href = rootURL
           }}>登出
         </div>
       </div>
@@ -154,9 +154,9 @@ class MenuPop extends React.Component {
     <div>
       <span className="trianglePopMenu"></span>
       <div className="menuPop">
-        <a href="./addWords">新增卡片</a>
-        <a href="./wordBooks">單字本</a>
-        <a href="./quiz">測驗</a>
+          <a href={rootURL +"/addWords"}>新增卡片</a>
+          <a href={rootURL +"/wordBooks"}>單字本</a>
+          <a href={rootURL +"/quiz"}>測驗</a>
       </div>
     </div>
 
@@ -191,13 +191,13 @@ class RouteNav extends React.Component{
     } else {
       return (
         <div className="memLoginFrame">
-          <a href="/login" >
+          <a href={rootURL +"/login"} >
             <img src="https://i.imgur.com/zGQkuFg.png" alt="" className="memberLogImg"></img>
           </a>
-          <a href="/login" >
+          <a href={rootURL +"/login"} >
             <div className="triangle"></div>
           </a>
-        <a href="/login" className="memberLogin">登入/註冊</a>
+          <a href={rootURL +"/login"} className="memberLogin">登入/註冊</a>
       </div>
       )
     }
@@ -213,7 +213,7 @@ class RouteNav extends React.Component{
   }
 
   redirectToLogin() {
-    window.location.replace("./login");
+    window.location.replace(rootURL +"./login");
   }
 
   toggleMemberPop() {
@@ -236,11 +236,11 @@ class RouteNav extends React.Component{
                 <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"
                   onClick={logIn ? this.toggleMenuPop.bind(this) : this.redirectToLogin.bind(this)}></img>
             {this.state.menuPop ? <MenuPop /> : null}  
-            <a href={logIn ? "/addwords" : "/login"} className="menuItem">新增卡片</a>
-            <a href={logIn ? "/wordbooks" : "/login"} className="menuItem">單字本</a>
-            <a href={logIn ? "/quiz" : "/login"} className="menuItem">測驗</a>
+                <a href={logIn ? rootURL + "/addwords" : rootURL +"/login"} className="menuItem">新增卡片</a>
+                <a href={logIn ? rootURL + "/wordbooks" : rootURL +"/login"} className="menuItem">單字本</a>
+                <a href={logIn ? rootURL + "/quiz" : rootURL +"/login"} className="menuItem">測驗</a>
               </ul>
-              <a href="./">
+              <a href={rootURL}>
                 <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logo"></img>
               </a>
           

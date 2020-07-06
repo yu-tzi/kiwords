@@ -8,16 +8,48 @@ class Home extends React.Component {
   render() {
     return (
     <div>
-        <div>Home</div>
-        <Carousel/>
+        <Head />
+        <Carousel />
+        <Bottom/>
     </div>
     )
   }
 }
 
+class Head extends React.Component { 
+  render() {
+    return (
+      <div className="mktArea">
+        <div className="head">
+          <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img>
+          <div className="subtitle">一款專門為英文學習打造的閃卡測驗網站。</div>
+          <div className="start">START</div>
+        </div>
+        <div className="middle">
+          <div className="share">Popular Share</div>
+          <div className="tri"></div>
+        </div>
+      </div>
+    )
+  }
+
+}
+
+class Bottom extends React.Component {
+  render() {
+    return (
+      <div className="bottomArea">
+        <div className="bottom">
+          <div className="journey">START YOUR JOURNEY</div>
+        </div>
+      </div>
+    )
+  }
+
+}
+
+
 let items = ["apple", "banannna", "cherry", "doge"]
-
-
 class Carousel extends React.Component {
 
   constructor(props) {
@@ -76,15 +108,18 @@ class Carousel extends React.Component {
 
   render() {
     return (
+      <div className="container"> 
       <div className="carouselContainer">
-        <div onClick={this.toleft}>◀︎</div>
+          <div className="arrowLeft" onClick={this.toleft}>◀︎</div>
         <div className="cardContainer">
           <div className="flexContainer">
             {this.itemRender()}
           </div>
         </div>
-        <div onClick={this.toRight}>►</div>
+          <div className="arrowRigth" onClick={this.toRight}>►</div>
       </div>
+    </div>
+
     )
   }
 }

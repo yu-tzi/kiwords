@@ -6,14 +6,64 @@
   text-decoration: none;
 }
 
+//head
+.mktArea{
+  height: 600px;
+  background: linear-gradient(135deg, #1b7e7e 0%,#11fa7a 100%); 
+  position: relative;
+}
+
+.head{
+  position: absolute;
+  top: 180px;
+  left: 10%;
+}
+
+.logoH{
+  height: 50px;
+}
+
+.subtitle{
+  padding: 10px 0px;
+  color: white;
+  letter-spacing: 3px;
+  line-height: 25px;
+}
+
+.start{
+  width: 200px;
+  background-color: #3a3a3a;
+  color: white;
+  letter-spacing: 1px;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 20px;
+  margin-top: 40px;
+
+}
+
+.middle{
+  position: absolute;
+  left: calc(50% - 60px);
+  color: white;
+  top: 90%;
+}
+
+
+
+
+// carousel
+
 .carouselContainer{
   display: flex;
-
+  align-items: center;
+  justify-content: center;
 }
 
 .cardContainer{
   display: flex;
-  width: 600px;
+  width: 650px;
   overflow: hidden;
 }
 
@@ -30,3 +80,36 @@
   flex-flow: row nowrap;
   
 }
+
+.container{
+  padding: 40px 0;
+  background-color: rgb(216, 216, 216);
+}
+
+
+
+
+
+@media (max-width: 500px) {
+
+
+
+  .logoH{
+    display: none;
+  }
+
+  .head{
+    width: 80%;
+    top: 130px;
+  }
+
+  .start{
+    margin: 10px auto;
+}
+
+.mktArea{
+  height: 450px;}
+
+
+}
+

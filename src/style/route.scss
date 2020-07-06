@@ -123,6 +123,10 @@ html, body {
   display: flex;
 }
 
+.share{
+  padding-bottom: 20px;
+}
+
 .logo{
   height: 30px;
   padding: 15px 0;
@@ -194,6 +198,16 @@ html, body {
 .signOut{
   background-color: rgb(63, 63, 63);
   color: white;
+}
+
+.tri{
+
+border-style: solid;
+border-width: 15px 20px 0 20px;
+border-color: #ffffff transparent transparent transparent;
+position: absolute;
+left: calc(50% - 15px);
+bottom: 0px;
 }
 
 
