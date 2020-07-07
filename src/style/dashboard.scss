@@ -53,3 +53,59 @@
   padding: 5px;
   margin-top:20px;
 }
+
+.imageUploadPop{
+  background-color: #fff;
+  height: 100px;
+  position: absolute;
+  z-index: 15;
+  top: 20px;
+  left: calc(50% - 130px);
+  width: 260px;
+  box-shadow: 1px 0px 12px -2px rgba(64,64,64,0.53);
+}
+
+.uploadPicture{
+  width: 200px;
+  position: absolute;
+  top: 35%;
+  left: calc(50% - 90px);
+}
+
+.imgUploadClose{
+  position: absolute;
+  right: 5px;
+}
+
+.titleUploadPop{
+  background-color: #fff;
+  height: 100px;
+  position: absolute;
+  z-index: 15;
+  top: 200px;
+  left: calc(50% - 130px);
+  width: 260px;
+  box-shadow: 1px 0px 12px -2px rgba(64,64,64,0.53);
+}
+
+.uploadTitleForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.uploadTitleForm>input:last-child{
+  width: 50%;
+  margin: 5px 0;
+}
+
+.uploadTitle{
+  width: 80%;
+  margin-top:30px
+}
+
+.titleUploadClose{
+  position: absolute;
+  right: 3px;
+  top:0;
+}

@@ -148,7 +148,8 @@ class RouteNav extends React.Component{
       )
     } else {
       return (
-        <div className="memberImg" style={{ content: "url(" + this.props.img + ")" }}></div>
+        <img className="memberImg memberImgY" src={this.props.img} alt=""
+        ></img>
       )
     }
     
