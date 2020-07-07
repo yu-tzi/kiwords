@@ -1,13 +1,13 @@
 import React from "react";
-import firebase from "firebase/app";
+/* import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
+import "firebase/firestore"; */
 import RouteNav from "./route"
-/* import firebaseConfig from "./firebaseConfig" */
+
 
 
 //================== Initialize Firebase ================
-var firebaseConfig = {
+/* var firebaseConfig = {
   apiKey: "AIzaSyAgpVLf1iNb1RJmq3QBIuHdDnMUYObYqKo",
   authDomain: "kiwords-c058b.firebaseapp.com",
   databaseURL: "https://kiwords-c058b.firebaseio.com",
@@ -18,10 +18,11 @@ var firebaseConfig = {
   measurementId: "G-1GYNCR5WYZ"
 };
 
-firebase.initializeApp(firebaseConfig); 
-var db = firebase.firestore();
 
+firebase.initializeApp(firebaseConfig); */
+import { db, firebase} from "./firebaseConfig"
 
+/* var db = firebase.firestore(); */
 
 
 //================== Auth + DB setting ================
@@ -60,7 +61,7 @@ class Auth extends React.Component {
       if (user) {
         console.log("login")
         this.setState({ logIn: true })
-        this.setState({ userData: [user] }) 
+        this.setState({ userData: [user] })
 
       } else {
         console.log("logout")
@@ -69,6 +70,8 @@ class Auth extends React.Component {
       }
     }); 
   }
+
+  
 
 
 //================== log functions ================
@@ -225,7 +228,7 @@ class Auth extends React.Component {
     {/* <firebaseConfig/> */}
     return(
       <div>
-        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData}/>
+        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData}/>
       </div>
     )
   }

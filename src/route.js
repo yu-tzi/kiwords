@@ -14,9 +14,7 @@ import Home from "./home"
 import LogPage from "./logIn"
 import './style/route.scss';
 
-import firebase from "firebase/app";
-import "firebase/auth";
-import { render } from "react-dom";
+import { db } from "./firebaseConfig"
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -46,6 +44,7 @@ class RoutePage extends React.Component{
           <Switch>
             <Route exact path="/">
               <Home />
+              {/* <Dashboard /> */}
             </Route>
             <Route path="/login">
               <Home />
@@ -71,53 +70,6 @@ class RoutePage extends React.Component{
 
         </Router>
       )
-/* 
-    } else {
-      return(
-      <Router>
-
-        <Link to="/"></Link>
-        <Link to="/login"></Link>
-        <Link to="/dashboard"></Link>
-        <Link to="/addwords"></Link>
-        <Link to="/wordbooks"></Link>
-        <Link to="/quiz"></Link>
-        <Link to="/statistics"></Link>
-
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/login">
-            <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
-            <Home />
-          </Route>
-          <Route path="/dashboard">
-            <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
-            <Home />
-          </Route>
-          <Route path="/addwords">
-            <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
-            <Home />
-          </Route>
-          <Route path="/wordbooks">
-            <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
-            <Home />
-          </Route>
-          <Route path="/quiz">
-            <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
-            <Home />
-          </Route>
-          <Route path="/statistics">
-            <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
-            <Home />
-          </Route>
-
-        </Switch>
-
-      </Router>
-      )  
-  } */
     
   }
 };
@@ -170,9 +122,36 @@ class RouteNav extends React.Component{
     super(props);
     this.state = {
       menuPop: false,
-      memberPop:false
+      memberPop: false,
+      memberImg: "",
+      memberImgWord: ""
     }
   }
+
+  componentDidUpdate() { 
+    let uid
+    if (this.props.userData.length > 0) {
+      uid = this.props.userData[0].uid
+      console.log(uid)
+
+      db.collection("users").where("uid", "==", uid)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            
+            console.log(doc.id, " => ", doc.data());
+          });
+        })
+        .catch(function (error) {
+          alert("Error getting documents: ", error);
+        });
+    }
+
+
+  
+
+  }
+
 
   memberSwitch() {
     if (this.props.logIn) {
