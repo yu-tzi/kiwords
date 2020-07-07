@@ -52,10 +52,7 @@ html, body {
 }
 
 .memberImgFrame{
-  border-color: white;
-  border-width: 1px;
-  border-style: solid;
-  height: 30px;
+
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
 }
@@ -70,7 +67,9 @@ html, body {
   height: 25px;
   width: 25px;
   border-radius: 25px;
-  margin: 3px 0px 0px 5px;
+  border-color: white;
+  border-style: solid;
+  margin: auto;
   color: white;
   background-color: rgb(30, 161, 37);
   text-align: center;
@@ -79,7 +78,7 @@ html, body {
 
 .memberImgWord{
   color: rgb(40, 40, 40);
-  margin: 0 10px;
+  margin: 0 3px 0 10px;
   line-height: 30px;
 }
 
@@ -234,10 +233,6 @@ bottom: 0px;
 }
 
 .memberImg{
-  margin: 0px;
-  height: 30px;
-  width: 30px;
-  line-height: 30px;
   font-weight: 500;
   font-size: 20px;
 }

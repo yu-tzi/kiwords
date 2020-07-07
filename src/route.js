@@ -14,7 +14,7 @@ import Home from "./home"
 import LogPage from "./logIn"
 import './style/route.scss';
 
-import { db } from "./firebaseConfig"
+import { db, firebase } from "./firebaseConfig"
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -43,8 +43,8 @@ class RoutePage extends React.Component{
 
           <Switch>
             <Route exact path="/">
-              <Home />
-              {/* <Dashboard /> */}
+              {/* <Home /> */}
+              <Dashboard />
             </Route>
             <Route path="/login">
               <Home />
@@ -123,33 +123,36 @@ class RouteNav extends React.Component{
     this.state = {
       menuPop: false,
       memberPop: false,
-      memberImg: "",
-      memberImgWord: ""
     }
+    this.convertName = this.convertName.bind(this)
+    this.convertImg = this.convertImg.bind(this)
+  }
+  
+  convertName() {
+    if (this.props.name.length < 19) {
+      name = this.props.name
+    } else {
+      name = this.props.name.slice(0, 18)
+      name = name + "..."
+    }
+    return (
+      <div className="memberImgWord">{name}</div>
+    )
   }
 
-  componentDidUpdate() { 
-    let uid
-    if (this.props.userData.length > 0) {
-      uid = this.props.userData[0].uid
-      console.log(uid)
+  convertImg() {
 
-      db.collection("users").where("uid", "==", uid)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            
-            console.log(doc.id, " => ", doc.data());
-          });
-        })
-        .catch(function (error) {
-          alert("Error getting documents: ", error);
-        });
+    if (this.props.img.length < 5) {
+      return (
+        <div className="memberImg">{this.props.name.slice(0, 1)}</div>
+      )
+    } else {
+      return (
+        <div className="memberImg" style={{ content: "url(" + this.props.img + ")" }}></div>
+      )
     }
-
-
-  
-
+    
+    
   }
 
 
@@ -158,10 +161,10 @@ class RouteNav extends React.Component{
       return (
       <div className="memberFrame">
           <div className="memberImgFrame" onClick={this.toggleMemberPop.bind(this)}>
-            <div className="memberImg">K</div>
-            <div className="memberImgWord">Kiki Luo</div>
+            {this.convertName()}
+            {this.convertImg()}
           </div>
-          <div className="triangle"></div>
+          <div className="triangle" onClick={this.toggleMemberPop.bind(this)}></div>
           {this.state.memberPop ? <MemberPop /> : null}
       </div>
       )

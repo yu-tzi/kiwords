@@ -1,28 +1,6 @@
 import React from "react";
-/* import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore"; */
 import RouteNav from "./route"
-
-
-
-//================== Initialize Firebase ================
-/* var firebaseConfig = {
-  apiKey: "AIzaSyAgpVLf1iNb1RJmq3QBIuHdDnMUYObYqKo",
-  authDomain: "kiwords-c058b.firebaseapp.com",
-  databaseURL: "https://kiwords-c058b.firebaseio.com",
-  projectId: "kiwords-c058b",
-  storageBucket: "kiwords-c058b.appspot.com",
-  messagingSenderId: "959153092087",
-  appId: "1:959153092087:web:278807305aad9aa00caaf2",
-  measurementId: "G-1GYNCR5WYZ"
-};
-
-
-firebase.initializeApp(firebaseConfig); */
-import { db, firebase} from "./firebaseConfig"
-
-/* var db = firebase.firestore(); */
+import { db, firebase } from "./firebaseConfig"
 
 
 //================== Auth + DB setting ================
@@ -36,9 +14,12 @@ class Auth extends React.Component {
       password: "", //for passing input data 
       name: "",
       logIn: false,
-      userData: []
+      userData: [],
+      memberImg: "",
+      memberImgWord: ""
     };
 
+    
     this.passingEmail = this.passingEmail.bind(this)
     this.passingPassword = this.passingPassword.bind(this)
     this.passingName = this.passingName.bind(this)
@@ -62,6 +43,27 @@ class Auth extends React.Component {
         console.log("login")
         this.setState({ logIn: true })
         this.setState({ userData: [user] })
+
+        let uid
+        uid = user.uid
+        db.collection("users").where("uid", "==", uid)
+          .get()
+          .then((querySnapshot)=> {
+            querySnapshot.forEach((doc)=> {
+
+              console.log(doc.id, " => ", doc.data());
+              this.setState({ memberImg: doc.data().image })
+              this.setState({ memberImgWord: doc.data().name })
+              console.log(this.state.memberImg)
+             
+
+            });
+          })
+          .catch(function (error) {
+            console.log("Error getting documents: ", error)
+          });
+        
+        
 
       } else {
         console.log("logout")
@@ -228,8 +230,9 @@ class Auth extends React.Component {
     {/* <firebaseConfig/> */}
     return(
       <div>
-        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData}/>
+        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord}/>
       </div>
+
     )
   }
 
