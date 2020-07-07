@@ -1,5 +1,5 @@
 import React from "react";
-import { db, firebase } from "./firebaseConfig"
+import { db, storage } from "./firebaseConfig"
 import './style/dashboard.scss';
 
 class Dashboards extends React.Component {
@@ -7,14 +7,13 @@ class Dashboards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgUploadPop: false,
-      imageEdited: ""
+      imgUploadPop: false
     }
     this.changeName = this.changeName.bind(this)
     this.convertName = this.convertName.bind(this)
-    this.changeImg = this.changeImg.bind(this)
+    this.uploadImg = this.uploadImg.bind(this)
     this.imageUploadPop = this.imageUploadPop.bind(this)
-    this.imageUploadSend = this.imageUploadSend.bind(this)
+
   }
 
   changeName(name) {
@@ -39,12 +38,23 @@ class Dashboards extends React.Component {
     this.setState({ imgUploadPop: true})
   }
 
-  imageUploadSend() {
-    this.setState({ imageEdited: event.target.value })
-  }
+ 
 
+/*   async uploadImg(e){
 
-  changeImg(img) {
+    const files = e.target.file
+    const data = new FormData()
+    data.append("file", files)
+    data.append("upload_preset", "md4sceof")
+    console.log(data)
+  
+    
+    const response = await fetch(' https://api.cloudinary.com/v1_1/dmmnwhxmb/image/upload', data);
+    const res = await response.json();
+    console.log(res)
+      
+    
+
     console.log(img)
     if (this.props.userData.length > 0) {
       console.log(this.props.userData[0].uid)
@@ -60,6 +70,28 @@ class Dashboards extends React.Component {
         });
 
     }
+  } */
+
+  uploadImg(e) {
+    const storageRef = storage.ref();
+    console.log(e.target.files[0])
+    let name = e.target.files[0].name
+    let url = ""
+    let memeberRef = storageRef.child(name);
+    memeberRef.put(e.target.files[0]).then(function (snapshot) {
+      console.log('Uploaded a blob or file!');
+      console.log(snapshot);
+      storageRef.child(name).getDownloadURL().then((res) => {
+        console.log(res)
+        url=res
+      })
+    });
+
+    
+
+
+
+
   }
 
 
@@ -93,10 +125,7 @@ class Dashboards extends React.Component {
           
           {/* image upload pop */}
           <div className="imageUploadPop" style={{ display: this.state.imgUploadPop ? "block" : "none" }}>
-            <form onSubmit={this.changeImg(this.state.imageEdited)}>
-              <input type="file" className="uploadPicture" accept="image/*" onChange={this.imageUploadSend} />
-              <input type="submit" value="Submit"></input>
-            </form>
+            <input type="file" name="file" className="uploadPicture" placeholder="上傳檔案" accept="image/*" onChange={this.uploadImg} />
           </div>
             
 
