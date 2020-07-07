@@ -1,0 +1,55 @@
+
+
+
+.content{
+  height: 100%;
+  background-color: rgb(250, 248, 248);
+}
+
+.edit{
+ height: 20px;
+ position: absolute;
+}
+
+.editImg{
+  right: 0px;
+  bottom: 0px;
+}
+
+.editTitle{
+  right: -25px;
+  top: 20px;
+
+}
+
+.profileImg{
+  width:150px;
+  height: 150px;
+  background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%);
+  border-radius: 50%; 
+
+}
+
+.profileTitle{
+  font-size: 25px;
+  padding: 15px 0;
+  position: relative;
+}
+
+.profileImgBox{
+  position: relative;
+}
+
+.profileBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.changePassword{
+  border-radius: 5px;
+  background-color: rgb(227, 227, 227);
+  padding: 5px;
+  margin-top:20px;
+}

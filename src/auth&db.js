@@ -16,7 +16,8 @@ class Auth extends React.Component {
       logIn: false,
       userData: [],
       memberImg: "",
-      memberImgWord: ""
+      memberImgWord: "",
+      memberEmail:""
     };
 
     
@@ -55,6 +56,7 @@ class Auth extends React.Component {
               this.setState({ memberImg: doc.data().image })
               this.setState({ memberImgWord: doc.data().name })
               console.log(this.state.memberImg)
+              this.setState({ memberEmail: doc.data().email })
              
 
             });
@@ -162,7 +164,7 @@ class Auth extends React.Component {
       image = ""
     } else if (userData.user.photoURL.includes("google")) {
       image = userData.user.photoURL
-    } else if (userData.user.photoURL.includes("facebook")) {
+    }else if (userData.user.photoURL.includes("facebook")) {
       image = userData.user.photoURL + "?height=500"
     }
 
@@ -230,7 +232,7 @@ class Auth extends React.Component {
     {/* <firebaseConfig/> */}
     return(
       <div>
-        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord}/>
+        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord} memberEmail={this.state.memberEmail} />
       </div>
 
     )

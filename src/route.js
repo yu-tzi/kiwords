@@ -44,14 +44,14 @@ class RoutePage extends React.Component{
           <Switch>
             <Route exact path="/">
               {/* <Home /> */}
-              <Dashboard />
+              <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
             </Route>
             <Route path="/login">
               <Home />
               <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
             </Route>
             <Route path="/dashboard">
-              <Dashboard />
+              <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
             </Route>
             <Route path="/addwords">
               <AddWords />
@@ -232,7 +232,7 @@ class RouteNav extends React.Component{
       </div>
 
         
-          <RoutePage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData}/>
+          <RoutePage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
         </div>
 
         <footer className="footer"></footer>
