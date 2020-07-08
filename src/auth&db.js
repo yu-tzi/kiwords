@@ -179,26 +179,26 @@ class Auth extends React.Component {
       email: userData.user.email,
       name: nameEdited,
       image: image,
-      ownedBook: ["bookID-1"],
-      savedBook: ["bookID-1"],
+      ownedBook: [],
+      savedBook: [],
       userExp: {
         quizHis: [
-          {
+          /* {
             time: "time-1",
             score: "score-1"
-          }
+          } */
         ],
         likeBook: [
-          {
+          /* {
             bookID: "likebook-1",
             bookScore: "bookScore-1"
-          }
+          } */
         ],
         addCards: [
-          {
+          /* {
             time: "time-1",
             amount: "amount-1"
-          }
+          } */
         ]
       }
     }

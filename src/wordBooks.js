@@ -1,6 +1,6 @@
 import React from "react";
 import BookDtail from "./wordBook-detail"
-import { db } from "./firebaseConfig"
+import { db,firebase } from "./firebaseConfig"
 import {
   BrowserRouter as Router,
   Switch,
@@ -94,7 +94,7 @@ class MyBook extends React.Component {
       let time = new Date().getTime()
       this.setState({ bookName: e.target.value })
       this.setState({ uid: this.props.userData[0].uid })
-      this.setState({ bookID: this.props.userData[0].uid + time })
+      this.setState({ bookID: time + this.props.userData[0].uid })
     }
   }
 
@@ -124,8 +124,11 @@ class MyBook extends React.Component {
     this.storeBookData(bookInfo)
   }
 
+  //& 存進 userData 的 ownBook
+
   storeBookData(bookInfo) {
     alert("storeBookData")
+    event.preventDefault()
 
     db.collection("books").doc(bookInfo.bookID).set(bookInfo)
       .then(() => {
@@ -137,6 +140,21 @@ class MyBook extends React.Component {
         console.error("Error adding document: ", error);
         alert(err.message);
       });
+    
+    
+    db.collection("users").doc(this.state.uid).update({
+      ownedBook: firebase.firestore.FieldValue.arrayUnion(bookInfo.bookID)
+    }).then(() => {
+      event.preventDefault()
+      alert("user book data : " + bookInfo.bookID + " is setted!")
+    })
+      .catch(function (err) {
+        event.preventDefault()
+        console.error("Error adding document: ", error);
+        alert(err.message);
+      });
+
+    
     
   }
   
