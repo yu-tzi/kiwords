@@ -48,13 +48,13 @@ class WordBook extends React.Component {
       <div>
 
         <div>你建立的單字本</div>
-        <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore}/></div>
+        <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} /></div>
 
         <div>你儲存的單字本</div>
         <div><SaveBook/></div>
 
         <div>熱門推薦</div>
-        <div><PopularBook/></div>
+        <div><PopularBook popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore} topThreeName={this.props.topThreeName}/></div>
 
         {/* 以下 router */}
         <div>
@@ -73,19 +73,113 @@ class WordBook extends React.Component {
 
 class PopularBook extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPop: true,
+      searchWord:""
+    };
 
+    this.getPopData = this.getPopData.bind(this)
+    this.renderPopBook = this.renderPopBook.bind(this)
+    this.getSearchData = this.getSearchData.bind(this)
+    this.sendSearchData = this.sendSearchData.bind(this)
+  }
 
+  getPopData() {
+    let popData = []
 
-
-  render() {
+    for (let i = 0; i < this.props.topThreeName.length; i++) {
+      popData.push(this.renderPopBook(i))
+    }
     return (
-      <div className="popBook bookformat" >
-        <div className="bookTitle">123</div>
-        <div className="bookStar">評等</div>
+      <div style={{ display: this.state.showPop ? "block":"none"}}>
+      {popData}
+      </div>
+    )
+  }
+  
+  renderPopBook(i) {
+    return (
+      <div className="popBook bookformat" key={i}>
+        <div className="bookTitle">{this.props.topThreeName[i]}</div>
+        <div className="bookStar">{this.props.popularBookScore[i]}</div>
         <div className="bookBtn">查看單字</div>
       </div>
     )
   }
+
+  getSearchData(e) {
+    this.setState({searchWord:e.target.value})
+  }
+
+  sendSearchData() {
+
+
+    let data = []
+    event.preventDefault()
+    db.collection("books").get().then((querySnapshot)=>{
+      querySnapshot.forEach((doc)=>{
+        // doc.data() is never undefined for query doc snapshots
+      /* console.log(doc.id, " => ", doc.data()); */
+        let book = {
+          bookName: doc.data().bookName
+        }
+        data.push(book)
+        //塞資料塞到一半
+        
+      });
+    });
+    console.log(data)
+    
+
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].bookName.includes(this.state.searchWord)) {
+        console.log(data[i].bookName)
+        //搜尋應該沒問題，但還要要檢驗是否為該使用者的本子
+        //也就是說要先把這裡的資料存起來
+        //先在這裡把欄位的值都取好，傳到下一個 render 的 function
+        //input值跟搜尋值得大小寫要調整一下
+  
+        
+      }
+    }
+    /* if (this.state.logIn) {
+            for (let k = 0; k < container.length; k++) {
+              console.log("hi")
+              for (let m = 0; m < this.state.showBook.length; m++) {
+                console.log("book")
+                let book = container[k].bookName
+                if (book.includes(this.state.showBook[m])) {
+                  container.splice(k, 1)
+                }
+              }
+
+            }
+          } */
+
+
+  }
+  
+  
+
+  render() {
+    return (
+      <div >
+        {/* search */}
+        <form onSubmit={this.sendSearchData} className="bookSearchFrame">
+          <input className="bookSearch" type="text" onChange={(e) => this.getSearchData(e)}></input>
+          <input className="bookSearchSend" type="submit" value=" 搜尋單字本 "></input>
+        </form>
+        {/* pop data */}
+        {this.getPopData()}
+      </div>
+    )
+  }
+
+
+
+  
 }
 
 
@@ -113,7 +207,8 @@ class MyBook extends React.Component {
     this.state = {
       bookName: "",
       uid: "",
-      bookID: ""
+      bookID: "",
+      displayName:""
     };
     this.getBookData = this.getBookData.bind(this)
     this.manageBookData = this.manageBookData.bind(this)
@@ -132,6 +227,7 @@ class MyBook extends React.Component {
       let time = new Date().getTime()
       this.setState({ bookName: e.target.value })
       this.setState({ uid: this.props.userData[0].uid })
+      this.setState({ displayName: this.props.userData[0].displayName })
       this.setState({ bookID: time + this.props.userData[0].uid })
     }
   }
@@ -141,6 +237,7 @@ class MyBook extends React.Component {
     let bookInfo = {
       bookName: this.state.bookName,
       created: this.state.uid,
+      author: this.state.displayName,
       evaluation: [],
       bookID: this.state.bookID,
       cards: [
