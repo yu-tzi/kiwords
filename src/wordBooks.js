@@ -17,12 +17,7 @@ class WordBook extends React.Component {
       bookID: ["1234", "1123", "3649"]
     };
   }
-
-
-    //要怎麼在 auth 反應過來登入等等狀態後，才換這一個 didMount ? 
-    //還是應該要在 auth 那一層都先把資料準備好傳下來 ？
-    
-  
+ 
 
   renderLink() {
     return this.state.bookID.map((bookID) => {
@@ -50,7 +45,7 @@ class WordBook extends React.Component {
       <div>
 
         <div>你建立的單字本</div>
-        <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail}/></div>
+        <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore}/></div>
 
         <div>你儲存的單字本</div>
         <div>render area</div>
@@ -85,7 +80,11 @@ class MyBook extends React.Component {
     this.getBookData = this.getBookData.bind(this)
     this.manageBookData = this.manageBookData.bind(this)
     this.storeBookData = this.storeBookData.bind(this)
+    this.setState = this.setState.bind(this)
+    this.showBook = this.showBook.bind(this)
+    
   }
+
 
 //bookID-建立日期
   
@@ -124,7 +123,7 @@ class MyBook extends React.Component {
     this.storeBookData(bookInfo)
   }
 
-  //& 存進 userData 的 ownBook
+  // 存進 userData 的 ownBook
 
   storeBookData(bookInfo) {
     alert("storeBookData")
@@ -145,7 +144,6 @@ class MyBook extends React.Component {
     db.collection("users").doc(this.state.uid).update({
       ownedBook: firebase.firestore.FieldValue.arrayUnion(bookInfo.bookID)
     }).then(() => {
-      event.preventDefault()
       alert("user book data : " + bookInfo.bookID + " is setted!")
     })
       .catch(function (err) {
@@ -154,19 +152,56 @@ class MyBook extends React.Component {
         alert(err.message);
       });
 
-    
-    
   }
+
+  showBook() {
+
+    if (this.props.showBook.length > 0) {
+
+      return (
+        <div>
+        
+          {
+            this.props.showBook.map((obj, index) => {
+
+              {/* console.log(index)
+              console.log(obj) */}
+
+              return (
+                <div className="addBookShow bookformat" key={index}>
+                  <div className="bookTitle">{obj}</div>
+                  <div className="bookBtn">新增單字</div>
+                </div>)
+          
+            })
+          
+          }
+        </div>
+      )
+    }
+  }
+
+
   
 
   render() {
     return (
       <div>
-        
-        <form onSubmit={this.manageBookData}>
-          <input type="text" onChange={(e)=>this.getBookData(e)}></input>
-          <input type="submit" value=" 新增單字本 "></input>
-        </form>
+        {/* render books you have */}
+        {this.showBook()}
+
+        {/* adding books frame */}
+      <div className="addBookShow bookformat">
+        <div className="bookTitle">建立屬於你的學習素材！</div>
+        <div className="bookBtn">新增單字本</div>
+      </div>
+
+      <div className="addBookHide bookformat">
+        <form onSubmit={this.manageBookData} className="bookEnterFrame">
+          <input className="bookEnter" type="text" onChange={(e)=>this.getBookData(e)}></input>
+          <input className="bookSend" type="submit" value=" 新增單字本 "></input>
+          </form>
+        </div>
 
       </div>
   )

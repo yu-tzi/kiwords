@@ -17,7 +17,10 @@ class Auth extends React.Component {
       userData: [],
       memberImg: "",
       memberImgWord: "",
-      memberEmail:""
+      memberEmail: "",
+      showBook: "",
+      popularBook: "",
+      popularBookScore: ""
     };
 
     
@@ -65,6 +68,84 @@ class Auth extends React.Component {
             console.log("Error getting documents: ", error)
           });
         
+        //get book data
+          let showBook = []
+
+          db.collection("books").where("created", "==", user.uid).get().then((doc) => {
+            if (doc) {
+              doc.forEach((doc) => {
+                showBook.push(doc.data().bookName)
+              })
+              this.setState({showBook: showBook})
+            } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+            }
+          }).catch(function (error) {
+            console.log("Error getting document:", error);
+          });
+
+        
+        //get popular book data
+          //get top 3 book id
+        db.collection("books").get().then((doc) => {
+          let container = []
+          if (doc) {
+              doc.forEach(callback)
+              function callback(doc) {
+                container.push(doc.data())
+            }
+            console.log(container)
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+
+          let topThreeID =[]
+          let topThreeScore =[]
+          
+          for (let j = 0; j < 3; j++) {
+
+            let largest = 0
+            let largestID = []
+            let total = 0
+            let average = 0
+            let index = ""
+
+            for (let i = 0; i < container.length; i++) {
+            
+              if (container[i].evaluation.length > 0) {
+                total = 0
+                for (let y = 0; y < container[i].evaluation.length; y++) {
+                  total += container[i].evaluation[y]
+                }
+                average = total / container[i].evaluation.length
+
+                if (average >= largest) {
+                  largest = average
+                  largestID = container[i].bookID
+                  index = i
+                }
+              }
+            }
+
+            topThreeID.push(largestID)
+            topThreeScore.push(largest)
+            container.splice(index, 1)
+            console.log(container.length)
+
+          }
+          
+          console.log(topThreeID)
+          console.log(topThreeScore)
+          this.setState({ popularBook: topThreeID })
+          this.setState({ popularBookScore: topThreeScore })
+
+        }).catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+
+
         
 
       } else {
@@ -72,7 +153,8 @@ class Auth extends React.Component {
         this.setState({ logIn: false })
         this.setState({ userData: [] }) 
       }
-    }); 
+    });  
+
   }
 
   
@@ -232,7 +314,7 @@ class Auth extends React.Component {
     {/* <firebaseConfig/> */}
     return(
       <div>
-        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord} memberEmail={this.state.memberEmail} />
+        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord} memberEmail={this.state.memberEmail} showBook={this.state.showBook} popularBook={this.state.popularBook} popularBookScore={this.state.popularBookScore}/>
       </div>
 
     )
