@@ -20,7 +20,8 @@ class Auth extends React.Component {
       memberEmail: "",
       showBook: "",
       popularBook: "",
-      popularBookScore: ""
+      popularBookScore: "",
+      topThreeName:""
     };
 
     
@@ -102,12 +103,29 @@ class Auth extends React.Component {
           }
 
           let topThreeID =[]
-          let topThreeScore =[]
-          
+          let topThreeScore = []
+          let topThreeName = []
+
+          //take off book you have
+          if (this.state.logIn) {
+            for (let k = 0; k < container.length; k++) {
+              console.log("hi")
+              for (let m = 0; m < this.state.showBook.length; m++) {
+                console.log("book")
+                let book = container[k].bookName
+                if (book.includes(this.state.showBook[m])) {
+                  container.splice(k, 1)
+                }
+              }
+
+            }
+          }
+
           for (let j = 0; j < 3; j++) {
 
             let largest = 0
             let largestID = []
+            let largestName = ""
             let total = 0
             let average = 0
             let index = ""
@@ -120,17 +138,23 @@ class Auth extends React.Component {
                   total += container[i].evaluation[y]
                 }
                 average = total / container[i].evaluation.length
+              } else {
+                average = 0
+              }
+
 
                 if (average >= largest) {
                   largest = average
                   largestID = container[i].bookID
+                  largestName = container[i].bookName
                   index = i
                 }
-              }
+              
             }
 
             topThreeID.push(largestID)
             topThreeScore.push(largest)
+            topThreeName.push(largestName)
             container.splice(index, 1)
             console.log(container.length)
 
@@ -140,6 +164,7 @@ class Auth extends React.Component {
           console.log(topThreeScore)
           this.setState({ popularBook: topThreeID })
           this.setState({ popularBookScore: topThreeScore })
+          this.setState({ topThreeName: topThreeName})
 
         }).catch(function (error) {
           console.log("Error getting document:", error);
@@ -152,6 +177,74 @@ class Auth extends React.Component {
         console.log("logout")
         this.setState({ logIn: false })
         this.setState({ userData: [] }) 
+
+        db.collection("books").get().then((doc) => {
+          let container = []
+          if (doc) {
+            doc.forEach(callback)
+            function callback(doc) {
+              container.push(doc.data())
+            }
+            console.log(container)
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+
+          let topThreeID = []
+          let topThreeScore = []
+          let topThreeName = []
+
+        
+          for (let j = 0; j < 3; j++) {
+
+            let largest = 0
+            let largestID = []
+            let largestName = ""
+            let total = 0
+            let average = 0
+            let index = ""
+
+            for (let i = 0; i < container.length; i++) {
+
+              if (container[i].evaluation.length > 0) {
+                total = 0
+                for (let y = 0; y < container[i].evaluation.length; y++) {
+                  total += container[i].evaluation[y]
+                }
+                average = total / container[i].evaluation.length
+              } else {
+                average = 0
+              }
+
+
+              if (average >= largest) {
+                largest = average
+                largestID = container[i].bookID
+                largestName = container[i].bookName
+                index = i
+              }
+
+            }
+
+            topThreeID.push(largestID)
+            topThreeScore.push(largest)
+            topThreeName.push(largestName)
+            container.splice(index, 1)
+            console.log(container.length)
+
+          }
+
+          console.log(topThreeID)
+          console.log(topThreeScore)
+          this.setState({ popularBook: topThreeID })
+          this.setState({ popularBookScore: topThreeScore })
+          this.setState({ topThreeName: topThreeName })
+
+        }).catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+
       }
     });  
 

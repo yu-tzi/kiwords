@@ -16,6 +16,8 @@ class WordBook extends React.Component {
     this.state = {
       bookID: ["1234", "1123", "3649"]
     };
+
+  
   }
  
 
@@ -40,6 +42,7 @@ class WordBook extends React.Component {
   }
 
 
+
   render() {
     return (
       <div>
@@ -48,10 +51,10 @@ class WordBook extends React.Component {
         <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore}/></div>
 
         <div>你儲存的單字本</div>
-        <div>render area</div>
+        <div><SaveBook/></div>
 
         <div>熱門推薦</div>
-        <div>render area</div>
+        <div><PopularBook/></div>
 
         {/* 以下 router */}
         <div>
@@ -68,6 +71,41 @@ class WordBook extends React.Component {
 }
 
 
+class PopularBook extends React.Component {
+
+
+
+
+
+  render() {
+    return (
+      <div className="popBook bookformat" >
+        <div className="bookTitle">123</div>
+        <div className="bookStar">評等</div>
+        <div className="bookBtn">查看單字</div>
+      </div>
+    )
+  }
+}
+
+
+
+class SaveBook extends React.Component {
+
+  render() {
+    return (
+      <div className="saveBook bookformat" >
+        <div className="bookTitle">標題</div>
+        <div className="bookAuthor">作者</div>
+        <div className="bookBtn">查看單字</div>
+      </div>
+    )
+  }
+}
+
+
+
+
 class MyBook extends React.Component {
 
   constructor(props) {
@@ -82,6 +120,7 @@ class MyBook extends React.Component {
     this.storeBookData = this.storeBookData.bind(this)
     this.setState = this.setState.bind(this)
     this.showBook = this.showBook.bind(this)
+    
     
   }
 
@@ -181,8 +220,6 @@ class MyBook extends React.Component {
     }
   }
 
-
-  
 
   render() {
     return (
