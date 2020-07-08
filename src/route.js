@@ -44,7 +44,7 @@ class RoutePage extends React.Component{
           <Switch>
             <Route exact path="/">
               {/* <Home /> */}
-              <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
+              <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail}/>
             </Route>
             <Route path="/login">
               <Home />
@@ -57,7 +57,7 @@ class RoutePage extends React.Component{
               <AddWords />
             </Route>
             <Route path="/wordbooks">
-              <WordBook />
+              <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail}/>
             </Route>
             <Route path="/quiz">
               <Quiz />
