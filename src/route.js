@@ -44,7 +44,9 @@ class RoutePage extends React.Component{
           <Switch>
             <Route exact path="/">
               {/* <Home /> */}
-              <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore} topThreeName={this.props.topThreeName}/>
+              {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />*/}
+              <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
+              <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore} topThreeName={this.props.topThreeName}/> 
             </Route>
             <Route path="/login">
               <Home />

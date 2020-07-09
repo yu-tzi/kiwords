@@ -1,7 +1,7 @@
 import React from "react";
 import './style/login.scss';
 
-import { db, firebase } from "./firebaseConfig"
+import { firebase } from "./firebaseConfig"
 
 //================== Auth + DB setting ================
 

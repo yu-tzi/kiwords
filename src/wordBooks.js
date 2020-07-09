@@ -110,54 +110,27 @@ class PopularBook extends React.Component {
   }
 
   getSearchData(e) {
-    this.setState({searchWord:e.target.value})
+    this.setState({searchWord: e.target.value.toLowerCase()})
   }
 
+
   sendSearchData() {
-
-
-    let data = []
+    console.log("this.state.searchWord")
     event.preventDefault()
-    db.collection("books").get().then((querySnapshot)=>{
-      querySnapshot.forEach((doc)=>{
-        // doc.data() is never undefined for query doc snapshots
-      /* console.log(doc.id, " => ", doc.data()); */
-        let book = {
-          bookName: doc.data().bookName
-        }
-        data.push(book)
-        //塞資料塞到一半
-        
-      });
-    });
-    console.log(data)
-    
-
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].bookName.includes(this.state.searchWord)) {
-        console.log(data[i].bookName)
-        //搜尋應該沒問題，但還要要檢驗是否為該使用者的本子
-        //也就是說要先把這裡的資料存起來
-        //先在這裡把欄位的值都取好，傳到下一個 render 的 function
-        //input值跟搜尋值得大小寫要調整一下
-  
-        
+    db.collection("books").where("searchKey", "array-contains", this.state.searchWord).get().then((doc) => {
+      
+      if (doc) {
+        doc.forEach((doc) => {
+          console.log(doc.data())
+          
+        })
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
       }
-    }
-    /* if (this.state.logIn) {
-            for (let k = 0; k < container.length; k++) {
-              console.log("hi")
-              for (let m = 0; m < this.state.showBook.length; m++) {
-                console.log("book")
-                let book = container[k].bookName
-                if (book.includes(this.state.showBook[m])) {
-                  container.splice(k, 1)
-                }
-              }
-
-            }
-          } */
-
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
 
   }
   
@@ -167,6 +140,7 @@ class PopularBook extends React.Component {
     return (
       <div >
         {/* search */}
+        <div className="searchTitle">試試看以下關鍵字:TOEIC,GRE,Intermediate...</div>
         <form onSubmit={this.sendSearchData} className="bookSearchFrame">
           <input className="bookSearch" type="text" onChange={(e) => this.getSearchData(e)}></input>
           <input className="bookSearchSend" type="submit" value=" 搜尋單字本 "></input>
@@ -175,11 +149,7 @@ class PopularBook extends React.Component {
         {this.getPopData()}
       </div>
     )
-  }
-
-
-
-  
+  } 
 }
 
 
@@ -227,17 +197,45 @@ class MyBook extends React.Component {
       let time = new Date().getTime()
       this.setState({ bookName: e.target.value })
       this.setState({ uid: this.props.userData[0].uid })
-      this.setState({ displayName: this.props.userData[0].displayName })
       this.setState({ bookID: time + this.props.userData[0].uid })
+
+      db.collection("users").doc(this.props.userData[0].uid).get().then((doc)=> {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+          this.setState({ displayName: doc.data().name })
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+
+      
+      
     }
   }
 
   manageBookData() {
     alert("manageBookData")
+
+    let searchWords = []
+    let searchArray = this.state.bookName.split("").filter(function (c) {
+      return c != ".";
+    }).join("").split(" ")
+    for (let i = 0; i < searchArray.length; i++){
+      event.preventDefault()
+      searchWords.push(searchArray[i].toLowerCase())
+    }
+
+    console.log(searchWords)
+
     let bookInfo = {
       bookName: this.state.bookName,
+      searchKey: searchWords,
       created: this.state.uid,
       author: this.state.displayName,
+      averageEvaluation: 0,
       evaluation: [],
       bookID: this.state.bookID,
       cards: [
