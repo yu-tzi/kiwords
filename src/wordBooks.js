@@ -79,7 +79,7 @@ class PopularBook extends React.Component {
       showPop: true,
       searchWord: "",
       searchData: "",
-      starCheck:false
+      starCheck: [false, false, false, false, false]
     };
 
     this.getPopData = this.getPopData.bind(this)
@@ -88,6 +88,7 @@ class PopularBook extends React.Component {
     this.sendSearchData = this.sendSearchData.bind(this)
     this.renderSearchData = this.renderSearchData.bind(this)
     this.formSearchData = this.formSearchData.bind(this)
+    this.clickStars = this.clickStars.bind(this)
   }
 
   getPopData() {
@@ -170,22 +171,111 @@ class PopularBook extends React.Component {
   }
   
   formSearchData(data, i) {
-    let checked = this.state.starCheck
     return (
       <div className="searchBook bookformat" key={i}>
         <div className="searchTitle">{data.bookName}</div>
         <div className="searchStar">{data.averageEvaluation}</div>
         <div className="searchAuthor">{data.author}</div>
         {/* 評分按鈕-借放 */}
-        <div className="score1">★</div>
-        <div className="score2">★</div>
-        <div className="score3">★</div>
-        <div className="score4">★</div>
-        <div className="score5">★</div>
+        <div className={data.bookID + " 1"} onClick={(e) => this.clickStars(e)} style={{color: this.state.starCheck[0]? "yellow":"grey"}}>★</div>
+        <div className={data.bookID + " 2"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[1] ? "yellow" : "grey" }}>★</div>
+        <div className={data.bookID + " 3"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[2] ? "yellow" : "grey" }}>★</div>
+        <div className={data.bookID + " 4"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[3] ? "yellow" : "grey" }}>★</div>
+        <div className={data.bookID + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div>
         {/* 評分按鈕-借放 */}
         <div className="bookBtn">查看單字</div>
       </div>
     )
+  }
+
+  clickStars(e) {
+    let score = parseInt(e.target.className.split(" ")[1])
+    let bookid = e.target.className.split(" ")[0]
+    let prevScore = []
+    let avgScore = 0
+    let uid = this.props.userData[0].uid
+
+    //change score
+
+    db.collection("books").doc(bookid).get().then((doc) => {
+      let data =[]
+      if (typeof(doc.data().evaluation) === "number") {
+        data.push(doc.data().evaluation)
+        console.log(data)
+        data.push(score)
+      } else if (typeof (doc.data().evaluation) === "string" || typeof (doc.data().evaluation)=== "object") { 
+        data = doc.data().evaluation
+        console.log(data)
+        data.push(score)
+      } else {
+        console.log(typeof (doc.data().evaluation))
+        data.push(score)
+      }
+      db.collection("books").doc(bookid).update({
+        "evaluation": data
+      }) 
+        .then(function () {
+          console.log("Document successfully updated!");
+          //change avg
+          db.collection("books").doc(bookid).get().then((doc) => {
+            console.log("document data:", doc.data());
+            prevScore = doc.data().evaluation
+            console.log(prevScore)
+            for (let i = 0; i < prevScore.length; i++) {
+              console.log(prevScore[i])
+              avgScore += prevScore[i]
+            }
+            avgScore = avgScore / prevScore.length
+            console.log(avgScore)
+            db.collection("books").doc(bookid).update({
+              "averageEvaluation": avgScore
+            }).then(() => {
+              console.log(avgScore)
+            })
+          }).catch(function (error) {
+            console.log("Error getting cached document:", error);
+          });
+        })
+        .catch((err) => console.log(err))
+      
+    }).catch((err)=>console.log(err))
+    
+    
+    //store to user
+
+
+    db.collection("users").doc(uid).update({
+      "userExp.likeBook": firebase.firestore.FieldValue.arrayUnion(bookid)
+    }).then(() => {
+      console.log(uid)
+    }).catch((err) => { console.log(err) })
+
+    //change avg
+
+    db.collection("books").doc(bookid).get().then((doc) => {
+      console.log("document data:", doc.data());
+      prevScore = doc.data().evaluation
+      console.log(prevScore)
+      /* for (let i = 0; i < prevScore.length; i++) {
+        console.log(typeof (prevScore[i]))
+        avgScore = parseInt(avgScore)
+        avgScore += parseInt(prevScore[i]) 
+        console.log("avgScore" + avgScore)
+        //change average
+        db.collection("books").doc(bookid).update({
+          "averageEvaluation": avgScore
+        })
+      } */
+    }).catch(function (error) {
+      console.log("Error getting cached document:", error);
+    });
+    
+    //change color
+    for (let i = 0; i < score; i++){
+      let arr = this.state.starCheck
+      arr[i] = true
+      this.setState({ starCheck:arr})
+    }    
   }
 
   
