@@ -54,7 +54,7 @@ class WordBook extends React.Component {
         <div><SaveBook/></div>
 
         <div>熱門推薦</div>
-        <div><PopularBook popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore} topThreeName={this.props.topThreeName}/></div>
+        <div><PopularBook popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore} topThreeName={this.props.topThreeName} userData={this.props.userData}/></div>
 
         {/* 以下 router */}
         <div>
@@ -77,13 +77,17 @@ class PopularBook extends React.Component {
     super(props);
     this.state = {
       showPop: true,
-      searchWord:""
+      searchWord: "",
+      searchData: "",
+      starCheck:false
     };
 
     this.getPopData = this.getPopData.bind(this)
     this.renderPopBook = this.renderPopBook.bind(this)
     this.getSearchData = this.getSearchData.bind(this)
     this.sendSearchData = this.sendSearchData.bind(this)
+    this.renderSearchData = this.renderSearchData.bind(this)
+    this.formSearchData = this.formSearchData.bind(this)
   }
 
   getPopData() {
@@ -115,25 +119,75 @@ class PopularBook extends React.Component {
 
 
   sendSearchData() {
-    console.log("this.state.searchWord")
     event.preventDefault()
-    db.collection("books").where("searchKey", "array-contains", this.state.searchWord).get().then((doc) => {
-      
-      if (doc) {
-        doc.forEach((doc) => {
-          console.log(doc.data())
-          
-        })
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
 
+    if (this.props.userData.length > 0) {
+      let uid = this.props.userData[0].uid
+      let data = []
+
+      db.collection("books").where("searchKey", "array-contains", this.state.searchWord).get().then((doc) => {
+      
+        if (doc) {
+          doc.forEach((doc) => {
+            if (doc.data().created !== uid) {
+              data.push(doc.data())
+            }
+          })
+          this.setState({ searchData: data })
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+
+    }
+  }
+
+  renderSearchData() {
+    let dataAll = []
+
+    if (this.state.searchData === "") {
+      return (
+        <div>undefined</div>
+      )
+    } else if (this.state.searchData.length === 0){
+      return (
+        <div>no result Q_Q</div>
+      )
+    } else if (this.state.searchData.length > 0){
+      for (let i = 0; i < this.state.searchData.length; i++) {
+        dataAll.push(this.formSearchData(this.state.searchData[i],i))
+      }
+      return (
+        <div style={{ display: this.state.showPop ? "block" : "none" }}>
+          {dataAll}
+        </div>
+      )
+    }
+ 
   }
   
+  formSearchData(data, i) {
+    let checked = this.state.starCheck
+    return (
+      <div className="searchBook bookformat" key={i}>
+        <div className="searchTitle">{data.bookName}</div>
+        <div className="searchStar">{data.averageEvaluation}</div>
+        <div className="searchAuthor">{data.author}</div>
+        {/* 評分按鈕-借放 */}
+        <div className="score1">★</div>
+        <div className="score2">★</div>
+        <div className="score3">★</div>
+        <div className="score4">★</div>
+        <div className="score5">★</div>
+        {/* 評分按鈕-借放 */}
+        <div className="bookBtn">查看單字</div>
+      </div>
+    )
+  }
+
   
 
   render() {
@@ -147,6 +201,8 @@ class PopularBook extends React.Component {
         </form>
         {/* pop data */}
         {this.getPopData()}
+        {/* search data */}
+        {this.renderSearchData()}
       </div>
     )
   } 
