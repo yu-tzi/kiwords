@@ -92,10 +92,10 @@ class Auth extends React.Component {
           let popBook = []
             if (doc) {
               doc.forEach((doc) => {
-                console.log(doc.data())
+                
                 popBook.push(doc.data())
               })
-              console.log(popBook)
+              
               this.setState({ popularBook:popBook})
             } else {
               // doc.data() will be undefined in this case
@@ -110,15 +110,15 @@ class Auth extends React.Component {
         let all = []
 
         db.collection("users").doc(user.uid).get().then((doc) => {
-          console.log(doc.data().savedBook)
+          
           if (doc.data().savedBook.length > 0) {
             let total = doc.data().savedBook.length
             let loaded = 0
             for (let i = 0; i < doc.data().savedBook.length; i++) {
               db.collection("books").doc(doc.data().savedBook[i]).get().then((doc) => {
-                console.log(doc.data())
+                
                 all.push(doc.data())
-                console.log(all)
+                
                 loaded++
                 if (loaded == total) { 
                   this.setState({ saveBook: all })

@@ -237,19 +237,6 @@ class PopularBook extends React.Component {
     let avgScore = 0
     let uid = this.props.userData[0].uid
 
-/*    db.collection("users").doc(uid).get().then((doc) => {
-      console.log(doc.data().userExp.likeBook)
-      if (doc.data().userExp.likeBook.length > 0) {
-        for (let i = 0; i < doc.data().userExp.likeBook.length; i++){
-          if (doc.data().userExp.likeBook[i] === bookid) {
-            alert('1')
-          }
-        }
-      }
-        
-      }
-    ) */
-
     //change score
 
     db.collection("books").doc(bookid).get().then((doc) => {
@@ -379,32 +366,6 @@ class SaveBook extends React.Component {
 
     )
   }
-
-  /* 
-    if (this.props.popularBook.length > 0) {
-      let all = []
-      for (let i = 0; i < 3; i++) {
-        all.push(this.renderPopBook(this.props.popularBook[i], i))
-      }
-
-      return (
-        <div style={{ display: this.state.showPop ? "block" : "none" }}>
-          {all}
-        </div>
-      )
-    }
-  }
-
-  renderPopBook(data, i) {
-    let uid
-
-    if (this.props.userData.length > 0) {
-      uid = this.props.userData[0].uid
-    } else {
-      uid = 0
-    }
-  */
-    
   
     render() {
       return (
