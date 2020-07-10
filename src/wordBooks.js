@@ -7,6 +7,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { render } from "react-dom";
 
 
 class WordBook extends React.Component {
@@ -51,10 +52,10 @@ class WordBook extends React.Component {
         <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} /></div>
 
         <div>你儲存的單字本</div>
-        <div><SaveBook/></div>
+        <div><SaveBook userData={this.props.userData} saveBook={this.props.saveBook}/></div>
 
         <div>熱門推薦</div>
-        <div><PopularBook popularBook={this.props.popularBook} popularBookScore={this.props.popularBookScore} topThreeName={this.props.topThreeName} userData={this.props.userData}/></div>
+        <div><PopularBook userData={this.props.userData} popularBook={this.props.popularBook}/></div>
 
         {/* 以下 router */}
         <div>
@@ -89,29 +90,69 @@ class PopularBook extends React.Component {
     this.renderSearchData = this.renderSearchData.bind(this)
     this.formSearchData = this.formSearchData.bind(this)
     this.clickStars = this.clickStars.bind(this)
+    this.saveBook = this.saveBook.bind(this)
   }
 
+  //getTop3
   getPopData() {
-    let popData = []
-
-    for (let i = 0; i < this.props.topThreeName.length; i++) {
-      popData.push(this.renderPopBook(i))
+    if (this.props.popularBook.length > 0) {
+      let all = []
+      for (let i = 0; i < 3; i++) {
+        all.push(this.renderPopBook(this.props.popularBook[i], i))
+      }
+    
+      return (
+        <div style={{ display: this.state.showPop ? "block" : "none" }}>
+          {all}
+        </div>
+      )
     }
-    return (
-      <div style={{ display: this.state.showPop ? "block":"none"}}>
-      {popData}
-      </div>
-    )
   }
   
-  renderPopBook(i) {
+  renderPopBook(data, i) {
+    let uid
+
+    if (this.props.userData.length > 0) {
+      uid = this.props.userData[0].uid
+    } else {
+      uid = 0
+    }
+
     return (
       <div className="popBook bookformat" key={i}>
-        <div className="bookTitle">{this.props.topThreeName[i]}</div>
-        <div className="bookStar">{this.props.popularBookScore[i]}</div>
-        <div className="bookBtn">查看單字</div>
+        <div className="bookTitle">{data.bookName}</div>
+        <div className="bookStar">{data.averageEvaluation}</div>
+        <div className="bookAuthor">{data.created === uid ? "這是你的作品！":data.author}</div>
+        {/* 評分按鈕-借放 */}
+        <div style={{ display: data.created === uid ? "none" : "block" }}>
+          <div className={data.bookID + " 1"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[0] ? "yellow" : "grey" }}>★</div>
+          <div className={data.bookID + " 2"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[1] ? "yellow" : "grey" }}>★</div>
+          <div className={data.bookID + " 3"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[2] ? "yellow" : "grey" }}>★</div>
+          <div className={data.bookID + " 4"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[3] ? "yellow" : "grey" }}>★</div>
+          <div className={data.bookID + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div>
+        </div>
+        {/* 評分按鈕-借放 */}
+        {/* 收藏按鈕-借放 */}
+        <div className={data.bookID + " saveBook"} onClick={(e) => this.saveBook(e)} style={{ display: data.created === uid ? "none":"block"}} >收藏</div>
+        {/* 收藏按鈕-借放 */}
+        <div className="bookBtn">{data.created === uid ? "編輯單字" : "查看單字"}</div>
       </div>
     )
+  }
+
+  saveBook(e) {
+    if (this.props.userData.length > 0) {
+      console.log(e.target.className.split(' ')[0])
+      console.log(this.props.userData[0].uid)
+      
+      db.collection("users").doc(this.props.userData[0].uid).update({
+        "savedBook": firebase.firestore.FieldValue.arrayUnion(e.target.className.split(' ')[0])
+      })
+        .then(function () {
+          console.log("Document successfully updated!");
+        });
+   
+    }
   }
 
   getSearchData(e) {
@@ -121,6 +162,7 @@ class PopularBook extends React.Component {
 
   sendSearchData() {
     event.preventDefault()
+    this.setState({showPop:false})
 
     if (this.props.userData.length > 0) {
       let uid = this.props.userData[0].uid
@@ -162,7 +204,7 @@ class PopularBook extends React.Component {
         dataAll.push(this.formSearchData(this.state.searchData[i],i))
       }
       return (
-        <div style={{ display: this.state.showPop ? "block" : "none" }}>
+        <div style={{ display: this.state.showPop ? "none" : "block" }}>
           {dataAll}
         </div>
       )
@@ -177,11 +219,11 @@ class PopularBook extends React.Component {
         <div className="searchStar">{data.averageEvaluation}</div>
         <div className="searchAuthor">{data.author}</div>
         {/* 評分按鈕-借放 */}
-        <div className={data.bookID + " 1"} onClick={(e) => this.clickStars(e)} style={{color: this.state.starCheck[0]? "yellow":"grey"}}>★</div>
+        {/* <div className={data.bookID + " 1"} onClick={(e) => this.clickStars(e)} style={{color: this.state.starCheck[0]? "yellow":"grey"}}>★</div>
         <div className={data.bookID + " 2"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[1] ? "yellow" : "grey" }}>★</div>
         <div className={data.bookID + " 3"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[2] ? "yellow" : "grey" }}>★</div>
         <div className={data.bookID + " 4"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[3] ? "yellow" : "grey" }}>★</div>
-        <div className={data.bookID + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div>
+        <div className={data.bookID + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div> */}
         {/* 評分按鈕-借放 */}
         <div className="bookBtn">查看單字</div>
       </div>
@@ -194,6 +236,19 @@ class PopularBook extends React.Component {
     let prevScore = []
     let avgScore = 0
     let uid = this.props.userData[0].uid
+
+/*    db.collection("users").doc(uid).get().then((doc) => {
+      console.log(doc.data().userExp.likeBook)
+      if (doc.data().userExp.likeBook.length > 0) {
+        for (let i = 0; i < doc.data().userExp.likeBook.length; i++){
+          if (doc.data().userExp.likeBook[i] === bookid) {
+            alert('1')
+          }
+        }
+      }
+        
+      }
+    ) */
 
     //change score
 
@@ -250,25 +305,7 @@ class PopularBook extends React.Component {
       console.log(uid)
     }).catch((err) => { console.log(err) })
 
-    //change avg
 
-    db.collection("books").doc(bookid).get().then((doc) => {
-      console.log("document data:", doc.data());
-      prevScore = doc.data().evaluation
-      console.log(prevScore)
-      /* for (let i = 0; i < prevScore.length; i++) {
-        console.log(typeof (prevScore[i]))
-        avgScore = parseInt(avgScore)
-        avgScore += parseInt(prevScore[i]) 
-        console.log("avgScore" + avgScore)
-        //change average
-        db.collection("books").doc(bookid).update({
-          "averageEvaluation": avgScore
-        })
-      } */
-    }).catch(function (error) {
-      console.log("Error getting cached document:", error);
-    });
     
     //change color
     for (let i = 0; i < score; i++){
@@ -301,16 +338,85 @@ class PopularBook extends React.Component {
 
 
 class SaveBook extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    };
 
-  render() {
-    return (
-      <div className="saveBook bookformat" >
-        <div className="bookTitle">標題</div>
-        <div className="bookAuthor">作者</div>
-        <div className="bookBtn">查看單字</div>
+    this.renderSaveBook = this.renderSaveBook.bind(this)
+    this.drawSavedBook = this.drawSavedBook.bind(this)
+  }
+
+  
+  renderSaveBook() {
+    console.log(this.props)
+    console.log(this.props.saveBook.length)
+    if (this.props.saveBook.length > 0) {
+      
+      console.log("saveBook>0")
+      let all = []
+      for (let i = 0; i < this.props.saveBook.length; i++) {
+        all.push(this.drawSavedBook(this.props.saveBook[i], i))
+      }
+
+      return (
+        <div>
+          {all}
       </div>
+      )
+    }
+  }
+
+  drawSavedBook(data,i) {
+    return (
+      <div className="saveBook bookformat" key={i}>
+        <div className="bookTitle">{data.bookName}</div>
+            <div className="bookAuthor">{data.author}</div>
+            <div className="bookScore">{data.averageEvaluation}</div>
+            <div className="bookBtn">查看單字</div>
+      </div>
+
     )
   }
+
+  /* 
+    if (this.props.popularBook.length > 0) {
+      let all = []
+      for (let i = 0; i < 3; i++) {
+        all.push(this.renderPopBook(this.props.popularBook[i], i))
+      }
+
+      return (
+        <div style={{ display: this.state.showPop ? "block" : "none" }}>
+          {all}
+        </div>
+      )
+    }
+  }
+
+  renderPopBook(data, i) {
+    let uid
+
+    if (this.props.userData.length > 0) {
+      uid = this.props.userData[0].uid
+    } else {
+      uid = 0
+    }
+  */
+    
+  
+    render() {
+      return (
+        <div>
+          {this.renderSaveBook()}
+        </div>
+      )
+    }
+  
+
+
+
 }
 
 

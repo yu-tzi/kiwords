@@ -19,9 +19,8 @@ class Auth extends React.Component {
       memberImgWord: "",
       memberEmail: "",
       showBook: "",
-      popularBook: "",
-      popularBookScore: "",
-      topThreeName:""
+      popularBook: [],
+      saveBook:[]
     };
 
     
@@ -89,11 +88,15 @@ class Auth extends React.Component {
           });
         
           //get popular book data
-          db.collection("books").orderBy("bookID").limit(3).get().then((doc) => {
+        db.collection("books").orderBy("averageEvaluation", "desc").limit(7).get().then((doc) => {
+          let popBook = []
             if (doc) {
               doc.forEach((doc) => {
                 console.log(doc.data())
+                popBook.push(doc.data())
               })
+              console.log(popBook)
+              this.setState({ popularBook:popBook})
             } else {
               // doc.data() will be undefined in this case
               console.log("No such document!");
@@ -101,11 +104,60 @@ class Auth extends React.Component {
           }).catch(function (error) {
             console.log("Error getting document:", error);
           });
+        
+        
+        //getSavedData
+        let all = []
+
+        db.collection("users").doc(user.uid).get().then((doc) => {
+          console.log(doc.data().savedBook)
+          if (doc.data().savedBook.length > 0) {
+            let total = doc.data().savedBook.length
+            let loaded = 0
+            for (let i = 0; i < doc.data().savedBook.length; i++) {
+              db.collection("books").doc(doc.data().savedBook[i]).get().then((doc) => {
+                console.log(doc.data())
+                all.push(doc.data())
+                console.log(all)
+                loaded++
+                if (loaded == total) { 
+                  this.setState({ saveBook: all })
+                }
+              }).catch((err) => {
+                console.log(err)
+              })
+            }
+          }
+          
+            }).catch((err) => {
+              console.log(err)
+            })
+          
+
+
 
       } else {
         console.log("logout")
         this.setState({ logIn: false })
         this.setState({ userData: [] }) 
+
+        //get popular book data
+        db.collection("books").orderBy("averageEvaluation", "desc").limit(7).get().then((doc) => {
+          let popBook = []
+          if (doc) {
+            doc.forEach((doc) => {
+              console.log(doc.data())
+              popBook.push(doc.data())
+            })
+            console.log(popBook)
+            this.setState({ popularBook: popBook })
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        }).catch(function (error) {
+          console.log("Error getting document:", error);
+        });
       }
     });  
   }
@@ -267,7 +319,7 @@ class Auth extends React.Component {
     {/* <firebaseConfig/> */}
     return(
       <div>
-        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord} memberEmail={this.state.memberEmail} showBook={this.state.showBook} popularBook={this.state.popularBook} popularBookScore={this.state.popularBookScore} topThreeName={this.state.topThreeName}/>
+        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord} memberEmail={this.state.memberEmail} showBook={this.state.showBook} popularBook={this.state.popularBook} saveBook={this.state.saveBook}/>
       </div>
 
     )

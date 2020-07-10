@@ -23,7 +23,7 @@ class Head extends React.Component {
           <div className="start">START</div>
         </div>
         <div className="middle">
-          <div className="share">Popular Share</div>
+          <div className="share">評分最高的單字本：</div>
           <div className="tri"></div>
         </div>
       </div>
