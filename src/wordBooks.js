@@ -511,18 +511,18 @@ class MyBook extends React.Component {
           {
             this.props.showBook.map((obj, index) => {
 
-              {/* console.log(index)
-              console.log(obj) */}
+              console.log(index)
+              console.log(obj.bookName)
 
               return (
                 <div className="addBookShow bookformat" key={index}>
-                  <div className="bookTitle">{obj}</div>
+                  <div className={"bookTitle "+ obj.bookID}>{obj.bookName}</div>
                   <div className="bookBtn">新增單字</div>
                 </div>)
           
             })
           
-          }
+          } 
         </div>
       )
     }

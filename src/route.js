@@ -45,7 +45,8 @@ class RoutePage extends React.Component{
             <Route exact path="/">
               {/* <Home /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />  */}
-              <AddWords />
+              {/* <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} /> */}
+              <AddWords showBook={this.props.showBook}/>
             </Route>
             <Route path="/login">
               <Home />
@@ -55,7 +56,7 @@ class RoutePage extends React.Component{
               <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
             </Route>
             <Route path="/addwords">
-              <AddWords />
+              <AddWords showBook={this.props.showBook}/>
             </Route>
             <Route path="/wordbooks">
               <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} />

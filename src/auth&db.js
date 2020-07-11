@@ -72,13 +72,15 @@ class Auth extends React.Component {
         
         //get book data
           let showBook = []
-
+          
           db.collection("books").where("created", "==", user.uid).get().then((doc) => {
             if (doc) {
+
               doc.forEach((doc) => {
-                showBook.push(doc.data().bookName)
+                showBook.push(doc.data())
               })
-              this.setState({showBook: showBook})
+              this.setState({ showBook: showBook })
+              
             } else {
               // doc.data() will be undefined in this case
               console.log("No such document!");
@@ -166,6 +168,8 @@ class Auth extends React.Component {
 
 
 //================== log functions ================
+  
+  
 
   
   passingName() {
