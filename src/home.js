@@ -1,5 +1,8 @@
 import React from "react";
 import './style/home.scss';
+import P5Wrapper from 'react-p5-wrapper';
+import sketch from './p5.js';
+
 
 class Home extends React.Component {
   render() {
@@ -17,11 +20,18 @@ class Head extends React.Component {
   render() {
     return (
       <div className="mktArea">
+        <div className="p5">
+          <P5Wrapper sketch={sketch} />
+        </div> 
+
         <div className="head">
+          
+
           <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img>
           <div className="subtitle">一款專門為英文學習打造的閃卡測驗網站。</div>
           <div className="start">START</div>
         </div>
+        
         <div className="middle">
           <div className="share">評分最高的單字本：</div>
           <div className="tri"></div>
@@ -37,6 +47,9 @@ class Bottom extends React.Component {
     return (
       <div className="bottomArea">
         <div className="bottom">
+          <div className="p5two">
+            <P5Wrapper sketch={sketch} />
+          </div> 
           <div className="journey">START YOUR JOURNEY</div>
         </div>
       </div>

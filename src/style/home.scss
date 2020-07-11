@@ -7,8 +7,21 @@
 }
 
 //head
+
+.p5{
+    height: 600px;
+    overflow: hidden;
+    width: 100vw;
+}
+
+.p5two{
+  height: 45vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
 .mktArea{
-  height: 600px;
+  height: 550px;
   background: linear-gradient(135deg, #1b7e7e 0%,#11fa7a 100%); 
   position: relative;
 }
@@ -76,7 +89,7 @@
 }
 
 .container{
-  padding: 80px 0;
+  padding: 100px 0 80px;
   background-color: #f8f8f8;
 }
 
@@ -133,12 +146,14 @@
 //bottom
 
 .bottomArea{
-  height: 300px;
+  height: 43vh;
   background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%);
   position: relative;
   margin: 0 0 50px 0;
 
 }
+
+
 
 .journey{
   width: 300px;
@@ -162,6 +177,10 @@
     height: 450px;
   }
 
+  .p5two{
+  height: 450px;
+}
+
   .logoH{
     display: none;
   }
@@ -176,6 +195,10 @@
 }
 
  .mktArea{
+  height: 450px;
+ }
+
+ .p5{
   height: 450px;
  }
 
