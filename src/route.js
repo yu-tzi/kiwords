@@ -12,6 +12,7 @@ import Statistics from "./statistics"
 import WordBook from "./wordBooks"
 import Home from "./home"
 import LogPage from "./logIn"
+import BookDtail from "./wordBook-route"
 import './style/route.scss';
 
 import { db, firebase } from "./firebaseConfig"
@@ -40,12 +41,13 @@ class RoutePage extends React.Component{
           <Link to="/wordbooks"></Link>
           <Link to="/quiz"></Link>
           <Link to="/statistics"></Link>
+          <Link to="/details"></Link>
 
           <Switch>
             <Route exact path="/">
-              <Home />
+              {/* <Home /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />  */}
-              {/* <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} /> */}
+              <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} />
               {/* <AddWords showBook={this.props.showBook}/> */}
             </Route>
             <Route path="/login">
@@ -61,6 +63,9 @@ class RoutePage extends React.Component{
             <Route path="/wordbooks">
               <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} />
             </Route>
+            <Route path="/details">
+              <BookDtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} />
+            </Route>
             <Route path="/quiz">
               <Quiz />
             </Route>
@@ -75,6 +80,8 @@ class RoutePage extends React.Component{
     
   }
 };
+
+
 
 
 class MemberPop extends React.Component { 

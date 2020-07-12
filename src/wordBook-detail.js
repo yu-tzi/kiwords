@@ -1,20 +1,28 @@
 import React from "react";
 
-class BookDtail extends React.Component {
+
+
+
+
+
+class Dtail extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-    
+
     };
   }
 
-
   render() {
     return (
-      <div>BookDtail</div>
+      <div>{this.props.bookID}
+      </div>
     )
   }
 }
 
-export default BookDtail
+
+
+
+export default Dtail

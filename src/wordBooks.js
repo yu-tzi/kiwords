@@ -1,5 +1,4 @@
 import React from "react";
-import BookDtail from "./wordBook-detail"
 import { db,firebase } from "./firebaseConfig"
 import {
   BrowserRouter as Router,
@@ -15,34 +14,10 @@ class WordBook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookID: ["1234", "1123", "3649"]
+      bookID: []
     };
 
-  
   }
- 
-
-  renderLink() {
-    return this.state.bookID.map((bookID) => {
-      let bookUrl = "/wordBooks/"+bookID
-      return(
-        <Link to={bookUrl} key={bookID} id={bookID}>bookID:{bookID}</Link>
-      )
-    })
-  }
-
-  renderRoute() {
-    return this.state.bookID.map((bookID) => {
-      let bookUrl = "/wordBooks/" + bookID
-      return (
-        <Route exact path={bookUrl} key={bookID} id={bookID}>
-          <div>book id : {bookID} <BookDtail /></div>
-        </Route>
-      )
-    })
-  }
-
-
 
   render() {
     return (
@@ -57,15 +32,7 @@ class WordBook extends React.Component {
         <div>熱門推薦</div>
         <div><PopularBook userData={this.props.userData} popularBook={this.props.popularBook}/></div>
 
-        {/* 以下 router */}
-        <div>
-          <Router>
-            {this.renderLink()}
-            <Switch>
-              {this.renderRoute()}
-            </Switch>
-          </Router>
-        </div>
+      
       </div>
     )
   }
@@ -510,9 +477,6 @@ class MyBook extends React.Component {
         
           {
             this.props.showBook.map((obj, index) => {
-
-              console.log(index)
-              console.log(obj.bookName)
 
               return (
                 <div className="addBookShow bookformat" key={index}>
