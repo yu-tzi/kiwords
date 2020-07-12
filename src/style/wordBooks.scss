@@ -1,0 +1,188 @@
+.myBookBlock, .saveBookBlock{
+  width: 80%;
+  margin: auto;
+  max-width: 1000px;
+}
+
+.myBookRender, .saveBookRender{
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+
+.popBookBlock{
+  display:flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto 0;
+  max-width: 1000px;
+  padding: 0px 0px 100px;
+}
+
+.renderSearchData, .getPopData{
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  
+}
+
+.mainTitle{
+  text-align: center;
+  padding:25px 0 0;
+  margin: 25px auto 10px;
+  font-size: 22px;
+  letter-spacing: 5px;
+  border-top-color: grey;
+  border-top-width: 1px;
+  border-top-style: solid;
+  width: 80%;
+  max-width: 1000px;
+}
+
+.mainTitle:first-child{
+  border-top-width: 0px;
+}
+
+.bookformat{
+  background-color: rgb(208, 254, 149);
+  width: 90%;
+  height: 300px;
+  border-radius: 15px;
+  margin: 20px auto;
+  position: relative;
+    
+}
+
+.searchTitle, .bookSearchFrame{
+  text-align: center;
+  padding: 5px 0;
+}
+
+.bookSearchSend{
+  margin: 0 5px;
+  letter-spacing: 3px;
+}
+
+.bookTitle,.searchResultTitle{
+  font-size: 22px;
+  width: 80%;
+  text-align: center;
+  margin: 30px auto 10px;
+}
+
+.bookBtn,.bookSend,.saveBookBtn{
+  position: absolute;
+    bottom: 30px;
+    left: calc(50% - 125px);
+    height: 30px;
+    width: 250px;
+    background-color: #3a3a3a;
+    color: white;
+    letter-spacing: 3px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.bookBtn{
+  line-height: 30px;
+}
+
+
+.newBookShow{
+  background-color: transparent;
+  border-color: grey;
+  border-width: 2px;
+  border-style: dashed;
+}
+
+.newBookHide{
+  background-color: transparent;
+  border-color: rgb(67, 68, 69);
+  border-width: 2px;
+  border-style: double,
+}
+
+.bookEnter{
+  position: absolute;
+  left: calc(50% - 135px);
+  font-size: 22px;
+  margin: 30px 0 10px 0;
+}
+
+
+.saveBook{
+  background-color:  rgb(240, 229, 134);
+}
+
+.popBook{
+  background-color: rgb(240, 190, 134);
+}
+
+.searchBook{
+  background-color: rgb(247, 184, 206);
+}
+
+//==============
+@media (max-width: 1200px) {
+
+.bookformat{
+  height: 300px;    
+}
+
+.myBookRender, .saveBookRender{
+  grid-template-columns: 50% 50%;
+}
+
+.renderSearchData, .getPopData{
+  grid-template-columns: 50% 50%;
+}
+}
+
+.bookAuthor,.searchAuthor{
+    font-size: 20px;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.bookStar{
+  margin: 0 auto;
+  text-align: center;
+  padding: 5px 0;
+}
+
+//==============
+@media (max-width: 1000px) {
+
+.bookformat {
+    height: 250px;
+}
+
+.myBookRender, .saveBookRender{
+  grid-template-columns: 100%;
+}
+
+.renderSearchData, .getPopData{
+  grid-template-columns: 100%;
+}
+
+
+}
+
+//==============
+
+@media (max-width: 500px) {
+
+  .bookBtn{
+  width: 150px;
+  left: calc(50% - 75px);
+  }
+
+  .bookTitle,.searchResultTitle{
+  width: 80%;
+  text-align: center;
+  margin: 10px auto 10px;
+}
+
+
+
+}

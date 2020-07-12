@@ -1,0 +1,123 @@
+
+.addWordCard{
+  display: flex;
+  flex-flow: column nowrap;
+  width: 600px;
+  height: 600px;
+  background: linear-gradient(135deg, #1b7e7e 0%,#11fa7a 100%);
+  margin: 50px auto;
+  align-items: center;
+  border-radius: 10px;
+}
+
+
+.cardBody{
+  display: flex;
+  flex-direction: column;
+}
+
+.searchForm{
+  padding: 50px 0 100px;
+  color: white;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.searchForm>input{
+  margin: 5px 0;
+  padding: 3px 10px;
+}
+
+
+.popMenu{
+  background-color: white;
+  position: absolute;
+  top: 236px;
+  width: 170px;
+  padding: 0px 5px;
+  line-height: 25px;
+}
+
+.popMenu>li:hover{
+  border-bottom-color: rgb(143, 143, 143);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.word, .meaning, .synonyms, .antonym{
+  color: white;
+  font-size: 18px;
+}
+
+.word>input, .meaning>input, .synonyms>input, .antonym>input{
+  width: 400px;
+  height: 18px;
+}
+
+.content{
+  padding: 0 0 150px;
+}
+
+.sendCard{
+  margin: 40px;
+  padding: 5px 25px;
+  letter-spacing: 3px;
+  font-size: 16px;
+  border-radius: 15px;
+  border-color: grey;
+  border-style:solid;
+  border-width: 1px;
+}
+
+.sendCard:hover{
+  background-color: rgb(45, 41, 41);
+  color:white;
+  border-width: 0;
+  transform: 0.5s;
+}
+
+.cited{
+  color: white;
+  font-size: 10px;
+  opacity: 0.8;
+  text-align: center;
+
+}
+
+.bookSelect{
+  margin: 50px calc(50% - 220px) -10px;
+  height: 25px;
+}
+
+
+@media (max-width: 700px) {
+
+  .popMenu{
+    top: 246px;
+  }
+
+  .addWordCard{
+    width: 300px;
+    height: 300px;
+  }
+
+  .searchForm{
+    padding: 10px 0;
+  }
+
+  .word>input, .meaning>input, .synonyms>input, .antonym>input{
+  width: 250px;
+  height: 18px;
+}
+
+.bookSelect{
+  width:250px;
+  margin: 50px calc(50% - 125px) -10px;
+}
+
+.cited{
+  color: black;
+  padding: 15px 0 0 0;
+}
+
+}

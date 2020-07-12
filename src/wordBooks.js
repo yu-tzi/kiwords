@@ -1,12 +1,6 @@
 import React from "react";
 import { db,firebase } from "./firebaseConfig"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import { render } from "react-dom";
+import './style/wordBooks.scss';
 
 
 class WordBook extends React.Component {
@@ -14,7 +8,7 @@ class WordBook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookID: []
+      
     };
 
   }
@@ -23,13 +17,13 @@ class WordBook extends React.Component {
     return (
       <div>
 
-        <div>你建立的單字本</div>
+        <div className="mainTitle">你建立的單字本</div>
         <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} /></div>
 
-        <div>你儲存的單字本</div>
+        <div className="mainTitle">你儲存的單字本</div>
         <div><SaveBook userData={this.props.userData} saveBook={this.props.saveBook}/></div>
 
-        <div>熱門推薦</div>
+        <div className="mainTitle">熱門推薦</div>
         <div><PopularBook userData={this.props.userData} popularBook={this.props.popularBook}/></div>
 
       
@@ -58,6 +52,7 @@ class PopularBook extends React.Component {
     this.formSearchData = this.formSearchData.bind(this)
     this.clickStars = this.clickStars.bind(this)
     this.saveBook = this.saveBook.bind(this)
+    this.renderStar = this.renderStar.bind(this)
   }
 
   //getTop3
@@ -69,7 +64,7 @@ class PopularBook extends React.Component {
       }
     
       return (
-        <div style={{ display: this.state.showPop ? "block" : "none" }}>
+        <div className="getPopData" style={{ display: this.state.showPop ? "grid" : "none" }}>
           {all}
         </div>
       )
@@ -88,25 +83,42 @@ class PopularBook extends React.Component {
     return (
       <div className="popBook bookformat" key={i}>
         <div className="bookTitle">{data.bookName}</div>
-        <div className="bookStar">{data.averageEvaluation}</div>
-        <div className="bookAuthor">{data.created === uid ? "這是你的作品！":data.author}</div>
+        <div className="bookAuthor">{data.created === uid ? "這是你的作品！" : "建立者： " + data.author}</div>
+        {this.renderStar(data.averageEvaluation)}
         {/* 評分按鈕-借放 */}
-        <div style={{ display: data.created === uid ? "none" : "block" }}>
+        {/* <div style={{ display: data.created === uid ? "none" : "block" }}>
           <div className={data.bookID + " 1"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[0] ? "yellow" : "grey" }}>★</div>
           <div className={data.bookID + " 2"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[1] ? "yellow" : "grey" }}>★</div>
           <div className={data.bookID + " 3"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[2] ? "yellow" : "grey" }}>★</div>
           <div className={data.bookID + " 4"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[3] ? "yellow" : "grey" }}>★</div>
           <div className={data.bookID + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div>
-        </div>
+        </div> */}
         {/* 評分按鈕-借放 */}
         {/* 收藏按鈕-借放 */}
-        <div className={data.bookID + " saveBook"} onClick={(e) => this.saveBook(e)} style={{ display: data.created === uid ? "none":"block"}} >收藏</div>
+        {/* <div className={data.bookID + " saveBook"} onClick={(e) => this.saveBook(e)} style={{ display: data.created === uid ? "none":"block"}} >收藏</div> */}
         {/* 收藏按鈕-借放 */}
-        <div className="bookBtn">{data.created === uid ? "編輯單字" : "查看單字"}</div>
+        <div className="bookBtn" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + data.bookID) }}>{data.created === uid ? "編輯單字" : "查看單字"}</div>
       </div>
     )
   }
 
+  renderStar(score) {
+    let star = Math.round(score)
+    let all = ""
+    for (let i = 0; i < star; i++){
+      all += "★"
+    }
+    for (let i = 0; i < (5-star); i++) {
+      all += "☆"
+    }
+    return (
+      <div className="bookStar">
+        <div>{all}</div>
+        <div>{"(" + score.toFixed(1) + ")"}</div>
+      </div>
+    )
+  }
+  
   saveBook(e) {
     if (this.props.userData.length > 0) {
       console.log(e.target.className.split(' ')[0])
@@ -160,7 +172,7 @@ class PopularBook extends React.Component {
 
     if (this.state.searchData === "") {
       return (
-        <div>undefined</div>
+        <div></div>
       )
     } else if (this.state.searchData.length === 0){
       return (
@@ -171,7 +183,7 @@ class PopularBook extends React.Component {
         dataAll.push(this.formSearchData(this.state.searchData[i],i))
       }
       return (
-        <div style={{ display: this.state.showPop ? "none" : "block" }}>
+        <div className="renderSearchData" style={{ display: this.state.showPop ? "none" : "grid" }}>
           {dataAll}
         </div>
       )
@@ -180,11 +192,19 @@ class PopularBook extends React.Component {
   }
   
   formSearchData(data, i) {
+    let uid
+
+    if (this.props.userData.length > 0) {
+      uid = this.props.userData[0].uid
+    } else {
+      uid = 0
+    }
+
     return (
       <div className="searchBook bookformat" key={i}>
-        <div className="searchTitle">{data.bookName}</div>
-        <div className="searchStar">{data.averageEvaluation}</div>
-        <div className="searchAuthor">{data.author}</div>
+        <div className="searchResultTitle">{data.bookName}</div>
+        <div className="searchAuthor">{"建立者： " + data.author}</div>
+        {this.renderStar(data.averageEvaluation)}
         {/* 評分按鈕-借放 */}
         {/* <div className={data.bookID + " 1"} onClick={(e) => this.clickStars(e)} style={{color: this.state.starCheck[0]? "yellow":"grey"}}>★</div>
         <div className={data.bookID + " 2"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[1] ? "yellow" : "grey" }}>★</div>
@@ -192,10 +212,12 @@ class PopularBook extends React.Component {
         <div className={data.bookID + " 4"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[3] ? "yellow" : "grey" }}>★</div>
         <div className={data.bookID + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div> */}
         {/* 評分按鈕-借放 */}
-        <div className="bookBtn">查看單字</div>
+        <div className={data.bookID +" bookBtn " + " saveBookBtn"} onClick={(e) => this.saveBook(e)} style={{ display: data.created === uid ? "none" : "block" }} >收藏</div>
       </div>
     )
   }
+
+  
 
   clickStars(e) {
     let score = parseInt(e.target.className.split(" ")[1])
@@ -273,12 +295,12 @@ class PopularBook extends React.Component {
 
   render() {
     return (
-      <div >
+      <div className="popBookBlock">
         {/* search */}
-        <div className="searchTitle">試試看以下關鍵字:TOEIC,GRE,Intermediate...</div>
+        <div className="searchTitle">試試這些關鍵字 : TOEIC , SAT , vocab...</div>
         <form onSubmit={this.sendSearchData} className="bookSearchFrame">
           <input className="bookSearch" type="text" onChange={(e) => this.getSearchData(e)}></input>
-          <input className="bookSearchSend" type="submit" value=" 搜尋單字本 "></input>
+          <input className="bookSearchSend" type="submit" value=" 搜尋 "></input>
         </form>
         {/* pop data */}
         {this.getPopData()}
@@ -300,35 +322,53 @@ class SaveBook extends React.Component {
 
     this.renderSaveBook = this.renderSaveBook.bind(this)
     this.drawSavedBook = this.drawSavedBook.bind(this)
+    this.renderStar = this.renderStar.bind(this)
   }
 
+  renderStar(score) {
+    let star = Math.round(score)
+    let all = ""
+    for (let i = 0; i < star; i++) {
+      all += "★"
+    }
+    for (let i = 0; i < (5 - star); i++) {
+      all += "☆"
+    }
+    return (
+      <div className="bookStar">
+        <div>{all}</div>
+        <div>{"(" + score.toFixed(1) + ")"}</div>
+      </div>
+    )
+  }
   
   renderSaveBook() {
     console.log(this.props)
     console.log(this.props.saveBook.length)
     if (this.props.saveBook.length > 0) {
       
-      console.log("saveBook>0")
+      
       let all = []
       for (let i = 0; i < this.props.saveBook.length; i++) {
         all.push(this.drawSavedBook(this.props.saveBook[i], i))
       }
 
       return (
-        <div>
+        <div className="saveBookRender">
           {all}
       </div>
       )
     }
   }
 
-  drawSavedBook(data,i) {
+  drawSavedBook(data, i) {
+   
     return (
       <div className="saveBook bookformat" key={i}>
         <div className="bookTitle">{data.bookName}</div>
-            <div className="bookAuthor">{data.author}</div>
-            <div className="bookScore">{data.averageEvaluation}</div>
-            <div className="bookBtn">查看單字</div>
+        <div className="bookAuthor">{"建立者： "+data.author}</div>
+          {this.renderStar(data.averageEvaluation)}
+        <div className="bookBtn" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + data.bookID) }}>查看單字</div>
       </div>
 
     )
@@ -336,7 +376,7 @@ class SaveBook extends React.Component {
   
     render() {
       return (
-        <div>
+        <div className="saveBookBlock">
           {this.renderSaveBook()}
         </div>
       )
@@ -358,7 +398,8 @@ class MyBook extends React.Component {
       bookName: "",
       uid: "",
       bookID: "",
-      displayName:""
+      displayName: "",
+      newBookPop:false
     };
     this.getBookData = this.getBookData.bind(this)
     this.manageBookData = this.manageBookData.bind(this)
@@ -459,6 +500,7 @@ class MyBook extends React.Component {
       ownedBook: firebase.firestore.FieldValue.arrayUnion(bookInfo.bookID)
     }).then(() => {
       alert("user book data : " + bookInfo.bookID + " is setted!")
+      this.setState({ newBookPop: false })
     })
       .catch(function (err) {
         event.preventDefault()
@@ -473,7 +515,20 @@ class MyBook extends React.Component {
     if (this.props.showBook.length > 0) {
 
       return (
-        <div>
+        <div className="myBookRender">
+          
+          {/* adding books frame */}
+          <div className="newBookShow bookformat" style={{ display: this.state.newBookPop ? "none" : "block" }} >
+            <div className="bookTitle">建立屬於你的學習素材！</div>
+            <div className="bookBtn" onClick={() => { this.setState({ newBookPop: true }) }}>新增單字本</div>
+          </div>
+
+          <div className="newBookHide bookformat" style={{ display: this.state.newBookPop ? "block" : "none" }}>
+            <form onSubmit={this.manageBookData} className="bookEnterFrame">
+              <input className="bookEnter" type="text" placeholder="輸入單字本名稱" onChange={(e) => this.getBookData(e)}></input>
+              <input className="bookSend" type="submit" value=" 新增單字本 "></input>
+            </form>
+          </div>
         
           {
             this.props.showBook.map((obj, index) => {
@@ -481,12 +536,14 @@ class MyBook extends React.Component {
               return (
                 <div className="addBookShow bookformat" key={index}>
                   <div className={"bookTitle "+ obj.bookID}>{obj.bookName}</div>
-                  <div className="bookBtn">新增單字</div>
+                  <div className="bookBtn" onClick={() => { window.location.href=('https://kiwords-c058b.web.app/details/' + obj.bookID)}}>編輯單字</div>
                 </div>)
           
             })
           
           } 
+          
+
         </div>
       )
     }
@@ -495,22 +552,9 @@ class MyBook extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="myBookBlock">
         {/* render books you have */}
         {this.showBook()}
-
-        {/* adding books frame */}
-      <div className="addBookShow bookformat">
-        <div className="bookTitle">建立屬於你的學習素材！</div>
-        <div className="bookBtn">新增單字本</div>
-      </div>
-
-      <div className="addBookHide bookformat">
-        <form onSubmit={this.manageBookData} className="bookEnterFrame">
-          <input className="bookEnter" type="text" onChange={(e)=>this.getBookData(e)}></input>
-          <input className="bookSend" type="submit" value=" 新增單字本 "></input>
-          </form>
-        </div>
 
       </div>
   )

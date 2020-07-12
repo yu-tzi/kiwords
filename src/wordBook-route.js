@@ -86,7 +86,7 @@ class BookDtail extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{display:"none"}}>
 
         {/* 以下 router */}
         <div>

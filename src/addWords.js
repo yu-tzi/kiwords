@@ -1,5 +1,7 @@
 import React from "react";
 import { db, firebase } from "./firebaseConfig"
+import './style/addWords.scss';
+
 
 class AddWords extends React.Component {
   constructor(props) {
@@ -144,7 +146,7 @@ class AddWords extends React.Component {
 
     return (
       <div className="cardBox">
-        <div className="cardContainer">
+        <div className="cardBody">
           
           <div className="word">
             <div>word</div>
@@ -241,6 +243,7 @@ class AddWords extends React.Component {
         
         return (
           <select className="bookSelect" onChange={(e) => { this.getBookID(e) }}>
+            <option key={this.props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
             {all}
           </select>
         )
@@ -256,26 +259,33 @@ class AddWords extends React.Component {
   }
 
   getBookID(e) {
-    this.setState({ nowBook: e.target.value})
+      this.setState({ nowBook: e.target.value })
   }
   
 
   render() {
     return (
-      <div>
+      <div className="addWordBlock">
           {/* 下拉式選單 */}
-          {this.renderBookID()}
-        <form action="" onSubmit={this.sendWord}>搜尋單字自動填入
-          <input type="text" onChange={(e) => { this.searchSend(e) }}></input>
-          或者直接輸入
-        </form>
-          {/* 提示選單 */}
-          {this.renderSearch()}
-          {/* 單字欄位 */}
-          {this.renderCard()}
-        <form onSubmit={(event) => {{ this.state.nowBook==="" ? alert('請選擇單字本'): this.submitCard(event)} }}>
-          <input type="submit" value={this.state.nowBook==="" ? "尚未選擇單字本":"送出字卡"} ></input>
-        </form>
+        {this.renderBookID()}
+        
+        <div className="addWordCard">
+          
+          <form className="searchForm" action="" onSubmit={this.sendWord}>搜尋單字自動填入<br></br>
+            <input type="text" placeholder="輸入你想查詢的單字" onChange={(e) => { this.searchSend(e) }}></input><br></br>
+            或者直接輸入...
+          </form>
+            {/* 提示選單 */}
+            {this.renderSearch()}
+            {/* 單字欄位 */}
+            {this.renderCard()}
+      
+          <form onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('請選擇單字本')} }}>
+            <input type="submit" className="sendCard" value={this.state.nowBook.replace(/\s+/g, "").length > 0 ? "送出字卡" : "尚未選擇單字本"} ></input>
+          </form>
+          <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
+          
+        </div> 
       </div>
     )
   }
