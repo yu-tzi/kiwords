@@ -13,6 +13,7 @@ import WordBook from "./wordBooks"
 import Home from "./home"
 import LogPage from "./logIn"
 import BookDtail from "./wordBook-route"
+import QuizMatch from "./quiz-match"
 import './style/route.scss';
 
 import { db, firebase } from "./firebaseConfig"
@@ -47,7 +48,9 @@ class RoutePage extends React.Component{
             <Route exact path="/">
               {/* <Home /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />  */}
-              <AddWords showBook={this.props.showBook}/>
+              {/* <AddWords showBook={this.props.showBook} /> */}
+              {/* <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
+              <QuizMatch />
             </Route>
             <Route path="/login">
               <Home />
@@ -63,7 +66,7 @@ class RoutePage extends React.Component{
               <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} />
             </Route>
             <Route path="/details">
-              <BookDtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} />
+              <BookDtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/>
             </Route>
             <Route path="/quiz">
               <Quiz />

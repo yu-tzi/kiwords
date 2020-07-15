@@ -62,6 +62,8 @@ class AddWords extends React.Component {
           let def = []
           let syn = []
           let ant = []
+          let syns = []
+          
           console.log('API called')
           console.log(result)
           if (result[0].meta === undefined) {
@@ -91,15 +93,20 @@ class AddWords extends React.Component {
               console.log(result[0].meta.syns[0])
               for (let i = 0; i < result[0].meta.syns[0].length; i++) {
                   if (i < 1) {
-                    syn += result[0].meta.syns[0][i]
+                    syns += result[0].meta.syns[0][i]
                   } else {
-                    syn += (" , " + result[0].meta.syns[0][i])
+                    syns += (" , " + result[0].meta.syns[0][i])
                   }
                 }
               
             } else {
               console.log(result[0].meta.syns)
-              syn = result[0].meta.syns[0]
+              if (result[0].meta.syns[0] === undefined) {
+                syns = ""
+                console.log("result[0].meta.syns[0] === undefined")
+              } else {
+                syns = result[0].meta.syns[0]
+              }
             }
             //ant
             if (result[0].meta.ants.length > 1) {
@@ -113,13 +120,19 @@ class AddWords extends React.Component {
               }
             } else {
               console.log(result[0].meta.ants)
-              ant = result[0].meta.ants[0]
+              if (result[0].meta.ants[0] === undefined) {
+                console.log("result[0].meta.ants[0] === undefined")
+                ant = ""
+              } else {
+                ant = result[0].meta.ants[0]
+              }
+             
             }
           }
 
           this.setState({ word: word })
           this.setState({ meaning: def })
-          this.setState({ synonyms: syn })
+          this.setState({ synonyms: syns })
           this.setState({ antonym: ant })
           
 
@@ -191,18 +204,26 @@ class AddWords extends React.Component {
     event.preventDefault()
     console.log('submit')
 
+    let confirm = false
+
     if (this.state.word.replace(/\s+/g, "").length < 1) {
       alert('請填寫內容')
     } else {
-      let confirm = true
+      confirm = true
+      if (this.state.meaning.length > 1 && this.state.synonyms.length > 1 && this.state.antonym.length > 1) {
+        
+        if (this.state.meaning.toString().replace(/\s+/g, "").length < 1 || this.state.synonyms.toString().replace(/\s+/g, "").length < 1 || this.state.antonym.toString().replace(/\s+/g, "").length < 1) {
 
-      if (this.state.meaning.replace(/\s+/g, "").length < 1 || this.state.synonyms.replace(/\s+/g, "").length < 1 || this.state.antonym.replace(/\s+/g, "").length) { 
-
+          if (!window.confirm("資料不完全，可能影響測驗成效，繼續送出嗎？")) {
+            console.log('跳出')
+            confirm = false
+          }
+        }
+      } else if (this.state.meaning.length < 1 || this.state.synonyms.length < 1 || this.state.antonym.length < 1) {
         if (!window.confirm("資料不完全，可能影響測驗成效，繼續送出嗎？")) {
           console.log('跳出')
           confirm = false
         }
-
       }
 
       if (confirm === true) {

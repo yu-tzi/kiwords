@@ -40,7 +40,7 @@ class BookDtail extends React.Component {
     return books.map((bookID) => {
       let bookUrl = "/details/" + bookID
       return (
-        <Link to={bookUrl} key={bookID} id={bookID}>bookID:{bookID}</Link>
+        <Link to={bookUrl} key={bookID} id={bookID}></Link>
       )
     })
   }
@@ -72,11 +72,11 @@ class BookDtail extends React.Component {
     
     
     return books.map((bookID) => {
-      console.log(bookID)
+      
       let bookUrl = "/details/" + bookID
       return (
         <Route exact path={bookUrl} key={bookID} id={bookID}>
-          <div>book id : {bookID} <Dtail bookID={bookID}/></div>
+          <div><Dtail bookID={bookID} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/></div>
         </Route>
       )
     })
@@ -86,8 +86,7 @@ class BookDtail extends React.Component {
 
   render() {
     return (
-      <div style={{display:"none"}}>
-
+      <div>
         {/* 以下 router */}
         <div>
           <Router>
