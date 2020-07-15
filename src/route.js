@@ -50,7 +50,7 @@ class RoutePage extends React.Component{
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />  */}
               {/* <AddWords showBook={this.props.showBook} /> */}
               {/* <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
-              <QuizMatch />
+              <QuizMatch showBook={this.props.showBook}/>
             </Route>
             <Route path="/login">
               <Home />
@@ -69,7 +69,7 @@ class RoutePage extends React.Component{
               <BookDtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/>
             </Route>
             <Route path="/quiz">
-              <Quiz />
+              <Quiz showBook={this.props.showBook}/>
             </Route>
             <Route path="/statistics">
               <Statistics />

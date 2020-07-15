@@ -1,22 +1,22 @@
 import React from "react";
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useDrag } from 'react-dnd'
 import { useDrop } from 'react-dnd'
 
 class QuizMatch extends React.Component {
-//DB word data (passing as props)
-//answer state (passing func)
-//send buttom
-// O or X (passing color)
-//freeze and show color
-//counting score
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+  }
   
   render() {
     return (
       <DndProvider backend={HTML5Backend}>
-        <QuizContainer />
+        <QuizContainer showBook={this.props.showBook}/>
       </DndProvider>
     )
   }
@@ -29,14 +29,15 @@ const ItemTypes = {
 
 const QuizOption=(props)=>{
 
-    const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging,canDrag }, drag] = useDrag({
       item: {
         type: ItemTypes.Option,
         value: props.word,
         id: props.id
-      },
+    },
+      canDrag: props.checked,
       collect: monitor => ({
-        isDragging: !!monitor.isDragging(),
+        isDragging: !!monitor.isDragging()
       }),
     })
 
@@ -45,7 +46,8 @@ const QuizOption=(props)=>{
         ref={drag}
         style={{
           opacity: isDragging ? 0.5 : 1,
-          cursor: 'move'
+          cursor: 'move',
+          color: props.color
         }}
         key={props.i}
       >{props.word}</div>
@@ -111,28 +113,76 @@ const QuizContext = createContext({
   unChooseItem:null
 });
 
-const QuizContainer=()=>{
+const QuizContainer = (props) => {
+  
   
   const [optionList, setOptionList] = useState([
     {
       id: 0,
       value: "valuable",
-      status: "unchoose"
+      status: "unchoose",
+      color: "black"
     }, {
-      id:1,
+      id: 1,
       value: "vulnerable",
-      status: "unchoose"
+      status: "unchoose",
+      color: "black"
     }, {
-      id:2,
+      id: 2,
       value: "capacity",
-      status: "unchoose"
+      status: "unchoose",
+      color: "black"
     }
   ])
 
+  const [answer, setAnswer] = useState([
+    {
+      id: 0,
+      value: "valuable",
+      status: "unchoose",
+      color: "black"
+    }
+  ])
+
+  const [checked, setChecked] = useState([true])
+  const [bookID, setBookID] = useState([""])
+  const [start, setStart] = useState([false])
+
+  const checkAns = () => {
+    let correct = false
+    let chooseAns = ""
+    let ans = 0
+    for (let i = 0; i < optionList.length; i++){
+      if (optionList[i].status === "chosen") {
+
+        if (optionList[i].value === answer[0].value) {
+          correct = true
+          setChecked(false)
+          chooseAns = -1
+          alert('正確答案')
+        } else {
+          chooseAns = optionList[i].id
+          setChecked(false)
+          alert('不是正確答案')
+        }
+      } else {
+        ans += 1
+      }
+
+      if (ans > 2) {
+        alert('尚未選擇答案')
+      } else {
+        SendItem(chooseAns)
+      }
+    
+    }
+  }
+  
   const chooseItem = (id) => {
     console.log("chooseItem trigger!" + id)
     let newList = []
-    let chosenStuff =""
+    let chosenStuff = ""
+    let unChooseStuff = ""
     
     for (let i = 0; i < optionList.length; i++){
 
@@ -144,6 +194,8 @@ const QuizContainer=()=>{
       }
       
       if (optionList[i].id !== id) {
+        unChooseStuff = optionList[i]
+        unChooseStuff.status = "unchoose"
         newList.push(optionList[i])
       }
     
@@ -174,42 +226,123 @@ const QuizContainer=()=>{
 
     }
     console.log(newList)
-
     setOptionList(newList)
   }
 
-  return (
+  const SendItem = (chooseID) => {
+    let newList = []
 
-    <div>
-      <QuizContext.Provider value={{ chooseItem, unChooseItem }}>
-      
-      <AnsArea>
-      {
-        optionList
-        .map((option,i) => {
-          if (option.status === "unchoose") {
-            return (  
-              <QuizOption key={i} i={i} word={option.value} id={option.id}/>
-            )
-          }
-        })
+    for (let i = 0; i < optionList.length; i++) {
+      let blue
+      let red
+      let black
+      if (optionList[i].id === answer[0].id) {
+        blue = optionList[i]
+        blue.color = "blue"
+        newList.push(blue)
       }
-      </AnsArea>
-      
-      <QuizArea>
-      {
-        optionList
-          .map((option, i) => {
-            if (option.status === "chosen") {
-              return (
-                <QuizOption key={i} i={i} word={option.value} id={option.id}/>
+      if (optionList[i].id === chooseID) {
+        red = optionList[i]
+        red.color = "red"
+        newList.push(red)
+      }
+      if (optionList[i].id !== answer[0].id && optionList[i].id !== chooseID) {
+        black = optionList[i]
+        newList.push(black)
+      }
+    }
+    console.log(newList)
+    setOptionList(newList)
+  }
+
+
+  const getBookID = (e) => {
+    console.log(e.target.value)
+    if (e.target.value !== " ") {
+      setBookID(e.target.value)
+      setStart(false)
+    } else {
+      setBookID(" ")
+      setStart(true)
+    }
+
+  }
+
+  const showBookID =(data, i)=>{
+    return (
+      <option key={i} value={data.bookID} >{data.bookName}</option>
+    )
+  }
+
+  
+  const renderBookID = () => {
+    
+      if (props.showBook.length > 0) {
+
+        let all = []
+        let count = 0
+        let j = 1
+        for (let i = 0; i < props.showBook.length; i++) {
+          all.push(showBookID(props.showBook[i], i))
+          count++
+          j++
+        }
+
+        if (count == props.showBook.length) {
+
+          return (
+            <select onChange={(e) => { getBookID(e) }}>
+              <option key={props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
+              {all}
+            </select>
+          )
+        }
+      }
+  }
+
+
+
+  return (
+    <div>
+      {renderBookID()}
+      <div style={{ display: start ? "none":"block"}}>
+
+        <QuizContext.Provider value={{ chooseItem, unChooseItem }}>
+        
+        <AnsArea>
+        {
+          optionList
+          .map((option,i) => {
+            if (option.status === "unchoose") {
+              return (  
+                <QuizOption key={i} i={i} word={option.value} id={option.id} color={option.color} checked={checked}/>
               )
             }
           })
         }
-      </QuizArea>
+        </AnsArea>
+        
+        <QuizArea>
+        {
+          optionList
+            .map((option, i) => {
+              if (option.status === "chosen") {
+                return (
+                  <QuizOption key={i} i={i} word={option.value} id={option.id} color={option.color} checked={checked}/>
+                )
+              }
+            })
+          }
+        </QuizArea>
 
-    </QuizContext.Provider>
+        </QuizContext.Provider>
+
+        <div onClick={checkAns}>送出答案</div>
+        <div>下一題</div>
+        <div>結束測驗</div>
+        <div>計分</div>
+      
+      </div>
     </div>
     
   )
