@@ -4,6 +4,9 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useDrag } from 'react-dnd'
 import { useDrop } from 'react-dnd'
+import { db } from "./firebaseConfig"
+import MultiBackend from 'react-dnd-multi-backend';
+import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 
 class QuizMatch extends React.Component {
   constructor(props) {
@@ -15,7 +18,7 @@ class QuizMatch extends React.Component {
   
   render() {
     return (
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
         <QuizContainer showBook={this.props.showBook}/>
       </DndProvider>
     )
@@ -147,6 +150,8 @@ const QuizContainer = (props) => {
   const [checked, setChecked] = useState([true])
   const [bookID, setBookID] = useState([""])
   const [start, setStart] = useState([false])
+
+  
 
   const checkAns = () => {
     let correct = false
