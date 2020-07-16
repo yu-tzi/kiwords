@@ -7,6 +7,7 @@ import { useDrop } from 'react-dnd'
 import { db } from "./firebaseConfig"
 import MultiBackend from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
+import './style/quizMatch.scss';
 
 class QuizMatch extends React.Component {
   constructor(props) {
@@ -52,6 +53,7 @@ const QuizOption=(props)=>{
           cursor: 'move',
           color: props.color
         }}
+        className="quizOption"
         key={props.i}
       >{props.word}</div>
     )
@@ -75,6 +77,7 @@ const AnsArea = (props) => {
       style={{
         backgroundColor: isOver ? "blue" : "green"
       }}
+      className="optionDrop"
     >
       <div>here is your option:</div>
       {props.children}
@@ -95,16 +98,23 @@ const QuizArea = (props) => {
     })
   })
   
-    return (
+  return (
+    <div>
+      {console.log(props.topic)}
+      <div className="title">Meaning : {props.topic[0].meaning}</div>
+      <div className="title-antonym">Antonym : {props.topic[0].meaning}</div>
+      <div className="title-synonyms">Synonyms : {props.topic[0].meaning}</div>
+
       <div
         ref={drop}
         style={{
           backgroundColor: isOver ? "grey" : "yellow"
         }}
+        className="answerDrop"
       >
-        <div>drop your ans here:</div>
         {props.children}
       </div>
+    </div>
     )
 }
 
@@ -150,6 +160,36 @@ const QuizContainer = (props) => {
             status: "unchoose",
             color: "black"
           }
+
+          let topicContent = []
+          topicContent.push({ meaning: doc.data().cards[j].meaning })
+
+
+
+          if (doc.data().cards[j].antonym.length > 0) {
+            let ant = ""
+            for (let i = 0; i < doc.data().cards[j].antonym.length; i++) {
+              ant = doc.data().cards[j].antonym
+            }
+            ant = ant.toString()
+            topicContent.push({ antonym: ant })
+          } else {
+            topicContent.push({ antonym: "no antonym"})
+          }
+
+          if (doc.data().cards[j].synonyms.length > 0) {
+            let syn = ""
+            for (let i = 0; i < doc.data().cards[j].synonyms.length; i++) {
+              syn = doc.data().cards[j].synonyms
+            }
+            syn = syn.toString()
+            topicContent.push({ synonyms: syn })
+          } else {
+            topicContent.push({ synonyms: "no synonyms" })
+          }
+          console.log(doc.data().cards[j].synonyms.length)
+          setTopic(topicContent)
+      
         
           setAnswer(answer)
           setOptionList(options)
@@ -191,6 +231,32 @@ const QuizContainer = (props) => {
             status: "unchoose",
             color: "black"
           }
+
+          let topicContent = []
+          topicContent.push({ meaning: doc.data().cards[count + j].meaning })
+          
+
+
+          if (doc.data().cards[count + j].antonym.length > 0) {
+            let ant = ""
+            for (let i = 0; i < doc.data().cards[count + j].antonym.length; i++){
+              ant = doc.data().cards[count + j].antonym
+            }
+              ant = ant.toString()
+              topicContent.push({ antonym: ant })
+          }
+
+          if (doc.data().cards[count + j].synonyms.length > 0) {
+            let syn = ""
+            for (let i = 0; i < doc.data().cards[count + j].synonyms.length; i++) {
+              syn = doc.data().cards[count + j].synonyms
+            }
+              syn = syn.toString()
+              topicContent.push({ synonyms: syn })
+          }
+          console.log(doc.data().cards[count + j].synonyms.length)
+          setTopic(topicContent)
+          console.log(topic)
 
           setAnswer(answer)
           setOptionList(options)
@@ -243,8 +309,13 @@ const QuizContainer = (props) => {
       color: "black"
     }
      */
+  
+  const [topic, setTopic] = useState([""])
+  useEffect(() => {
+    console.log(topic)
+  }, [topic])
 
-
+  
   const checkAns = () => {
     let correct = false
     let chooseAns = ""
@@ -389,7 +460,7 @@ const QuizContainer = (props) => {
         if (count == props.showBook.length) {
 
           return (
-            <select onChange={(e) => { getBookID(e) }}>
+            <select onChange={(e) => { getBookID(e) }} className="bookSelect">
               <option key={props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
               {all}
             </select>
@@ -405,42 +476,42 @@ const QuizContainer = (props) => {
   return (
     <div>
       {renderBookID()}
-      <div style={{ display: start ? "none":"block"}}>
+      <div style={{ display: start ? "none" : "block" }} className="quizContainer">
+        <div className="score">計分</div>
 
         <QuizContext.Provider value={{ chooseItem, unChooseItem }}>
         
-        <AnsArea>
-        {
-          optionList
-          .map((option,i) => {
-            if (option.status === "unchoose") {
-              return (  
-                <QuizOption key={i} i={i} word={option.value} id={option.id} color={option.color} checked={checked}/>
-              )
-            }
-          })
-        }
-        </AnsArea>
-        
-        <QuizArea>
-        {
+        <QuizArea topic={topic}>
+          {
           optionList
             .map((option, i) => {
               if (option.status === "chosen") {
                 return (
-                  <QuizOption key={i} i={i} word={option.value} id={option.id} color={option.color} checked={checked}/>
+                  <QuizOption key={i} i={i} word={option.value} id={option.id} color={option.color} checked={checked} />
                 )
               }
             })
           }
-        </QuizArea>
+          </QuizArea>
+          
+          <AnsArea>
+            {
+              optionList
+                .map((option, i) => {
+                  if (option.status === "unchoose") {
+                    return (
+                      <QuizOption key={i} i={i} word={option.value} id={option.id} color={option.color} checked={checked} />
+                    )
+                  }
+                })
+            }
+          </AnsArea>
 
         </QuizContext.Provider>
 
-        <div onClick={checkAns}>送出答案</div>
+        <div onClick={checkAns}>送出</div>
         <div onClick={() => {setPage(page + 2)}}>下一題</div>
         <div onClick={() => { alert('單字用罄，結束測驗，分數是： ' + score)}}>結束測驗</div>
-        <div>計分</div>
       
       </div>
     </div>
