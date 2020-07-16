@@ -117,10 +117,103 @@ const QuizContext = createContext({
 });
 
 const QuizContainer = (props) => {
-  
-  
-  const [optionList, setOptionList] = useState([
-    {
+
+  const [checked, setChecked] = useState([true])
+  const [bookID, setBookID] = useState([""])
+  useEffect(() => {
+    let str = bookID
+    console.log(str.length)
+    if (str.length > 5) {
+      setPage(1)
+      setScore(0)
+      setChecked(true)
+      db.collection("books").doc(bookID).get().then((doc) => {
+        console.log(doc.data().cards[0].word)
+        let options = []
+        if (doc.data().cards.length < 3) {
+          alert('你的單字本字量不夠，請先新增更多單字:(')
+          /*  redirect to add card page */
+        } else {
+          for (let i = 0; i < 3; i++) {
+            let option = {
+              id: i,
+              value: doc.data().cards[i].word,
+              status: "unchoose",
+              color: "black"
+            }
+            options.push(option)
+          }
+          let j = Math.floor((Math.random() * 3))
+          let answer = {
+            id: j,
+            value: doc.data().cards[j].word,
+            status: "unchoose",
+            color: "black"
+          }
+        
+          setAnswer(answer)
+          setOptionList(options)
+        }
+      }
+      ).catch((error) => {
+        alert(error)
+      })
+    }
+  }, [bookID]);
+  const [start, setStart] = useState([false])
+  const [page, setPage] = useState(1)
+  useEffect(() => {
+    let str = bookID
+    console.log(str.length)
+    if (str.length > 5) {
+      console.log(page)
+      db.collection("books").doc(bookID).get().then((doc) => {
+        console.log(doc.data().cards[0].word)
+        if (doc.data().cards.length <= page + 2) {
+          alert('單字用罄，結束測驗，分數是： '+score)
+        } else {
+          let options = []
+          for (let i = 0; i < 3; i++) {
+            let count = parseInt(page)
+            let option = {
+              id: count + i,
+              value: doc.data().cards[count + i].word,
+              status: "unchoose",
+              color: "black"
+            }
+            options.push(option)
+          }
+          let count = parseInt(page)
+          let j = Math.floor((Math.random() * 3))
+          let answer = {
+            id: count + j,
+            value: doc.data().cards[count + j].word,
+            status: "unchoose",
+            color: "black"
+          }
+
+          setAnswer(answer)
+          setOptionList(options)
+          setChecked(true)
+        }
+      }
+      ).catch((error) => {
+        alert(error)
+      })
+    }
+  }, [page])
+  const [score, setScore] = useState(0)
+  useEffect(()=>{
+    console.log("score : "+score)
+  },[score])
+
+
+  const [optionList, setOptionList] = useState([""])
+  useEffect(() => { 
+    console.log(optionList)
+  }, [optionList])
+  /* 
+  {
       id: 0,
       value: "valuable",
       status: "unchoose",
@@ -136,22 +229,21 @@ const QuizContainer = (props) => {
       status: "unchoose",
       color: "black"
     }
-  ])
+     */
 
-  const [answer, setAnswer] = useState([
+  const [answer, setAnswer] = useState([""])
+  useEffect(() => {
+    console.log(answer)
+  }, [answer])
+  /* 
     {
       id: 0,
       value: "valuable",
       status: "unchoose",
       color: "black"
     }
-  ])
+     */
 
-  const [checked, setChecked] = useState([true])
-  const [bookID, setBookID] = useState([""])
-  const [start, setStart] = useState([false])
-
-  
 
   const checkAns = () => {
     let correct = false
@@ -160,10 +252,11 @@ const QuizContainer = (props) => {
     for (let i = 0; i < optionList.length; i++){
       if (optionList[i].status === "chosen") {
 
-        if (optionList[i].value === answer[0].value) {
+        if (optionList[i].value === answer.value) {
           correct = true
           setChecked(false)
           chooseAns = -1
+          setScore(score+1)
           alert('正確答案')
         } else {
           chooseAns = optionList[i].id
@@ -241,7 +334,7 @@ const QuizContainer = (props) => {
       let blue
       let red
       let black
-      if (optionList[i].id === answer[0].id) {
+      if (optionList[i].id === answer.id) {
         blue = optionList[i]
         blue.color = "blue"
         newList.push(blue)
@@ -251,7 +344,7 @@ const QuizContainer = (props) => {
         red.color = "red"
         newList.push(red)
       }
-      if (optionList[i].id !== answer[0].id && optionList[i].id !== chooseID) {
+      if (optionList[i].id !== answer.id && optionList[i].id !== chooseID) {
         black = optionList[i]
         newList.push(black)
       }
@@ -305,6 +398,8 @@ const QuizContainer = (props) => {
       }
   }
 
+ 
+
 
 
   return (
@@ -343,22 +438,14 @@ const QuizContainer = (props) => {
         </QuizContext.Provider>
 
         <div onClick={checkAns}>送出答案</div>
-        <div>下一題</div>
-        <div>結束測驗</div>
+        <div onClick={() => {setPage(page + 2)}}>下一題</div>
+        <div onClick={() => { alert('單字用罄，結束測驗，分數是： ' + score)}}>結束測驗</div>
         <div>計分</div>
       
       </div>
     </div>
     
   )
-
-
-
-
-
-
-
-
 }
 
 
