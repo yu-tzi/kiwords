@@ -101,9 +101,13 @@ const QuizArea = (props) => {
   return (
     <div>
       {console.log(props.topic)}
-      <div className="title">Meaning : {props.topic[0].meaning}</div>
-      <div className="title-antonym">Antonym : {props.topic[0].meaning}</div>
-      <div className="title-synonyms">Synonyms : {props.topic[0].meaning}</div>
+      {console.log(props.topic[0])}
+      {console.log(props.topic[1]?.syn)}
+      {console.log(props.topic[2]?.meaning)}
+      {/* {console.log(props.topic[1].ant)} */}
+      <div className="title">Meaning : {props.topic[2]?.meaning}</div>
+      <div className="title-antonym">Antonym : {props.topic[0].ant}</div>
+      <div className="title-synonyms">Synonyms : {props.topic[1]?.syn}</div>
 
       <div
         ref={drop}
@@ -162,9 +166,6 @@ const QuizContainer = (props) => {
           }
 
           let topicContent = []
-          topicContent.push({ meaning: doc.data().cards[j].meaning })
-
-
 
           if (doc.data().cards[j].antonym.length > 0) {
             let ant = ""
@@ -172,9 +173,9 @@ const QuizContainer = (props) => {
               ant = doc.data().cards[j].antonym
             }
             ant = ant.toString()
-            topicContent.push({ antonym: ant })
+            topicContent.push({ ant: ant })
           } else {
-            topicContent.push({ antonym: "no antonym"})
+            topicContent.push({ ant: "no antonym"})
           }
 
           if (doc.data().cards[j].synonyms.length > 0) {
@@ -183,11 +184,12 @@ const QuizContainer = (props) => {
               syn = doc.data().cards[j].synonyms
             }
             syn = syn.toString()
-            topicContent.push({ synonyms: syn })
+            topicContent.push({ syn: syn })
           } else {
-            topicContent.push({ synonyms: "no synonyms" })
+            topicContent.push({ syn: "no synonyms" })
           }
-          console.log(doc.data().cards[j].synonyms.length)
+       
+          topicContent.push({ meaning: doc.data().cards[j].meaning })
           setTopic(topicContent)
       
         
@@ -233,17 +235,16 @@ const QuizContainer = (props) => {
           }
 
           let topicContent = []
-          topicContent.push({ meaning: doc.data().cards[count + j].meaning })
-          
-
 
           if (doc.data().cards[count + j].antonym.length > 0) {
             let ant = ""
-            for (let i = 0; i < doc.data().cards[count + j].antonym.length; i++){
+            for (let i = 0; i < doc.data().cards[count + j].antonym.length; i++) {
               ant = doc.data().cards[count + j].antonym
             }
-              ant = ant.toString()
-              topicContent.push({ antonym: ant })
+            ant = ant.toString()
+            topicContent.push({ ant: ant })
+          } else {
+            topicContent.push({ ant: "no antonym" })
           }
 
           if (doc.data().cards[count + j].synonyms.length > 0) {
@@ -251,12 +252,19 @@ const QuizContainer = (props) => {
             for (let i = 0; i < doc.data().cards[count + j].synonyms.length; i++) {
               syn = doc.data().cards[count + j].synonyms
             }
-              syn = syn.toString()
-              topicContent.push({ synonyms: syn })
+            syn = syn.toString()
+            topicContent.push({ syn: syn })
+          } else {
+            topicContent.push({ syn: "no synonyms" })
           }
-          console.log(doc.data().cards[count + j].synonyms.length)
+
+          topicContent.push({ meaning: doc.data().cards[count + j].meaning })
           setTopic(topicContent)
-          console.log(topic)
+
+
+          setAnswer(answer)
+          setOptionList(options)
+
 
           setAnswer(answer)
           setOptionList(options)
