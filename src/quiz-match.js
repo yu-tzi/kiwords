@@ -49,8 +49,8 @@ const QuizOption=(props)=>{
       <div
         ref={drag}
         style={{
-          opacity: isDragging ? 0.5 : 1,
-          cursor: 'move',
+          backgroundColor: isDragging ? "rgb(39, 98, 116)" : "rgb(43, 39, 39)",
+          cursor: isDragging ? "grabbing":'grab',
           color: props.color
         }}
         className="quizOption"
@@ -75,11 +75,11 @@ const AnsArea = (props) => {
     <div
       ref={drop}
       style={{
-        backgroundColor: isOver ? "blue" : "green"
+        backgroundColor: isOver ? "lightgrey" : "whitesmoke"
       }}
       className="optionDrop"
     >
-      <div>here is your option:</div>
+      <div></div>
       {props.children}
     </div>
   )
@@ -99,28 +99,28 @@ const QuizArea = (props) => {
   })
   
   return (
-    <div>
-      {console.log(props.topic)}
-      {console.log(props.topic[0])}
-      {console.log(props.topic[1]?.syn)}
-      {console.log(props.topic[2]?.meaning)}
-      {/* {console.log(props.topic[1].ant)} */}
-      <div className="title">Meaning : {props.topic[2]?.meaning}</div>
-      <div className="title-antonym">Antonym : {props.topic[0].ant}</div>
-      <div className="title-synonyms">Synonyms : {props.topic[1]?.syn}</div>
-
+    <div className="topic-container">
+      
       <div
         ref={drop}
         style={{
-          backgroundColor: isOver ? "grey" : "yellow"
+          backgroundColor: isOver ? "lightgrey" : "whitesmoke"
         }}
         className="answerDrop"
       >
-        {props.children}
+        {props.children}   
       </div>
+
+      <div className="topic-Area">
+        <div className="title">Meaning : {props.topic[2]?.meaning}</div>
+        <div className="title-antonym">Antonym : {props.topic[0]?.ant}</div>
+        <div className="title-synonyms">Synonyms : {props.topic[1]?.syn}</div>
+      </div>
+
     </div>
     )
 }
+
 
 
 //====create context====
@@ -140,6 +140,8 @@ const QuizContainer = (props) => {
     if (str.length > 5) {
       setPage(1)
       setScore(0)
+      setTopicCount(0)
+      setEnd(false)
       setChecked(true)
       db.collection("books").doc(bookID).get().then((doc) => {
         console.log(doc.data().cards[0].word)
@@ -153,7 +155,7 @@ const QuizContainer = (props) => {
               id: i,
               value: doc.data().cards[i].word,
               status: "unchoose",
-              color: "black"
+              color: "white"
             }
             options.push(option)
           }
@@ -162,7 +164,7 @@ const QuizContainer = (props) => {
             id: j,
             value: doc.data().cards[j].word,
             status: "unchoose",
-            color: "black"
+            color: "white"
           }
 
           let topicContent = []
@@ -212,7 +214,8 @@ const QuizContainer = (props) => {
       db.collection("books").doc(bookID).get().then((doc) => {
         console.log(doc.data().cards[0].word)
         if (doc.data().cards.length <= page + 2) {
-          alert('單字用罄，結束測驗，分數是： '+score)
+          alert('單字用罄，結束測驗，分數是： ' + score)
+          setEnd(true)
         } else {
           let options = []
           for (let i = 0; i < 3; i++) {
@@ -221,7 +224,7 @@ const QuizContainer = (props) => {
               id: count + i,
               value: doc.data().cards[count + i].word,
               status: "unchoose",
-              color: "black"
+              color: "white"
             }
             options.push(option)
           }
@@ -231,7 +234,7 @@ const QuizContainer = (props) => {
             id: count + j,
             value: doc.data().cards[count + j].word,
             status: "unchoose",
-            color: "black"
+            color: "white"
           }
 
           let topicContent = []
@@ -276,10 +279,17 @@ const QuizContainer = (props) => {
       })
     }
   }, [page])
+
   const [score, setScore] = useState(0)
   useEffect(()=>{
     console.log("score : "+score)
-  },[score])
+  }, [score])
+  
+  const [topic, setTopic] = useState(0)
+  useEffect(() => {
+    console.log("topic : " + topic)
+  }, [topic])
+ 
 
 
   const [optionList, setOptionList] = useState([""])
@@ -318,12 +328,16 @@ const QuizContainer = (props) => {
     }
      */
   
-  const [topic, setTopic] = useState([""])
+  const [topicCount, setTopicCount] = useState([""])
   useEffect(() => {
-    console.log(topic)
-  }, [topic])
+    console.log(topicCount)
+  }, [topicCount])
 
-  
+  const [end, setEnd] = useState(false)
+  useEffect(() => {
+    console.log(end)
+  }, [end])
+
   const checkAns = () => {
     let correct = false
     let chooseAns = ""
@@ -335,11 +349,13 @@ const QuizContainer = (props) => {
           correct = true
           setChecked(false)
           chooseAns = -1
-          setScore(score+1)
+          setScore(score + 1)
+          setTopicCount(topicCount + 1)
           alert('正確答案')
         } else {
           chooseAns = optionList[i].id
           setChecked(false)
+          setTopicCount(topicCount + 1)
           alert('不是正確答案')
         }
       } else {
@@ -412,7 +428,7 @@ const QuizContainer = (props) => {
     for (let i = 0; i < optionList.length; i++) {
       let blue
       let red
-      let black
+      let white
       if (optionList[i].id === answer.id) {
         blue = optionList[i]
         blue.color = "blue"
@@ -424,8 +440,8 @@ const QuizContainer = (props) => {
         newList.push(red)
       }
       if (optionList[i].id !== answer.id && optionList[i].id !== chooseID) {
-        black = optionList[i]
-        newList.push(black)
+        white = optionList[i]
+        newList.push(white)
       }
     }
     console.log(newList)
@@ -477,15 +493,22 @@ const QuizContainer = (props) => {
       }
   }
 
- 
+  const endQuiz = () => { 
+    alert('單字用罄，結束測驗，分數是： ' + score)
+    setEnd(true)
+  }
 
-
+/* const [end, setEnd] = useState(false) */
 
   return (
     <div>
       {renderBookID()}
+      <div className="changePage">
+        <div>{"測驗模式 :"+"　"}</div><div> 單字聽打</div><div>｜</div><div>單字配對</div>
+      </div>
       <div style={{ display: start ? "none" : "block" }} className="quizContainer">
-        <div className="score">計分</div>
+        <div className="quizArea" style={{ display: end ? "none" : "block" }}>
+        <div className="score">目前分數 : {score}</div>
 
         <QuizContext.Provider value={{ chooseItem, unChooseItem }}>
         
@@ -515,12 +538,22 @@ const QuizContainer = (props) => {
             }
           </AnsArea>
 
-        </QuizContext.Provider>
+          </QuizContext.Provider>
+        
 
-        <div onClick={checkAns}>送出</div>
-        <div onClick={() => {setPage(page + 2)}}>下一題</div>
-        <div onClick={() => { alert('單字用罄，結束測驗，分數是： ' + score)}}>結束測驗</div>
-      
+        <div className="btnList">
+          <div onClick={() => { setPage(page + 2) }} className="next">下一題</div>
+          <div onClick={() => { endQuiz() }} className="end-quiz">結束測驗</div>
+          <div onClick={checkAns} className="send">送出</div>  
+          </div>
+        </div>
+
+        <div className="endQuiz" style={{ display: end ? "block" : "none" }}>
+          <div className="yourScore">你的分數是</div>
+          <div className="scoreIs">{score + "/" + topicCount}</div>
+          
+        </div>
+
       </div>
     </div>
     
