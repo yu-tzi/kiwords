@@ -20,9 +20,9 @@ class Head extends React.Component {
   render() {
     return (
       <div className="mktArea">
-       {/*  <div className="p5">
+        <div className="p5">
           <P5Wrapper sketch={sketch} />
-        </div>  */}
+        </div> 
 
         <div className="head">
           
@@ -47,9 +47,9 @@ class Bottom extends React.Component {
     return (
       <div className="bottomArea">
         <div className="bottom">
-          {/* <div className="p5two">
+          <div className="p5two">
             <P5Wrapper sketch={sketch} />
-          </div>  */}
+          </div> 
           <div className="journey">START YOUR JOURNEY</div>
         </div>
       </div>
