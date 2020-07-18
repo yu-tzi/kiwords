@@ -1,7 +1,7 @@
 *{
   margin: 0px;
   padding: 0px;
-  font-family: verdana, Arial, Helvetica, sans-serif;
+  font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
   list-style: none;
   text-decoration: none;
 }
@@ -14,15 +14,21 @@ html, body {
 .content{
   min-height: 100vh;
   margin: 0 auto -50px;
+  background-color: #2b2b2b;
+  padding: 0px;
 }
 
 .footer{
   height: 50px;
-  background-color: rgb(58, 58, 58);
+  background-color: #2b2b2b;
 }
 
 .navBox{
-  background-color: rgb(58, 58, 58);
+  background-color: #2b2b2b;
+  width: 90%;
+  margin: auto;
+  max-width: 1200px;
+
 }
 
 .nav{
@@ -42,14 +48,45 @@ html, body {
 
 .menu>a{
   color: white;
-  letter-spacing: 5px;
   margin: 0 13px;
 }
 
-.menu>a:hover{
-  color: rgb(194, 194, 194);
-  transition: 0.5s;
+
+.decoline{
+  height: 32px;
+  width: 85px;
+  position: absolute;
+  top: 20px;
+  border-bottom-style: solid;
+  border-bottom-color: orange;
+  border-bottom-width:0px;
+  
 }
+
+.decoline:hover{
+  white-space: nowrap;
+  overflow: hidden;
+  animation: type 0.2s steps(10) forwards;
+  -moz-animation:type 0.2s steps(10) forwards;  
+  -webkit-animation:type 0.2s steps(10) forwards;
+}
+
+@keyframes type
+{
+  0%{ border-bottom-width:0px;}
+	100%{ border-bottom-width:5px;}
+}
+@-moz-keyframes type
+{
+  0%{ border-bottom-width:0px;}
+	100%{ border-bottom-width:5px;}
+}
+@-webkit-keyframes type
+{
+  0%{ border-bottom-width:0px;}
+	100%{ border-bottom-width:5px;}
+}
+
 
 .memberImgFrame{
 
@@ -59,7 +96,7 @@ html, body {
 
 .memberImgFrame:hover{
   transition: 0.5s;
-  background-color: rgb(194, 194, 194);
+  color: rgb(255, 204, 0);
 }
 
 
@@ -90,7 +127,6 @@ html, body {
 
 .memberLogin{
   color: white;
-  letter-spacing: 5px;
 }
 
 .memberLogImg{
@@ -127,15 +163,16 @@ html, body {
 }
 
 .logo{
-  height: 30px;
-  padding: 15px 0;
+  font-size: 35px;
+  color: white;
+  padding: 20px 0;
 }
 
 .memPop{
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 5vw;
+  right: 14vw;
   top:80px;
   background-color: #e4e4e4;
   box-shadow: 2px 2px 5px rgb(213, 213, 213);
@@ -148,7 +185,7 @@ html, body {
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 5vw;
+  left: 9vw;
   top:80px;
   background-color: #e4e4e4;
   box-shadow: 2px 2px 5px rgb(213, 213, 213);
@@ -164,7 +201,7 @@ html, body {
   border-width: 0 10px 30px 10px;
   border-color: transparent transparent #e4e4e4 transparent;
   position: absolute;
-  right: 5.5vw;
+  right: 14vw;
   top:55px;
   z-index: 15;
 }
@@ -176,7 +213,7 @@ html, body {
   border-width: 0 10px 30px 10px;
   border-color: transparent transparent #e4e4e4 transparent;
   position: absolute;
-  left: 6vw;
+  left: 10vw;
   top:55px;
   z-index: 15;
 }
@@ -185,7 +222,6 @@ html, body {
   color: rgb(43, 43, 43);
   padding: 10px 40px;
   text-align: center;
-  letter-spacing: 5px;
   border-radius: 10px;
 }
 

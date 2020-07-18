@@ -4,13 +4,15 @@ import P5Wrapper from 'react-p5-wrapper';
 import sketch from './p5.js';
 
 
+
+
 class Home extends React.Component {
   render() {
     return (
     <div>
         <Head />
-        <Carousel />
-        <Bottom/>
+        {/* <Carousel />
+        <Bottom/> */}
     </div>
     )
   }
@@ -25,17 +27,16 @@ class Head extends React.Component {
         </div> 
 
         <div className="head">
-          
-
-          <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img>
-          <div className="subtitle">一款專門為英文學習打造的閃卡測驗網站。</div>
+          <div className="logoH">KiWords</div>
+          {/* <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img> */}
+          <div className="subtitle">KiWords makes simple learning tools that let you study English. Start learning today with flashcards & quizes !</div>
           <div className="start">START</div>
         </div>
         
-        <div className="middle">
+        {/* <div className="middle">
           <div className="share">評分最高的單字本：</div>
           <div className="tri"></div>
-        </div>
+        </div> */}
       </div>
     )
   }

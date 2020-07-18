@@ -6,12 +6,10 @@
   text-decoration: none;
 }
 
-//head
 
 .p5{
-    height: 600px;
-    overflow: hidden;
-    width: 100vw;
+  overflow: hidden;
+  width: 100vw;
 }
 
 .p5two{
@@ -21,39 +19,49 @@
 }
 
 .mktArea{
-  height: 550px;
-  background: linear-gradient(135deg, #1b7e7e 0%,#11fa7a 100%); 
+  /* height: 550px; */
+  /* background: linear-gradient(135deg, #1b7e7e 0%,#11fa7a 100%);  */
+  background-color: rgb(43, 43, 43);
   position: relative;
+  /* width: 90%; */
+  margin: auto;
+  max-width: 1200px;
+  overflow: hidden;
+  height: 100%;
 }
 
 .head{
   position: absolute;
-  top: 180px;
+  top: 120px;
   left: 10%;
 }
 
-.logoH{
-  height: 50px;
-}
+
+
 
 .subtitle{
-  padding: 10px 0px;
+  padding: 30px 0px;
   color: white;
   letter-spacing: 3px;
   line-height: 25px;
+  width: 70%;
 }
 
 .start{
   width: 200px;
-  background-color: #3a3a3a;
-  color: white;
+  background-color:rgb(255, 204, 0);
   letter-spacing: 1px;
   text-align: center;
   height: 30px;
   line-height: 30px;
   border-radius: 20px;
-  margin-top: 40px;
+  margin-top: 20px;
 
+}
+
+.logoH{
+  font-size:60px;
+  color:white;
 }
 
 .middle{
@@ -66,7 +74,6 @@
 
 
 
-// carousel
 
 .carouselContainer{
   display: flex;
@@ -90,7 +97,8 @@
 
 .container{
   padding: 100px 0 80px;
-  background-color: #f8f8f8;
+/*   background-color: #f8f8f8; */
+  background-color: rgb(43, 43, 43);
 }
 
 .arrowLeft{
@@ -134,7 +142,6 @@
   margin: 0 10px;
   border-radius: 5px;
   box-shadow: 0 4px 15px 0 rgba(40,44,53,0.08);
-  //CSS tranfrom effect?
 }
 
 .flexContainer> .card:hover{
@@ -143,11 +150,12 @@
    
 }
 
-//bottom
+
 
 .bottomArea{
   height: 43vh;
-  background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%);
+  /* background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%); */
+  background-color: rgb(43, 43, 43);
   position: relative;
   margin: 0 0 50px 0;
 
@@ -177,30 +185,24 @@
     height: 450px;
   }
 
-  .p5two{
-  height: 450px;
-}
 
-  .logoH{
-    display: none;
-  }
+
+ 
 
   .head{
     width: 80%;
-    top: 130px;
+    top: 150px;
   }
 
   .start{
     margin: 10px auto;
 }
 
- .mktArea{
+ /* .mktArea{
   height: 450px;
- }
+ } */
 
- .p5{
-  height: 450px;
- }
+ 
 
  .journey{
   width: 250px;
@@ -211,5 +213,5 @@
 
 
 
-}//media end
+}
 

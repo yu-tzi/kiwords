@@ -2,20 +2,20 @@
 
 export default function sketch(p) {
 
-  let c = 70;
+  let c = 50;
   let x = [];
   let y = [];
   let colorX = 0
   let colorY = 0
-  const Y_AXIS = 1;
+  /* const Y_AXIS = 1;
   const X_AXIS = 2;
-  let b1, b2;
+  let b1, b2; */
  
   p.setup = function(){
-    p.createCanvas(p.windowWidth, 900);
+    p.createCanvas(3000, 800);
 
-    b1 = p.color(101, 172, 189);
-    b2 = p.color(131, 255, 204);
+/*     b1 = p.color(101, 172, 189);
+    b2 = p.color(131, 255, 204); */
     
     for (var i = 0; i < c; i++) {
       x[i] = p.random(-100, p.windowWidth);
@@ -26,8 +26,8 @@ export default function sketch(p) {
 
 
   p.draw =function () {
-    p.background(0);
-    p.setGradient(0, 0, p.width, p.height, b1, b2, Y_AXIS);
+    p.background(43,43,43);
+    /* p.setGradient(0, 0, p.width, p.height, b1, b2, Y_AXIS); */
     p.stroke(colorX, 150, colorY);//white line
     p.noFill();//以下不填滿
     for (var j = 0; j < c; j++) {
@@ -57,7 +57,7 @@ export default function sketch(p) {
     
   }
 
-  p.setGradient = function (x, y, w, h, c1, c2, axis) {
+  /* p.setGradient = function (x, y, w, h, c1, c2, axis) {
     
     p.noFill();
     if (axis === Y_AXIS) {
@@ -80,9 +80,9 @@ export default function sketch(p) {
         p.line(i, y, i, y + h);
       }
     }
-  }
+  } */
 
-  p.windowResized=function() {
+ /*  p.windowResized=function() {
     p.resizeCanvas(p.windowWidth, 900);
-  }
+  } */
 }

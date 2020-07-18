@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import {
   BrowserRouter as Router,
@@ -93,13 +94,13 @@ class MemberPop extends React.Component {
     <div> 
       <span className="trianglePop"></span>
       <div className="memPop">
-          <a href={rootURL+"/dashboard"}>個人資料</a>
-          <a href={rootURL+"/statistics"}>學習統計</a>
+          <a href={rootURL+"/dashboard"}>Profile</a>
+          {/* <a href={rootURL+"/statistics"}>學習統計</a> */}
         <div className="signOut"
           onClick={() => {
             firebase.auth().signOut();
             window.location.href = rootURL
-          }}>登出
+          }}>Log Out
         </div>
       </div>
       </div>
@@ -115,9 +116,9 @@ class MenuPop extends React.Component {
     <div>
       <span className="trianglePopMenu"></span>
       <div className="menuPop">
-          <a href={rootURL +"/addWords"}>新增卡片</a>
-          <a href={rootURL +"/wordBooks"}>單字本</a>
-          <a href={rootURL +"/quiz"}>測驗</a>
+          <a href={rootURL + "/addWords"}>Add Words</a>
+          <a href={rootURL +"/wordBooks"}>Wordbook</a>
+          <a href={rootURL +"/quiz"}>Quiz</a>
       </div>
     </div>
 
@@ -189,7 +190,7 @@ class RouteNav extends React.Component{
           <a href={rootURL +"/login"} >
             <div className="triangle"></div>
           </a>
-          <a href={rootURL +"/login"} className="memberLogin">登入/註冊</a>
+          <a href={rootURL +"/login"} className="memberLogin">Log In / Sign Up</a>
       </div>
       )
     }
@@ -228,13 +229,16 @@ class RouteNav extends React.Component{
                 <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"
                   onClick={logIn ? this.toggleMenuPop.bind(this) : this.redirectToLogin.bind(this)}></img>
             {this.state.menuPop ? <MenuPop /> : null}  
-                <a href={logIn ? rootURL + "/addwords" : rootURL +"/login"} className="menuItem">新增卡片</a>
-                <a href={logIn ? rootURL + "/wordbooks" : rootURL +"/login"} className="menuItem">單字本</a>
-                <a href={logIn ? rootURL + "/quiz" : rootURL +"/login"} className="menuItem">測驗</a>
+                <a href={logIn ? rootURL + "/addwords" : rootURL + "/login"} className="menuItem">Add Words<div className="decoline"></div></a>
+                <a href={logIn ? rootURL + "/wordbooks" : rootURL + "/login"} className="menuItem">Wordbook<div className="decoline"></div></a>
+                <a href={logIn ? rootURL + "/quiz" : rootURL + "/login"} className="menuItem">Quiz<div className="decoline"></div></a>
               </ul>
-              <a href={rootURL}>
+
+              <a href={rootURL} className="logo">KiWords</a>
+
+              {/* <a href={rootURL}>
                 <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logo"></img>
-              </a>
+              </a> */}
           
 
           <ul className="member">
