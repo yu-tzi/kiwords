@@ -4,6 +4,11 @@
   font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
   list-style: none;
   text-decoration: none;
+
+}
+
+*:focus {
+    outline: none;
 }
 
 html, body {
@@ -175,7 +180,7 @@ html, body {
   right: 14vw;
   top:80px;
   background-color: #e4e4e4;
-  box-shadow: 2px 2px 5px rgb(213, 213, 213);
+  /* box-shadow: 2px 2px 5px rgb(213, 213, 213); */
   z-index: 10; 
   border-radius: 10px;
   padding: 10px 0;
@@ -188,7 +193,7 @@ html, body {
   left: 9vw;
   top:80px;
   background-color: #e4e4e4;
-  box-shadow: 2px 2px 5px rgb(213, 213, 213);
+  /* box-shadow: 2px 2px 5px rgb(213, 213, 213); */
   z-index: 10; 
   border-radius: 10px;
   padding: 10px 0;
@@ -201,7 +206,7 @@ html, body {
   border-width: 0 10px 30px 10px;
   border-color: transparent transparent #e4e4e4 transparent;
   position: absolute;
-  right: 14vw;
+  right: 15vw;
   top:55px;
   z-index: 15;
 }

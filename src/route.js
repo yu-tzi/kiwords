@@ -48,7 +48,8 @@ class RoutePage extends React.Component{
           <Switch>
             <Route exact path="/">
               <Home />
-              {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />  */}
+              <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
+              {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
               {/* <AddWords showBook={this.props.showBook} /> */}
               {/* <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
               {/* <QuizMatch showBook={this.props.showBook}/> */}
@@ -98,8 +99,10 @@ class MemberPop extends React.Component {
           {/* <a href={rootURL+"/statistics"}>學習統計</a> */}
         <div className="signOut"
           onClick={() => {
-            firebase.auth().signOut();
-            window.location.href = rootURL
+            firebase.auth().signOut().then(() => {
+              window.location.href = rootURL
+            })
+            
           }}>Log Out
         </div>
       </div>

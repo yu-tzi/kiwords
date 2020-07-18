@@ -47,17 +47,17 @@ class LogPage extends React.Component {
 
           </div>
           <div className="logClose" onClick={() => { window.location.href = rootURL}}>✕</div>
-          <div className="logTitle">{signUpBtn ? "註冊" : "登入"}</div>
+          <div className="logTitle">{signUpBtn ? "Sign Up" : "Log In"}</div>
           <div className="signUpComtainer" style={{ display: signUpBtn ? "block" : "none"}}>
             <form className="signUpForm" onSubmit={
             this.props.handleSignUp
           }>
-              <input className="signInInput" placeholder="輸入你的信箱" type="text" onChange={this.props.passingEmail} />
-              <input className="signInInput"  placeholder="輸入你的密碼" type="text" onChange={this.props.passingPassword} />
+              <input className="signInInput" placeholder="EMAIL" type="text" onChange={this.props.passingEmail} />
+              <input className="signInInput"  placeholder="PASSWORD" type="text" onChange={this.props.passingPassword} />
               
-              <input className="signInInput"  placeholder="輸入你的名字" type="text" onChange={this.props.passingName} />
-              <input type="submit" className="signInSend" value="送   出" />
-              <div className="signInBtn" onClick={this.switchLogIn}>返回登入頁</div>
+              <input className="signInInput"  placeholder="NMAE" type="text" onChange={this.props.passingName} />
+              <input type="submit" className="signInSend" value="SEND" />
+              <div className="signInBtn" onClick={this.switchLogIn}>Have an account already ?  Sign in.</div>
             </form>
           </div>
         
@@ -65,17 +65,17 @@ class LogPage extends React.Component {
           <form onSubmit={
             this.props.handleSignIn
           }>
-            <input type="text" placeholder="輸入你的信箱" onChange={this.props.passingEmail} />
-              <input type="text" placeholder="輸入你的密碼" onChange={this.props.passingPassword} />
-            <input type="submit" value="送   出" />
+            <input type="text" placeholder="EMAIL" onChange={this.props.passingEmail} />
+              <input type="text" placeholder="PASSWORD" onChange={this.props.passingPassword} />
+            <input type="submit" value="SEND" />
             </form>
             
-            <div className="signUpBtn" onClick={this.switchSignUp}>沒有帳號嗎？快速註冊</div>
-            <div className="signUpBtn normal" >或者 ...</div>
+            <div className="signUpBtn" onClick={this.switchSignUp}>Don't have an account ? Join us.</div>
+            <div className="signUpBtn normal" >or ...</div>
             <button
               onClick={() => {
                 if (this.props.logIn) {
-                  alert('you are already log in!')
+                  alert('You are already log in!')
                   return
                 }
                 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -83,13 +83,14 @@ class LogPage extends React.Component {
                   .then((res) => {
                     console.log(res)
                     if (res.additionalUserInfo.isNewUser) {
-                      alert("google new user!")
                       this.props.manageUserData(res, "name")
+                    } else {
+                      window.location.href = rootURL
                     }
                 
                   })
                   .catch((err) => { console.log(err), alert(err.message) })
-              }}>使用 Google 帳號
+              }}>I have Google account
           </button>
 
             <button
@@ -102,13 +103,12 @@ class LogPage extends React.Component {
                 firebase.auth().signInWithPopup(facebookAuthProvider).then((res) => {
                   console.log(res)
                   if (res.additionalUserInfo.isNewUser) {
-                    alert("faebook new user!")
                     this.props.manageUserData(res, "name")
                   }
 
                 })
                   .catch((err) => { console.log(err), alert(err.message) })
-              }}>使用 Facebook 帳號
+              }}>I have Facebook account
           </button>
           </div>
 

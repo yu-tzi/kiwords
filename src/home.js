@@ -3,7 +3,7 @@ import './style/home.scss';
 import P5Wrapper from 'react-p5-wrapper';
 import sketch from './p5.js';
 
-
+let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
 
 class Home extends React.Component {
@@ -27,10 +27,11 @@ class Head extends React.Component {
         </div> 
 
         <div className="head">
+          {/* <a href={rootURL +"/login"} > */}
           <div className="logoH">KiWords</div>
           {/* <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img> */}
           <div className="subtitle">KiWords makes simple learning tools that let you study English. Start learning today with flashcards & quizes !</div>
-          <div className="start">START</div>
+          <a href={rootURL + "/login"} ><div className="start">START</div></a>
         </div>
         
         {/* <div className="middle">

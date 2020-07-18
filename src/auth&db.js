@@ -4,6 +4,7 @@ import { db, firebase } from "./firebaseConfig"
 
 
 //================== Auth + DB setting ================
+let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
 class Auth extends React.Component {
 
@@ -113,7 +114,7 @@ class Auth extends React.Component {
 
         db.collection("users").doc(user.uid).get().then((doc) => {
           
-          if (doc.data().savedBook.length > 0) {
+          if (doc.data()?.savedBook.length > 0) {
             let total = doc.data().savedBook.length
             let loaded = 0
             for (let i = 0; i < doc.data().savedBook.length; i++) {
@@ -148,7 +149,7 @@ class Auth extends React.Component {
           let popBook = []
           if (doc) {
             doc.forEach((doc) => {
-              console.log(doc.data())
+              /* console.log(doc.data()) */
               popBook.push(doc.data())
             })
             console.log(popBook)
@@ -194,7 +195,7 @@ class Auth extends React.Component {
     } else {
       event.preventDefault();
       console.log(this.state.name)
-      alert('A name was submitted: ' + this.state.name);
+      /* alert('A name was submitted: ' + this.state.name); */
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
@@ -217,18 +218,15 @@ class Auth extends React.Component {
       alert('you have already signin in!')
       event.preventDefault();
     } else {
-      alert('handle signin activated!');
       event.preventDefault();
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
-          event.persist();
           window.location.href = "/"
         })
         .catch((err) => {
           alert(err.message)
           console.log(err)
-          event.persist();
         })
     }
   }
@@ -295,24 +293,31 @@ class Auth extends React.Component {
     }
     //send data
     console.log(data)
-    alert('store to data!')
     this.storeToUser(data)
   } 
 
 
   storeToUser(data) {
     console.log('storeToUser is triggered!')
+    console.log(data.uid)
+    console.log(data)
+    /* alert('store') */
 
-      db.collection("users").doc(data.uid).set(data)
-      .then(function () {
-        console.log("fisrt signup: " + data.uid + " is setted!")
-        window.location.href="/" 
-      
-      })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-        alert(err.message);
-      });
+    firebase.auth().onAuthStateChanged((user) => { 
+
+      if (user) {
+        db.collection("users").doc(data.uid).set(data)
+          .then(() => {
+            console.log("fisrt signup: " + data.uid + " is setted!")
+            window.location.href = rootURL
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+            alert(err.message);
+          });
+      }
+    })
+
     
 
   }
