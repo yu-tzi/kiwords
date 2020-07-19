@@ -13,7 +13,11 @@ class AddWords extends React.Component {
       meaning: "",
       synonyms: "",
       antonym: "",
-      nowBook : ""
+      nowBook: "",
+      menuPop: true,
+      renderBookOpt: false,
+      nowBookText: "",
+      docSend: false
     };
     this.searchSend = this.searchSend.bind(this)
     this.searchDic = this.searchDic.bind(this)
@@ -30,6 +34,7 @@ class AddWords extends React.Component {
   searchSend(e) {
     this.setState({ searchWord: e.target.value })
     this.searchDic()
+    this.setState({ menuPop: true })
   }
 
   searchDic() {
@@ -134,6 +139,7 @@ class AddWords extends React.Component {
           this.setState({ meaning: def })
           this.setState({ synonyms: syns })
           this.setState({ antonym: ant })
+          this.setState({ menuPop:false})
           
 
         },
@@ -146,7 +152,7 @@ class AddWords extends React.Component {
   renderSearch() {
     let all = []
     for (let i = 0; i < this.state.relatedWord.length; i++) {
-      all.push(<li key={i} onClick={(e) => {this.sendWord(e)}}>{this.state.relatedWord[i].word}</li>)
+      all.push(<li key={i} style={{ display: this.state.menuPop ? "block":"none"}} onClick={(e) => {this.sendWord(e)}}>{this.state.relatedWord[i].word}</li>)
     }
     return (
       <ul className="popMenu">
@@ -160,7 +166,10 @@ class AddWords extends React.Component {
     return (
       <div className="addCardBox">
         
-        <div className="nowBookBlock">4000 Essential English Words</div>
+        {this.renderBookID()}
+       
+        
+        <div className="nowBookBlock" onClick={() => { this.setState({ renderBookOpt: true }) }}>{this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.state.nowBookText : "Please select one of your wordbook"} </div>
         
         <form className="searchForm" action="" onSubmit={this.sendWord}><br></br>
           <input type="text" placeholder="Enter your search term ..." onChange={(e) => { this.searchSend(e) }}></input>
@@ -190,8 +199,8 @@ class AddWords extends React.Component {
           <textarea rows="3" cols="50" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
         </div>
         
-        <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.') } }}>
-          <input type="submit" className="sendCard" value={this.state.nowBook.replace(/\s+/g, "").length > 0 ? "SEND" : "Please select one of your wordbook"} ></input>
+        <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#00CED1" : "#e0ac49" }}>
+          <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "SEND"} ></input>
         </form>
         <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
 
@@ -254,8 +263,16 @@ class AddWords extends React.Component {
         db.collection("books").doc(this.state.nowBook).update({
           cards: firebase.firestore.FieldValue.arrayUnion(cards)
         })
-          .then(function () {
+          .then(()=> {
             console.log("Document successfully updated!");
+            this.setState({ docSend: true })
+            setTimeout(() => {
+              this.setState({ word: "" })
+              this.setState({ meaning: "" })
+              this.setState({ synonyms: "" })
+              this.setState({ antonym: "" })
+              this.setState({ docSend: false })
+            }, 2000);
           })
           .catch(function (error) {
             console.error("Error updating document: ", error);
@@ -277,12 +294,17 @@ class AddWords extends React.Component {
       }
       
       if (count == this.props.showBook.length) {
+        /* style={{ display: this.state.renderBookOpt ? "block" : "block" }}  */
         
         return (
-          <select style={{display:"none"}} className="bookSelect" onChange={(e) => { this.getBookID(e) }}>
-            <option key={this.props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
+          <div className="selectBlock" style={{ display: this.state.renderBookOpt ? "block" : "none" }} >
+            <div className="selectBlockX" onClick={()=>{this.setState({renderBookOpt:false})}}>X</div>
+          <select className="bookSelectOpt"  onChange={(e) => { this.getBookID(e) }}>
+            <option key={this.props.showBook.length + 1} value=" " >———— Choose One Wordbook ————</option>
             {all}
-          </select>
+            </select>
+            <div className="selectBlockSend" onClick={() => { this.setState({ renderBookOpt: false }) }}>OK</div>
+          </div>
         )
       }
     } 
@@ -296,15 +318,21 @@ class AddWords extends React.Component {
   }
 
   getBookID(e) {
-      this.setState({ nowBook: e.target.value })
+    this.setState({ nowBook: e.target.value })
+    let bookName = ""
+    for (let i = 0; i < this.props.showBook.length; i++){
+      if (e.target.value === this.props.showBook[i].bookID) {
+        bookName = this.props.showBook[i].bookName
+      }
+    }
+    this.setState({ nowBookText: bookName})
   }
   
 
   render() {
     return (
       <div className="addWordBlock">
-          {/* 下拉式選單 */}
-        {this.renderBookID()}
+        {/* 下拉式選單 */}
         
         {this.renderCard()}
           {/* <form className="searchForm" action="" onSubmit={this.sendWord}>搜尋單字自動填入<br></br>

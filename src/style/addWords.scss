@@ -1,3 +1,64 @@
+.addWordBlock{
+  padding-bottom:50px;
+}
+
+.selectBlock{
+    background-color: rgb(0,0,0,0.8);
+    z-index: 20;
+    height: 230px;
+    width: 500px;
+    position: absolute;
+    left: calc(50% - 250px);
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
+    top: 10%;
+}
+
+.selectBlockX{
+  font-size: 20px;
+  position: relative;
+  left: 480px;
+  top: 5px;
+  color: white;
+  width: 20px;
+  cursor: pointer;
+}
+
+.selectBlockSend{
+  color: white;
+  font-size: 25px;
+  border-color: white;
+  border-width: 1px;
+  border-style: solid;
+  width: 150px;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  position: relative;
+  left: calc(50% - 85px);
+  top: 40px;
+  cursor: pointer;
+}
+
+.selectBlockSend:hover{
+  background-color: rgba(223, 130, 15, 0.8);
+}
+
+.bookSelectOpt{
+    height: 40px;
+    width: 480px;
+    border-color: white;
+    color: white;
+    padding: 0 10px;
+    /* margin: 10px; */
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-left: 10px;
+    margin-top: 50px;
+    border-width: 3px;
+    font-size: 18px;
+}
+
 .addCardBox{
     margin: auto;
     display: grid;
@@ -8,7 +69,30 @@
     height: 600px;
     max-width: 1100px;
     margin-top:15px;
+    position: relative;
 }
+
+.popMenu{
+  position: absolute;
+    background-color: whitesmoke;
+    font-size: 25px;
+    width: 280px;
+    top: 53px;
+    left: 20%;
+    border-width: 1px;
+    border-color: grey;
+    border-style: solid;
+}
+
+
+
+
+.popMenu>li{
+    padding: 5px 10px;
+
+}
+
+
 
 .searchForm{
     grid-column-start: 1;
@@ -25,9 +109,10 @@
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 3;
-    background-color: rgb(255, 242, 239);
+    background-color: rgb(224, 172, 73);
     border-radius: 5px;
     margin: 0 15px 0 0px;
+    cursor: pointer;
 }
 
 .word{
@@ -162,9 +247,12 @@
     grid-column-end: 4;
     grid-row-start: 5;
     grid-row-end: 6;
-    background-color: orange;
+    background-color: rgb(224, 172, 73);
     border-radius: 5px;
     margin: 0 15px 0 0;
+    display: flex;
+    transition: background-color 0.5s ease;
+    cursor: pointer;
 }
 
 .nowBookBlock{
@@ -213,7 +301,7 @@
   padding: 5px;
   font-size: 25px;
   border-radius: 5px;
-  color: white;
+  color: black;
   white-space: normal;
   background-color: rgb(0,0,0,0);
 }
@@ -222,13 +310,119 @@
 
 @media (max-width: 1000px) {
 
+
+.popMenu{
+  position: absolute;
+    background-color: whitesmoke;
+   font-size: 20px;
+    width: 280px;
+    top: 50px;
+    left: calc(30% - 140px);
+    border-width: 1px;
+    border-color: grey;
+    border-style: solid;
+}
+
+
 .addCardBox{
-  grid-template-columns: 2.5fr 1fr 1.9fr;
+  grid-template-columns: 2.5fr 0.6fr 1.9fr;
+}
+
+
+
+.word{
+  flex-direction: column;
+}
+
+.searchForm>input{
+  font-size: 25px;
+}
+
+.meaning > textarea{
+  width: 450px;
+}
+
+.antonym > textarea{
+  width: 200px;
+}
+
+.synonyms > textarea{
+  width: 200px;
 }
 
 }
 
 @media (max-width: 768px) {
+
+  .selectBlock{
+    height: 200px;
+    width: 300px;
+    left: calc(50% - 150px);
+  }
+
+  .selectBlockX{
+    left: 280px;
+  }
+
+  .bookSelectOpt{
+    height: 40px;
+    width: 280px;
+    padding: 0 10px;
+    margin-left: 10px;
+    margin-top: 30px;
+    border-width: 1px;
+    font-size: 16px;
+  }
+  .selectBlockSend{
+    font-size: 18px;
+    border-width: 1px;
+    width: 150px;
+    padding: 5px;
+    left: calc(50% - 85px);
+    top: 40px;
+  }
+
+  .nowBookBlock{
+    height: 210px;
+  }
+
+  .popMenu{
+    font-size: 20px;
+    width: 220px;
+    top: 273px;
+    left: 25%;
+  }
+
+  .searchForm > input{
+    font-size: 23px;
+  }
+
+  .word > div{
+    font-size: 25px;
+  }
+
+  .word > input{
+    margin-bottom: 5px;
+  }
+
+.meaning > textarea{
+  width: 300px;
+  font-size: 16px;
+}
+
+.synonyms > textarea{
+  margin: 0 0 5px 0;
+  font-size: 16px;
+}
+
+.antonym > textarea{
+  margin: 0 0 5px 0;
+  font-size: 16px;
+}
+
+.addCardBox{
+  grid-template-columns: 2.5fr 1fr 1.9fr;
+}
 
 .addCardBox{
   grid-template-columns: 100%;
@@ -325,7 +519,14 @@
 }
 
 
+
 @media (max-width: 500px) {
+
+.popMenu{
+      width: 190px;
+    top: 265px;
+    left: calc(35vw - 100px);
+}
 
   .searchForm > input{
     font-size: 18px;
@@ -346,6 +547,13 @@
     margin: 0 0 10px 0;
    }
 
+   .meaning > textarea{
+    width: 163px;
+    font-size: 16px;
+    height: 75px;
+
+   }
+
    .meaning > div {
     font-size: 20px;
 }
@@ -357,6 +565,7 @@
 
   .synonyms > div {
     font-size: 20px;
+    margin-top: 5px;
 }
 
 .synonyms >textarea{
@@ -367,6 +576,7 @@
 
   .antonym > div {
     font-size: 20px;
+    margin-top: 5px;
 }
 
 .antonym >textarea{
