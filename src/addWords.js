@@ -158,8 +158,17 @@ class AddWords extends React.Component {
   renderCard() {
 
     return (
-      <div className="cardBox">
-        <div className="cardBody">
+      <div className="addCardBox">
+        
+        <div className="nowBookBlock">4000 Essential English Words</div>
+        
+        <form className="searchForm" action="" onSubmit={this.sendWord}><br></br>
+          <input type="text" placeholder="Enter your search term ..." onChange={(e) => { this.searchSend(e) }}></input>
+          <div className="explain">{"( "+ "or fill in the blank yourself"+" )"}</div>
+          
+          </form>
+
+        {this.renderSearch()}
           
           <div className="word">
             <div>word</div>
@@ -168,20 +177,27 @@ class AddWords extends React.Component {
 
           <div className="meaning">
             <div>meaning</div>
-            <input type="text" value={this.state.meaning || ""} onChange={(e) => this.changeCardInput(e)}></input>
+          <textarea rows="3" cols="50" value={this.state.meaning || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
           </div>
 
           <div className="synonyms">
             <div>synonyms</div>
-            <input type="text" value={this.state.synonyms || ""} onChange={(e) => this.changeCardInput(e)}></input>
+          <textarea rows="3" cols="50" value={this.state.synonyms || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
           </div>
 
           <div className="antonym">
             <div>antonym</div>
-            <input type="text" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)}></input>
-          </div>
+          <textarea rows="3" cols="50" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
         </div>
-      </div>
+        
+        <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.') } }}>
+          <input type="submit" className="sendCard" value={this.state.nowBook.replace(/\s+/g, "").length > 0 ? "SEND" : "Please select one of your wordbook"} ></input>
+        </form>
+        <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
+
+
+        </div>
+
     )
 
   }
@@ -263,7 +279,7 @@ class AddWords extends React.Component {
       if (count == this.props.showBook.length) {
         
         return (
-          <select className="bookSelect" onChange={(e) => { this.getBookID(e) }}>
+          <select style={{display:"none"}} className="bookSelect" onChange={(e) => { this.getBookID(e) }}>
             <option key={this.props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
             {all}
           </select>
@@ -290,23 +306,21 @@ class AddWords extends React.Component {
           {/* 下拉式選單 */}
         {this.renderBookID()}
         
-        <div className="addWordCard">
-          
-          <form className="searchForm" action="" onSubmit={this.sendWord}>搜尋單字自動填入<br></br>
+        {this.renderCard()}
+          {/* <form className="searchForm" action="" onSubmit={this.sendWord}>搜尋單字自動填入<br></br>
             <input type="text" placeholder="輸入你想查詢的單字" onChange={(e) => { this.searchSend(e) }}></input><br></br>
             或者直接輸入...
           </form>
-            {/* 提示選單 */}
-            {this.renderSearch()}
-            {/* 單字欄位 */}
+
+            {this.renderSearch()} 
+            
             {this.renderCard()}
       
           <form onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('請選擇單字本')} }}>
             <input type="submit" className="sendCard" value={this.state.nowBook.replace(/\s+/g, "").length > 0 ? "送出字卡" : "尚未選擇單字本"} ></input>
           </form>
-          <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
+          <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>*/}
           
-        </div> 
       </div>
     )
   }

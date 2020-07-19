@@ -2,6 +2,8 @@ import React from "react";
 import { db, storage } from "./firebaseConfig"
 import './style/dashboard.scss';
 
+let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
+
 class Dashboards extends React.Component {
 
   constructor(props) {
@@ -9,7 +11,8 @@ class Dashboards extends React.Component {
     this.state = {
       imgUploadPop: false,
       titleUploadPop: false,
-      titleContent: ""
+      titleContent: "",
+      reviseNamePop: false
     }
     this.changeName = this.changeName.bind(this)
     this.convertName = this.convertName.bind(this)
@@ -36,6 +39,7 @@ class Dashboards extends React.Component {
         "name": name
       }).then(() => {
         console.log("名字修改完成!")
+        
       })
         .catch(function (error) {
           alert("Error getting documents: ", error)
@@ -45,7 +49,11 @@ class Dashboards extends React.Component {
   }
 
   titleUploadPop() {
-    this.setState({ titleUploadPop: true})
+    this.setState({ titleUploadPop: true })
+    this.setState({ reviseNamePop: true })
+    if (this.state.imgUploadPop) {
+      this.setState({ imgUploadPop:false})
+    }
   }
 
   titleUploadClose() {
@@ -53,7 +61,10 @@ class Dashboards extends React.Component {
   }
 
   imageUploadPop() {
-    this.setState({ imgUploadPop: true})
+    this.setState({ imgUploadPop: true })
+    if (this.state.titleUploadPop) {
+      this.setState({ titleUploadPop: false })
+    }
   }
 
   imageUploadClose() {
@@ -89,6 +100,7 @@ class Dashboards extends React.Component {
         "image": res
       }).then(() => {
         console.log("照片修改完成!")
+        window.location.href = rootURL + "/dashboard"
       })
         .catch(function (error) {
           alert("Error getting documents: ", error)
@@ -111,7 +123,8 @@ class Dashboards extends React.Component {
     }
     return (
       <div className="profileTitle">{name}
-        <img className="edit editTitle" src="https://i.imgur.com/W1LMjHf.png" alt="" onClick={this.titleUploadPop}></img>
+        {/* <img className="edit editTitle" src="https://i.imgur.com/W1LMjHf.png" alt="" onClick={this.titleUploadPop}></img> */}
+        
       </div>
     )
   }
@@ -136,19 +149,16 @@ class Dashboards extends React.Component {
   }
 
   changeName() {
-    alert("change name")
 
     if (this.props.userData.length > 0) {
-      alert("this.props.userData.length > 0")
-      console.log(this.props.userData[0].uid)
       let uid = this.props.userData[0].uid
-      alert(uid)
+      /* alert(uid) */
       event.preventDefault()
 
       db.collection("users").doc(uid).update({
         "name": this.state.titleContent
       }).then(() => {
-        alert("文字修改完成!")
+        window.location.href = rootURL + "/dashboard"
       })
         .catch(function (error) {
           alert("Error getting documents: ", error)
@@ -159,39 +169,68 @@ class Dashboards extends React.Component {
 
   render() {
     return (
-      <div className="profileBox">
-        <div className="profileImgBox">
-          
-          
-          {this.convertImg()}
+      <div className="dashContainer">
+        
+        <div className="profileBox">
+          <div className="profileImgBox">
+            
+            
+            {this.convertImg()}
 
-          <img className="edit editImg" src="https://i.imgur.com/W1LMjHf.png" alt=""
-            onClick={this.imageUploadPop}></img>
-          
-          {/* image upload pop */}
-          <div className="imageUploadPop" style={{ display: this.state.imgUploadPop ? "block" : "none" }}>
-            <input type="file" name="file" className="uploadPicture" placeholder="上傳檔案" accept="image/*" onChange={this.uploadImg} />
-            <div className="imgUploadClose" onClick={this.imageUploadClose}>✕</div>
-          </div>
-
-          {/* word upload pop */}
-          <div className="titleUploadPop" style={{ display: this.state.titleUploadPop ? "block" : "none" }}>
-            <form className="uploadTitleForm" onSubmit={this.changeName}>
-              <input type="text" id="fname" name="fname" className="uploadTitle" placeholder="你想改成什麼名字？" onChange={(e) => { this.uploadName(e)}} />
-              <input type="submit" ></input>
-            </form>
-            <div className="titleUploadClose" onClick={this.titleUploadClose}>✕</div>
-          </div>
+            
+            
             
 
+            
+              
 
-        </div>
-        
-        {this.convertName()}
 
-        <div className="profileInfor">{this.props.memberEmail}
+          </div>
+          
+          {this.convertName()}
+
+          <div className="profileInfor">{this.props.memberEmail}
+            
+            <div className="uploadBtnBox">
+              
+            <div className="editTitleBox">
+              {/* word upload pop */}
+              <div className="titleUploadPop" style={{ display: this.state.titleUploadPop ? "block" : "none" }}>
+                <form className="uploadTitleForm" onSubmit={this.changeName}>
+                  <input type="text" id="fname" name="fname" className="uploadTitle" placeholder="NEW NAME" onChange={(e) => { this.uploadName(e) }} />
+                  <input type="submit" ></input>
+                </form>
+                <div className="titleUploadClose" onClick={this.titleUploadClose}>✕</div>
+              </div>
+
+
+                <div className="edit editUploadTitle" onClick={this.titleUploadPop}>Change Your Name
         </div>
-        
+              
+              </div>
+            
+              <div className="editImgBox">
+              {/* image upload pop */}
+              <div className="imageUploadPop" style={{ display: this.state.imgUploadPop ? "block" : "none" }}>
+                <input type="file" name="file" className="uploadPicture" placeholder="上傳檔案" accept="image/*" onChange={this.uploadImg} />
+                <div className="imgUploadClose" onClick={this.imageUploadClose}>✕</div>
+              </div>
+
+
+                <div className="edit editImg" onClick={this.imageUploadPop}>Upload New Photo</div>
+                
+              </div>
+              
+          {/* <img className="edit editImg" src="https://i.imgur.com/W1LMjHf.png" alt=""
+              ></img> */}
+            </div>
+          </div>
+        </div>
+
+        <div className="statisBox">
+          <div className="statisUp"></div>
+          <div className="statisDown"></div>
+        </div>
       </div>
     )
   }
