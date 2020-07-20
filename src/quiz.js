@@ -112,9 +112,9 @@ const QuizArea = (props) => {
       </div>
 
       <div className="topic-Area">
-        <div className="title">Meaning : {props.topic[2]?.meaning}</div>
-        <div className="title-antonym">Antonym : {props.topic[0]?.ant}</div>
-        <div className="title-synonyms">Synonyms : {props.topic[1]?.syn}</div>
+        <div className="title"><div className="titleL">Meaning  </div>{props.topic[2]?.meaning}</div>
+        <div className="title-antonym"><div className="title-antonymL">Antonym </div>{props.topic[0]?.ant}</div>
+        <div className="title-synonyms"><div className="title-synonymsL">Synonyms  </div>{props.topic[1]?.syn}</div>
       </div>
 
     </div>
@@ -131,6 +131,12 @@ const QuizContext = createContext({
 });
 
 const QuizContainer = (props) => {
+
+  const [bookIDpop, setBookIDpop] = useState(false)
+  useEffect(() => { console.log("bookIDpop:" + bookIDpop) }, [bookIDpop])
+
+  const [bookName, setBookName] = useState("")
+  useEffect(() => { console.log("bookName:" + bookName) }, [bookName])
 
   const [checked, setChecked] = useState([true])
   const [bookID, setBookID] = useState([""])
@@ -291,6 +297,11 @@ const QuizContainer = (props) => {
   }, [topic])
 
 
+  const [sendSwitch, setSendSwitch] = useState(false)
+  useEffect(() => {
+    console.log(sendSwitch)
+  }, [sendSwitch])
+
 
   const [optionList, setOptionList] = useState([""])
   useEffect(() => {
@@ -339,6 +350,7 @@ const QuizContainer = (props) => {
   }, [end])
 
   const checkAns = () => {
+    console.log(" checkAns")
     let correct = false
     let chooseAns = ""
     let ans = 0
@@ -446,6 +458,7 @@ const QuizContainer = (props) => {
     }
     console.log(newList)
     setOptionList(newList)
+    
   }
 
 
@@ -454,6 +467,12 @@ const QuizContainer = (props) => {
     if (e.target.value !== " ") {
       setBookID(e.target.value)
       setStart(false)
+      for (let i = 0; i < props.showBook.length; i++){
+        if (e.target.value === props.showBook[i].bookID) {
+          setBookName(props.showBook[i].bookName)
+        }
+      }
+      
     } else {
       setBookID(" ")
       setStart(true)
@@ -484,10 +503,14 @@ const QuizContainer = (props) => {
       if (count == props.showBook.length) {
 
         return (
-          <select onChange={(e) => { getBookID(e) }} className="bookSelect">
-            <option key={props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
-            {all}
-          </select>
+          <div className="bookIDpop" style={{ display: bookIDpop ? "block" : "none" }}>
+            <div className="bookPopX" onClick={() => { setBookIDpop(false)}}>X</div>
+            <select onChange={(e) => { getBookID(e) }} className="bookSelect">
+              <option key={props.showBook.length + 1} value=" " >———— Please choose one wordbook ————</option>
+              {all}
+            </select>
+            <div className="bookPopSend" onClick={() => { setBookIDpop(false) }}>SEND</div>
+          </div>
         )
       }
     }
@@ -499,14 +522,18 @@ const QuizContainer = (props) => {
   }
 
   /* const [end, setEnd] = useState(false) */
-
+/* <div style={{ display: start ? "none" : "block" }} className="quizContainer"> */
+  /* <div className="quizArea" style={{ display: end ? "none" : "block" }}> */
+  
+  
   return (
-    <div>
+    <div className="quizContainer">
+      <div className="bookIDpopBtn" onClick={() => { setBookIDpop(true) }}>{bookName === "" ? "Please Choose One of Your Wordbook" : bookName}</div>
       {renderBookID()}
+
       
-      <div style={{ display: start ? "none" : "block" }} className="quizContainer">
-        <div className="quizArea" style={{ display: end ? "none" : "block" }}>
-          <div className="score">目前分數 : {score}</div>
+        
+          {/* <div className="score">目前分數 : {score}</div> */}
 
           <QuizContext.Provider value={{ chooseItem, unChooseItem }}>
 
@@ -539,12 +566,13 @@ const QuizContainer = (props) => {
           </QuizContext.Provider>
 
 
-          <div className="btnList">
-            <div onClick={() => { setPage(page + 2) }} className="next">下一題</div>
-            <div onClick={() => { endQuiz() }} className="end-quiz">結束測驗</div>
-            <div onClick={checkAns} className="send">送出</div>
-          </div>
-        </div>
+      {/* setSendSwitch */}
+       <div onClick={() => { setPage(page + 2) }} className="next">NEXT</div>
+       <div onClick={checkAns} className="send">SEND</div>
+       <div onClick={() => { endQuiz() }} className="end-quiz">QUIT</div>
+           
+         
+        
 
         <div className="endQuiz" style={{ display: end ? "block" : "none" }}>
           <div className="yourScore">你的分數是</div>
@@ -552,7 +580,7 @@ const QuizContainer = (props) => {
 
         </div>
 
-      </div>
+      
     </div>
 
   )

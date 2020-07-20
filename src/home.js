@@ -31,7 +31,7 @@ class Head extends React.Component {
           <div className="logoH">KiWords</div>
           {/* <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img> */}
           <div className="subtitle">KiWords makes simple learning tools that let you study English. Start learning today with flashcards & quizes !</div>
-          <a href={rootURL + "/login"} ><div className="start">START</div></a>
+          <a href={rootURL + "/"} ><div className="start">START</div></a>
         </div>
         
         {/* <div className="middle">

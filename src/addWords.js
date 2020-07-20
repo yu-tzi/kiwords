@@ -199,7 +199,7 @@ class AddWords extends React.Component {
           <textarea rows="3" cols="50" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
         </div>
         
-        <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#00CED1" : "#e0ac49" }}>
+        <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#FFD700" : "#e0ac49" }}>
           <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "SEND"} ></input>
         </form>
         <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>

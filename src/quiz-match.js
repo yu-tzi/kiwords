@@ -132,6 +132,9 @@ const QuizContext = createContext({
 
 const QuizContainer = (props) => {
 
+  const [bookIDpop, setBookIDpop] = useState(false)
+  useEffect(() => { console.log("bookIDpop:"+ bookIDpop) }, [bookIDpop])
+  
   const [checked, setChecked] = useState([true])
   const [bookID, setBookID] = useState([""])
   useEffect(() => {
@@ -484,10 +487,12 @@ const QuizContainer = (props) => {
         if (count == props.showBook.length) {
 
           return (
-            <select onChange={(e) => { getBookID(e) }} className="bookSelect">
-              <option key={props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
-              {all}
-            </select>
+            <div className="bookIDpop" style={{ display: bookIDpop? "block":"none" }}>
+              <select onChange={(e) => { getBookID(e) }} className="bookSelect">
+                <option key={props.showBook.length + 1} value=" " >———— 請選擇單字本 ————</option>
+                {all}
+              </select>
+            </div>
           )
         }
       }
@@ -502,6 +507,7 @@ const QuizContainer = (props) => {
 
   return (
     <div>
+      <div className="bookIDpopBtn" onClick={() => { setBookIDpop(true) }}>{ BookIDpop?"Please Choose One of Your Wordbook":""}</div>
       {renderBookID()}
       <div className="changePage">
         <div>{"測驗模式 :"+"　"}</div><div> 單字聽打</div><div>｜</div><div>單字配對</div>

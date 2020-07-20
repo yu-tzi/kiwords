@@ -50,10 +50,10 @@ class RoutePage extends React.Component{
               {/* <Home /> */}
               {/* <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
-              <AddWords showBook={this.props.showBook} />
+              {/* <AddWords showBook={this.props.showBook} /> */}
               {/* <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} /> */}
               {/* <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
-              {/* <QuizMatch showBook={this.props.showBook}/> */}
+              <QuizMatch showBook={this.props.showBook}/>
             </Route>
             <Route path="/login">
               <Home />
@@ -210,7 +210,7 @@ class RouteNav extends React.Component{
   }
 
   redirectToLogin() {
-    window.location.replace(rootURL +"./login");
+    window.location.replace(rootURL +"/login");
   }
 
   toggleMemberPop() {
