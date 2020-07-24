@@ -2,31 +2,88 @@ import React from "react";
 import { db,firebase } from "./firebaseConfig"
 import './style/wordBooks.scss';
 
+let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
 class WordBook extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      
+      toggleCreate: true
     };
+
+    this.convertName = this.convertName.bind(this)
+    this.convertImg = this.convertImg.bind(this)
 
   }
 
+  convertImg() {
+
+    if (this.props.img.length < 5) {
+      return (
+        <div className="wordbookImg" >{this.props.name.slice(0, 1)}</div>
+      )
+    } else {
+      return (
+        <img className="wordbookImg" src={this.props.img} alt=""
+        ></img>
+      )
+
+    }
+  }
+
+  convertName() {
+
+    let name
+
+    if (this.props.name.length < 19) {
+      name = this.props.name
+    } else {
+      name = this.props.name.slice(0, 18)
+      name = name + "..."
+    }
+    return (
+      <div className="wordbookN">{name}
+      </div>
+    )
+  }
+
+
+
   render() {
+    const toggleCreate = this.state.toggleCreate
     return (
       <div>
+          
+          
+        <div className="addbookTopArea">
+              {this.convertImg()}
+        
 
-        <div className="mainTitle">你建立的單字本</div>
-        <div><MyBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} /></div>
+        <div className="nameBtn">
+          <div>
+            {this.convertName()}
+          </div>
+          
+          <div className="toggleContainer">
+              <div className="toggleOption" style={{ backgroundColor: toggleCreate ? "#7dd" : "#303545", color: toggleCreate ? "#303545" : "white"}} onClick={() => { this.setState({toggleCreate: true})}}>Created Books</div>
+              <div className="toggleOption" onClick={() => { this.setState({ toggleCreate: false }) }} style={{ backgroundColor: toggleCreate ? "#303545" : "#7dd", color: toggleCreate ? "white" : "#303545"}}>Liked Books</div>
+            </div>
+            
+          </div>
+        </div>
 
-        <div className="mainTitle">你儲存的單字本</div>
-        <div><SaveBook userData={this.props.userData} saveBook={this.props.saveBook}/></div>
 
-        <div className="mainTitle">熱門推薦</div>
-        <div><PopularBook userData={this.props.userData} popularBook={this.props.popularBook}/></div>
+          <div style={{ display: toggleCreate ? "block":"none"}} className="mainTitle"></div>
+        <div><MyBook style={{ display: toggleCreate ? "block" : "none" }} userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} toggleCreate={this.state.toggleCreate} /></div>
 
-      
+          <div style={{ display: toggleCreate ? "none" : "block" }}  className="mainTitle"></div>
+        <div><SaveBook style={{ display: toggleCreate ? "none" : "block" }} userData={this.props.userData} saveBook={this.props.saveBook} toggleCreate={this.state.toggleCreate}/></div>
+
+          <div style={{ display: toggleCreate ? "none" : "block"}}  className="mainTitle"></div>
+          <div><PopularBook style={{ display: toggleCreate ? "none" : "block" }} userData={this.props.userData} popularBook={this.props.popularBook} toggleCreate={this.state.toggleCreate} /></div>
+
+        
       </div>
     )
   }
@@ -295,7 +352,7 @@ class PopularBook extends React.Component {
 
   render() {
     return (
-      <div className="popBookBlock">
+      <div className="popBookBlock" style={{ display: this.props.toggleCreate? "none" : "block" }}>
         {/* search */}
         <div className="searchTitle">試試這些關鍵字 : TOEIC , SAT , vocab...</div>
         <form onSubmit={this.sendSearchData} className="bookSearchFrame">
@@ -354,7 +411,7 @@ class SaveBook extends React.Component {
       }
 
       return (
-        <div className="saveBookRender">
+        <div className="saveBookRender" style={{ display: this.props.toggleCreate ? "none" : "block" }}>
           {all}
       </div>
       )
@@ -438,7 +495,7 @@ class MyBook extends React.Component {
   }
 
   manageBookData() {
-    alert("manageBookData")
+    /* alert("manageBookData") */
 
     let searchWords = []
     let searchArray = this.state.bookName.split("").filter(function (c) {
@@ -481,13 +538,27 @@ class MyBook extends React.Component {
   // 存進 userData 的 ownBook
 
   storeBookData(bookInfo) {
-    alert("storeBookData")
+    /* alert("storeBookData") */
     event.preventDefault()
 
     db.collection("books").doc(bookInfo.bookID).set(bookInfo)
       .then(() => {
         event.preventDefault()
-        alert("bookInfo: " + this.state.uid + " is setted!")
+      /* alert("bookInfo: " + this.state.uid + " is setted!") */
+        
+        db.collection("users").doc(this.state.uid).update({
+          ownedBook: firebase.firestore.FieldValue.arrayUnion(bookInfo.bookID)
+        }).then(() => {
+          /* alert("user book data : " + bookInfo.bookID + " is setted!") */
+          this.setState({ newBookPop: false })
+          window.location.href = (rootURL + '/wordbooks')
+        })
+          .catch(function (err) {
+            event.preventDefault()
+            console.error("Error adding document: ", error);
+            alert(err.message);
+          });
+        
       })
       .catch(function (err) {
         event.preventDefault()
@@ -496,17 +567,7 @@ class MyBook extends React.Component {
       });
     
     
-    db.collection("users").doc(this.state.uid).update({
-      ownedBook: firebase.firestore.FieldValue.arrayUnion(bookInfo.bookID)
-    }).then(() => {
-      alert("user book data : " + bookInfo.bookID + " is setted!")
-      this.setState({ newBookPop: false })
-    })
-      .catch(function (err) {
-        event.preventDefault()
-        console.error("Error adding document: ", error);
-        alert(err.message);
-      });
+    
 
   }
 
@@ -518,9 +579,10 @@ class MyBook extends React.Component {
         <div className="myBookRender">
           
           {/* adding books frame */}
-          <div className="newBookShow bookformat" style={{ display: this.state.newBookPop ? "none" : "block" }} >
-            <div className="bookTitle">建立屬於你的學習素材！</div>
-            <div className="bookBtn" onClick={() => { this.setState({ newBookPop: true }) }}>新增單字本</div>
+          <div className="newBookShow " style={{ display: this.state.newBookPop ? "none" : "block" }} >
+            <div className="addbookDecor">
+              <div className="addBookTitle" onClick={() => { this.setState({ newBookPop: true }) }}>{"✚"+ "　"+"Create New Book"}</div>
+            </div>
           </div>
 
           <div className="newBookHide bookformat" style={{ display: this.state.newBookPop ? "block" : "none" }}>
@@ -534,9 +596,11 @@ class MyBook extends React.Component {
             this.props.showBook.map((obj, index) => {
 
               return (
-                <div className="addBookShow bookformat" key={index}>
-                  <div className={"bookTitle "+ obj.bookID}>{obj.bookName}</div>
-                  <div className="bookBtn" onClick={() => { window.location.href=('https://kiwords-c058b.web.app/details/' + obj.bookID)}}>編輯單字</div>
+                <div className="addBookShow bookformat" key={index} onClick={(event) => { event.stopPropagation(),window.location.href = ('https://kiwords-c058b.web.app/details/' + obj.bookID) }}>
+                  <div className={"bookTitle " + obj.bookID} >{obj.bookName}</div>
+                  {/* <div className="bookBtn" onClick={() => { window.location.href=('https://kiwords-c058b.web.app/details/' + obj.bookID)}}>編輯單字</div> */}
+                  <div className="bookBtnPlus" onClick={(event) => { event.stopPropagation(),window.location.href = ('https://kiwords-c058b.web.app/addwords') }}>Add Words</div>
+                  {/* <div className="bookBtnView" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + obj.bookID) }}>View</div> */}
                 </div>)
           
             })
@@ -546,13 +610,35 @@ class MyBook extends React.Component {
 
         </div>
       )
+    } else {
+      return (
+        
+        <div className="noBookInfor" style={{ display: this.props.toggleCreate ? "flex" : "none" }}>
+          
+          <div className="noBookTitle">You have no Wordbook yet</div>
+          <div className="noBookSubtitle">Create a new Wordbook to start adding flashcards.</div>
+          <div className="noBookBtn" onClick={() => { this.setState({ newBookPop: true }) }}>Create Wordbook</div>
+
+
+          {/* add book popup */}
+          <div className="addbookpop" style={{ display: this.state.newBookPop ? "block" : "none" }}>
+            <div className="addbookpopX" onClick={() => { this.setState({ newBookPop: false }) }}>✕</div>
+            <form onSubmit={this.manageBookData} className="addbookpopFrame">
+              <input className="addbookpopEnter" type="text" placeholder="Enter a title, like : 4000 Essential English Words " onChange={(e) => this.getBookData(e)}></input>
+              <input className="addbookpopSend" type="submit" value="Create"></input>
+            </form>
+          </div>
+
+        </div>
+
+      )
     }
   }
 
 
   render() {
     return (
-      <div className="myBookBlock">
+      <div className="myBookBlock" style={{ display: this.props.toggleCreate ? "block" : "none" }}>
         {/* render books you have */}
         {this.showBook()}
 

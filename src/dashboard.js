@@ -173,18 +173,7 @@ class Dashboards extends React.Component {
         
         <div className="profileBox">
           <div className="profileImgBox">
-            
-            
             {this.convertImg()}
-
-            
-            
-            
-
-            
-              
-
-
           </div>
           
           {this.convertName()}
@@ -193,7 +182,9 @@ class Dashboards extends React.Component {
             
             <div className="uploadBtnBox">
               
-            <div className="editTitleBox">
+              <div className="editTitleBox">
+                
+                
               {/* word upload pop */}
               <div className="titleUploadPop" style={{ display: this.state.titleUploadPop ? "block" : "none" }}>
                 <form className="uploadTitleForm" onSubmit={this.changeName}>

@@ -1,3 +1,7 @@
+$background: #0d0e13;
+$darkblue: #131a32;
+
+
 *{
   margin: 0px;
   padding: 0px;
@@ -137,7 +141,7 @@
 .container{
   padding: 100px 0 80px;
 /*   background-color: #f8f8f8; */
-  background-color: rgb(43, 43, 43);
+  background-color: $background;
 }
 
 .arrowLeft{

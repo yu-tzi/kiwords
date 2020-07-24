@@ -222,7 +222,7 @@ class Auth extends React.Component {
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
           console.log(res)
-          window.location.href = "/"
+          window.location.href = "/wordbooks"
         })
         .catch((err) => {
           alert(err.message)
@@ -309,7 +309,7 @@ class Auth extends React.Component {
         db.collection("users").doc(data.uid).set(data)
           .then(() => {
             console.log("fisrt signup: " + data.uid + " is setted!")
-            window.location.href = rootURL
+            window.location.href = rootURL + "/wordbooks"
           })
           .catch(function (error) {
             console.error("Error adding document: ", error);

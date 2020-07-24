@@ -85,7 +85,7 @@ class LogPage extends React.Component {
                     if (res.additionalUserInfo.isNewUser) {
                       this.props.manageUserData(res, "name")
                     } else {
-                      window.location.href = rootURL
+                      window.location.href = rootURL + "/wordbooks"
                     }
                 
                   })

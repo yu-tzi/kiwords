@@ -1,3 +1,7 @@
+$background: #1a1d28;
+$darkblue: #131a32;
+
+
 *{
   margin: 0px;
   padding: 0px;
@@ -19,17 +23,17 @@ html, body {
 .content{
   min-height: 100vh;
   margin: 0 auto -50px;
-  background-color: #2b2b2b;
+  background-color: #0d0e13;
   padding: 0px;
 }
 
 .footer{
   height: 50px;
-  background-color: #2b2b2b;
+  background-color: #0d0e13;
 }
 
 .navBox{
-  background-color: #2b2b2b;
+  background-color: #0d0e13;
   width: 90%;
   margin: auto;
   max-width: 1200px;
@@ -76,6 +80,25 @@ html, body {
   -webkit-animation:type 0.2s steps(10) forwards;
 }
 
+.decolineLog{
+  height: 32px;
+  width: 120px;
+  position: absolute;
+  top: 20px;
+  border-bottom-style: solid;
+  border-bottom-color: orange;
+  border-bottom-width:0px;
+  
+}
+
+.decolineLog:hover{
+  white-space: nowrap;
+  overflow: hidden;
+  animation: type 0.2s steps(10) forwards;
+  -moz-animation:type 0.2s steps(10) forwards;  
+  -webkit-animation:type 0.2s steps(10) forwards;
+}
+
 @keyframes type
 {
   0%{ border-bottom-width:0px;}
@@ -101,9 +124,8 @@ html, body {
 
 .memberImgFrame:hover{
   transition: 0.5s;
-  color: rgb(255, 204, 0);
+  background-color: rgb(187, 186, 186);
 }
-
 
 .memberImg{
   height: 25px;
@@ -113,7 +135,7 @@ html, body {
   border-style: solid;
   margin: auto;
   color: white;
-  background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%);
+  background: #19295e;
   text-align: center;
   line-height: 25px;
 }
@@ -136,11 +158,6 @@ html, body {
 
 .memberLogImg{
   display: none;
-}
-
-.memberLogin:hover{
-  color: rgb(194, 194, 194);
-  transition: 0.5s;
 }
 
 

@@ -47,17 +47,17 @@ class RoutePage extends React.Component{
 
           <Switch>
             <Route exact path="/">
-              {/* <Home /> */}
+              {/* <Home logIn={this.props.logIn}/> */}
               {/* <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
               {/* <AddWords showBook={this.props.showBook} /> */}
-              {/* <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} /> */}
+              <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail}/>
               {/* <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
               {/* <QuizMatch showBook={this.props.showBook}/> */}
-              <Statistics />
+              {/* <Statistics /> */}
             </Route>
             <Route path="/login">
-              <Home />
+              <Home logIn={this.props.logIn}/>
               <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
             </Route>
             <Route path="/dashboard">
@@ -195,7 +195,7 @@ class RouteNav extends React.Component{
           <a href={rootURL +"/login"} >
             <div className="triangle"></div>
           </a>
-          <a href={rootURL +"/login"} className="memberLogin">Log In / Sign Up</a>
+          <a href={rootURL + "/login"} className="memberLogin">Log In / Sign Up<div className="decolineLog"></div></a>
       </div>
       )
     }

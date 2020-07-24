@@ -10,7 +10,7 @@ class Home extends React.Component {
   render() {
     return (
     <div>
-        <Head />
+        <Head logIn={this.props.logIn}/>
         {/* <Carousel />
         <Bottom/> */}
     </div>
@@ -31,7 +31,7 @@ class Head extends React.Component {
           <div className="logoH">KiWords</div>
           {/* <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img> */}
           <div className="subtitle">KiWords makes simple learning tools that let you study English. Start learning today with flashcards & quizes !</div>
-          <a href={rootURL + "/"} ><div className="start">START</div></a>
+          <a href={this.props.logIn ? rootURL + "/wordbooks" : rootURL + "/login"} ><div className="start">START</div></a>
         </div>
         
         {/* <div className="middle">
