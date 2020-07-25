@@ -2,6 +2,7 @@
   width: 80%;
   margin: auto;
   max-width: 1000px;
+  margin-top: 30px;
 }
 
 .myBookRender, .saveBookRender{
@@ -9,13 +10,20 @@
   grid-template-columns: 33% 33% 33%;
 }
 
+.saveBookRender{
+  margin: -110px;
+}
+
+
+
+
 .popBookBlock{
   display:flex;
   flex-direction: column;
   width: 80%;
   margin: 0 auto 0;
   max-width: 1000px;
-  padding: 0px 0px 100px;
+  padding: 0px 0px 80px;
 }
 
 .renderSearchData, .getPopData{
@@ -59,12 +67,12 @@
   padding-bottom: 15px;
 }
 
-.noBookTitle{
+.noBookTitle,.noLikedTitle{
   color: white;
   font-size: 30px;
 }
 
-.noBookSubtitle{
+.noBookSubtitle,.noLikedSubtitle{
   color: white;
   font-weight: 200;
   padding-top: 15px;
@@ -81,7 +89,49 @@
   line-height: 40px;
 }
 
-.noBookInfor{
+.bookSend{
+  color: orange;
+  margin-top: 30px;
+  background-color: #303545;
+  height: 40px;
+  width: 200px;
+  border-radius: 3px;
+  text-align: center;
+  border-style: none;
+  position: absolute;
+  right: 10px;
+  bottom: 15px;
+  cursor:pointer;
+  font-size: 16px;
+}
+
+.newBookHide{
+  background-color: orange;
+  width: 280px;
+  height: 180px;
+  border-radius: 5px;
+  margin: 20px auto;
+  position: relative;
+  border-style: solid;
+  border-width: 5px;
+  border-color: orange;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+
+.bookEnter{
+  width: 230px;
+  position: absolute;
+  background-color: rgb(0,0,0,0);
+  border-width: 0px;
+  top: 50px;
+  left: 30px;
+  border-bottom-width: 2px;
+  border-bottom-color: #303545;
+}
+
+.noBookInfor,.noLikedInfor{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -136,6 +186,11 @@
   top: 10px;
 }
 
+
+.newBookHide:hover{
+  border-bottom-color: #646f90;
+}
+
 .newBookShow{
   background-color: #646f90;
   width: 280px;
@@ -178,7 +233,6 @@
 
 
 
-
 .mainTitle{
   text-align: center;
   padding:25px 0 0;
@@ -212,10 +266,85 @@
   border-bottom-color: orange;
 }
 
+.likedSubtitle{
+  color: white;
+  font-weight: 200;
+  display: block;
+  text-align: center;
+  padding-top: 60px;
+}
+
+
+
 .searchTitle, .bookSearchFrame{
   text-align: center;
-  padding: 5px 0;
+  margin: 30px auto;
 }
+
+.bookSearchFrame{
+  text-align: center;
+  margin: 30px auto;
+  border-color: white;
+  border-style: solid;
+  width: 300px;
+  border-width: 1px;
+  border-radius: 20px;
+  padding: 3px;
+}
+
+.searchImg{
+  width: 20px;
+  padding-top: 4px;
+  position: relative;
+  top: 3px;
+}
+
+.searchBook{
+  background-color: #24293c;
+    width: 280px;
+    height: 180px;
+    border-radius: 5px;
+    margin: 20px auto;
+    position: relative;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #24293c;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.bookformat:hover{
+    border-bottom-color: orange;
+}
+
+.viewBookBtn{
+  font-size: 16px;
+  background-color: orange;
+  width: 150px;
+  border-radius: 3px;
+  padding: 5px 10px;
+  color: #303545;
+  text-align: center;
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.bookSearch{
+  border-right-style: none;
+  border-left-style: none;
+  border-bottom-style: none;
+  border-top-style: none;
+  background-color: rgba(0, 0, 0, 0);
+  width: 250px;
+  color: white;
+  font-size: 16px;
+  line-height: 16px;
+  height: 30px;
+}
+
+
 
 .bookSearchSend{
   margin: 0 5px;
@@ -228,6 +357,27 @@
   margin: 10px auto 10px;
   color: white;
   line-height: 30px;
+}
+
+.searchResultTitle{
+  margin: 10px auto 5px;
+}
+
+.searchAuthor{
+  font-size: 16px;
+  color: white;
+  font-size: 16px;
+  margin: 0 20px;
+  font-weight: 300;
+}
+
+
+.bookStar{
+  padding: 5px 0;
+  color: white;
+  font-size: 16px;
+  margin: 0 20px;
+  font-weight: 300;
 }
 
 .bookBtnPlus{
@@ -258,7 +408,7 @@
   cursor: pointer;
 }
 
-.bookBtn,.bookSend,.saveBookBtn{
+.bookBtn,.saveBookBtn{
   position: absolute;
     bottom: 30px;
     left: calc(50% - 125px);
@@ -276,12 +426,28 @@
   line-height: 30px;
 }
 
-.newBookHide{
-  background-color: transparent;
-  border-color: rgb(67, 68, 69);
-  border-width: 2px;
-  border-style: double,
+.searchHintTitle{
+  color: rgb(119, 221, 221);
+  font-weight: 800;
+  padding-left: 20px;
+
 }
+
+.noSreachResult{
+  color: white;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.searchHintTitle:last-child{
+  padding-top:20px;
+}
+
+.saveBookRender{
+      margin-left: 0px;
+    margin-right: 0px;
+}
+
 
 
 .addBookTitle{
@@ -312,28 +478,6 @@
 }
 
 
-
-
-.bookEnter{
-  position: absolute;
-  left: calc(50% - 135px);
-  font-size: 22px;
-  margin: 30px 0 10px 0;
-}
-
-
-.saveBook{
-  background-color:  rgb(240, 229, 134);
-}
-
-.popBook{
-  background-color: rgb(240, 190, 134);
-}
-
-.searchBook{
-  background-color: rgb(247, 184, 206);
-}
-
 //==============
 @media (max-width: 1200px) {
 
@@ -350,7 +494,7 @@
 }
 }
 
-.bookAuthor,.searchAuthor{
+.bookAuthor{
     font-size: 20px;
     width: 80%;
     text-align: center;
@@ -358,8 +502,6 @@
 }
 
 .bookStar{
-  margin: 0 auto;
-  text-align: center;
   padding: 5px 0;
 }
 
