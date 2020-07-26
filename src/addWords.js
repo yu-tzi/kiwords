@@ -18,7 +18,8 @@ class AddWords extends React.Component {
       renderBookOpt: false,
       nowBookText: "",
       docSend: false,
-      newWord:1
+      newWord: 1,
+      menuPopIndex:""
     };
     this.searchSend = this.searchSend.bind(this)
     this.searchDic = this.searchDic.bind(this)
@@ -61,30 +62,41 @@ class AddWords extends React.Component {
   }
 
   newWordsBlock(i) {
+    let keyvalue = "key" + i.toString()
+
+    let index 
+    for (let i = 0; i < this.state.meaning.length; i++){
+      if (this.state.meaning[i].hasOwnProperty(keyvalue)) {
+
+        index = i
+      }
+    }
+    
     return (
-        <div key={i} className="addWordBlocks">
+        <div key={i} className={"addWordBlocks"+" key"+i}>
           {this.renderSearch(i)}
         <div className="upper">
           <div className="word">
             {/* <div>word</div> */}
-            <input type="text" value={this.state.searchWord} onChange={(e) => this.changeCardInput(e)} placeholder="Enter word"></input>
+            <input type="text" className={index + " " + keyvalue} value={this.state.word[index]?.[keyvalue] || this.state.searchWord} onChange={(e) => this.changeCardInput(e)} placeholder="Enter word"></input>
           </div>
 
           <div className="meaning">
-            {/* <div>meaning</div> */}
-            <textarea rows="3" cols="50" value={this.state.meaning || ""} onChange={(e) => this.changeCardInput(e)} placeholder="Meaning"></textarea>
+            
+            <textarea rows="3" className={index + " " + keyvalue} cols="50" value={this.state.meaning[index]?.[keyvalue] || ""} onChange={(e) => this.changeCardInput(e)} placeholder="Meaning"></textarea>
           </div>
         </div>
 
         <div className="mid">
           <div className="synonyms">
             {/* <div>synonyms</div> */}
-            <textarea rows="3" cols="50" value={this.state.synonyms || ""} onChange={(e) => this.changeCardInput(e)} placeholder="synonyms"></textarea>
+            <textarea rows="3" className={index + " " + keyvalue} cols="50" value={this.state.synonyms[index]?.[keyvalue] || ""} onChange={(e) => this.changeCardInput(e)} placeholder="synonyms"></textarea>
           </div>
 
           <div className="antonym">
             {/* <div>antonym</div> */}
-            <textarea rows="3" cols="50" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)} placeholder="antonym"></textarea>
+            
+            <textarea rows="3" className={index + " " + keyvalue} cols="50" value={this.state.antonym[index]?.[keyvalue] || ""} onChange={(e) => this.changeCardInput(e)} placeholder="antonym"></textarea>
           </div>
         </div>
       </div>
@@ -109,7 +121,8 @@ class AddWords extends React.Component {
 
   sendWord(e,index) {
     let word = e.target.textContent
-    this.setState({ searchWord: word})
+    this.setState({ searchWord: "" })
+
     console.log(e.target.textContent)
     //meaning
     fetch("https://dictionaryapi.com/api/v3/references/ithesaurus/json/" + e.target.textContent + "?key=68dac210-bb56-4bfb-bc92-b86dfcbda9d6")
@@ -189,19 +202,22 @@ class AddWords extends React.Component {
           }
 
           console.log('index : ' + index)
-
+          let newKey = index
+          console.log(newKey.toString())
+          newKey = "key" + newKey.toString()
+          console.log(newKey)
   
           
           let wordJoind = [...this.state.word]
           for (let i = 0; i < wordJoind.length; i++) {
-            if (wordJoind[i].hasOwnProperty(index)) {
+            if (wordJoind[i].hasOwnProperty(newKey)) {
 
               wordJoind.splice(i, 1);
 
             }
           }
           let wordobj = {}
-          wordobj[index] = word
+          wordobj[newKey] = word
           wordJoind.push(wordobj)
           this.setState({ word: wordJoind })
 
@@ -209,14 +225,14 @@ class AddWords extends React.Component {
           let defJoind = [...this.state.meaning]
           
           for (let i = 0; i < defJoind.length; i++){
-            if (defJoind[i].hasOwnProperty(index)) {
+            if (defJoind[i].hasOwnProperty(newKey)) {
               
               defJoind.splice(i, 1);
               
             }
           }
           let defobj = {}
-          defobj[index] = def
+          defobj[newKey] = def
           defJoind.push(defobj)
           
 
@@ -226,14 +242,14 @@ class AddWords extends React.Component {
           
           let synsJoind = [...this.state.synonyms]
           for (let i = 0; i < synsJoind.length; i++) {
-            if (synsJoind[i].hasOwnProperty(index)) {
+            if (synsJoind[i].hasOwnProperty(newKey)) {
               
               synsJoind.splice(i, 1);
               
             }
           }
           let synsobj = {}
-          synsobj[index] = syns
+          synsobj[newKey] = syns
           synsJoind.push(synsobj)
           this.setState({ synonyms: synsJoind })
 
@@ -242,14 +258,14 @@ class AddWords extends React.Component {
           
           let antJoind = [...this.state.antonym]
           for (let i = 0; i < antJoind.length; i++) {
-            if (antJoind[i].hasOwnProperty(index)) {
+            if (antJoind[i].hasOwnProperty(newKey)) {
               
               antJoind.splice(i, 1);
               
             }
           }
           let antobj = {}
-          antobj[index] = ant
+          antobj[newKey] = ant
           antJoind.push(antobj)
           this.setState({ antonym: antJoind })
 
@@ -266,8 +282,9 @@ class AddWords extends React.Component {
 
   renderSearch(index) {
     let all = []
+    console.log(this.state.menuPopIndex==="key"+index)
     for (let i = 0; i < this.state.relatedWord.length; i++) {
-      all.push(<li key={i} style={{ display: this.state.menuPop ? "block":"none"}} onClick={(e) => {this.sendWord(e,index)}}>{this.state.relatedWord[i].word}</li>)
+      all.push(<li key={i} style={{ display: this.state.menuPop && this.state.menuPopIndex === "key" + index ? "block":"none"}} onClick={(e) => {this.sendWord(e,index)}}>{this.state.relatedWord[i].word}</li>)
     }
     return (
       <ul className="searchPopMenu">
@@ -343,12 +360,47 @@ class AddWords extends React.Component {
     if (e.target.parentElement.className === "word") {
       /* this.setState({ word: e.target.value }) */
       this.searchSend(e)
+      let All = this.state.word
+      console.log(e.target.className.split(" "))
+      let index = e.target.className.split(" ")[0]
+      let key = e.target.className.split(" ")[1]
+      this.setState({ menuPopIndex: key })
+      if (All[index] !== undefined) {
+        All[index][key] = e.target.value
+        console.log(All)
+        this.setState({ word: All })
+      }
+
+
     } else if (e.target.parentElement.className === "meaning") {
-      this.setState({ meaning: e.target.value })
+      let All = this.state.meaning
+      console.log(e.target.className.split(" "))
+      let index = e.target.className.split(" ")[0]
+      let key = e.target.className.split(" ")[1]
+      All[index][key] = e.target.value
+      console.log(All)
+      this.setState({ meaning: All })
+
+
     } else if (e.target.parentElement.className === "synonyms") {
-      this.setState({ synonyms: e.target.value })
+      let All = this.state.synonyms
+      console.log(e.target.className.split(" "))
+      let index = e.target.className.split(" ")[0]
+      let key = e.target.className.split(" ")[1]
+      All[index][key] = e.target.value
+      console.log(All)
+      this.setState({ synonyms: All })
+
+
     } else if (e.target.parentElement.className === "antonym") {
-      this.setState({ antonym: e.target.value })
+      
+      let All = this.state.antonym
+      console.log(e.target.className.split(" "))
+      let index = e.target.className.split(" ")[0]
+      let key = e.target.className.split(" ")[1]
+      All[index][key] = e.target.value
+      console.log(All)
+      this.setState({ antonym: All })
 
     }
   }
