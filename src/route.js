@@ -50,8 +50,8 @@ class RoutePage extends React.Component{
               {/* <Home logIn={this.props.logIn}/> */}
               {/* <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
-              {/* <AddWords showBook={this.props.showBook} /> */}
-              <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail}/>
+              <AddWords showBook={this.props.showBook} />
+              {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail}/> */}
               {/* <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
               {/* <QuizMatch showBook={this.props.showBook}/> */}
               {/* <Statistics /> */}

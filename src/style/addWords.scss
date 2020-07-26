@@ -1,592 +1,158 @@
-.addWordBlock{
-  padding-bottom:50px;
+
+.addCardBox{
+  color:white;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  max-width: 1000px;
+}
+
+.addBookSubTitle{
+  color: #77dddd;
+  font-weight: 800;
+  padding-top: 30px;
+}
+
+.nowBookBlock{
+  background-color: #24293c;
+  width: 100%;
+  height: 80px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 80px;
+  margin-top: 20px;
 }
 
 .selectBlock{
-    background-color: rgb(0,0,0,0.8);
-    z-index: 20;
-    height: 230px;
-    width: 500px;
+    background-color: #24293c;
+    width: 40%;
+    height: 60px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 80px;
+    margin-top: 20px;
     position: absolute;
-    left: calc(50% - 250px);
-    border-width: 1px;
-    border-color: white;
-    border-style: solid;
-    top: 10%;
+    top: 140px;
+    display: block;
+    left: 30%;
 }
 
-.selectBlockX{
-  font-size: 20px;
-  position: relative;
-  left: 480px;
-  top: 5px;
-  color: white;
-  width: 20px;
-  cursor: pointer;
-}
-
-.selectBlockSend{
-  color: white;
-  font-size: 25px;
-  border-color: white;
-  border-width: 1px;
-  border-style: solid;
-  width: 150px;
-  border-radius: 5px;
-  padding: 5px;
-  text-align: center;
-  position: relative;
-  left: calc(50% - 85px);
-  top: 40px;
-  cursor: pointer;
-}
-
-.selectBlockSend:hover{
-  background-color: rgba(223, 130, 15, 0.8);
+.selectBlockX,.bookSelectOpt,.selectBlockSend{
+  position: absolute;
 }
 
 .bookSelectOpt{
-    height: 40px;
-    width: 480px;
-    border-color: white;
-    color: white;
-    padding: 0 10px;
-    /* margin: 10px; */
-    background-color: rgba(0, 0, 0, 0.7);
-    margin-left: 10px;
-    margin-top: 50px;
-    border-width: 3px;
-    font-size: 18px;
+  top: 20px;
+  left: 30px;
+  background: rgb(0,0,0,0);
+  color: white;
+  border-color: white;
+  border-style: solid;
 }
 
-.addCardBox{
-    margin: auto;
-    display: grid;
-    grid-template-columns: 2.2fr 1fr 1.3fr;
-    grid-template-rows: 0.5fr 0.7fr 0.8fr 1fr 0.3fr;
-    /* background-color: white; */
-    width: 70%;
-    height: 600px;
-    max-width: 1100px;
-    margin-top:15px;
-    position: relative;
-}
-
-.popMenu{
-  position: absolute;
-    background-color: whitesmoke;
-    font-size: 25px;
-    width: 280px;
-    top: 53px;
-    left: 20%;
-    border-width: 1px;
-    border-color: grey;
+.selectBlockSend{
     border-style: solid;
+    top: 19px;
+    left: 450px;
+    width: 50px;
+    border-width: 1px;
+    line-height: 19px;
 }
 
-
-
-
-.popMenu>li{
-    padding: 5px 10px;
-
-}
-
-
-
-.searchForm{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    background-color: rgb(254, 255, 240);
+.addWordBlocks{
+    background-color: #24293c;
     border-radius: 5px;
-    margin: 0 15px;
+    text-align: center;
+    line-height: 80px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 120px;
+    display: flex;
+    padding: 15px 10px 0px;
 }
 
-.nowBookBlock{
-      grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 3;
-    background-color: rgb(224, 172, 73);
-    border-radius: 5px;
-    margin: 0 15px 0 0px;
-    cursor: pointer;
+
+
+.upper,.mid{
+  display: flex;
+}
+
+.word,.meaning,.synonyms,.antonym{
+  width: 50%;
+  height:45px;
+  margin-bottom: 15px;
+}
+
+.addWordBlocks{
+  height: 120px;
+  display: flex;
+  padding-top: 15px;
 }
 
 .word{
-  grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    background-color: rgb(248, 255, 245);
-    border-radius: 5px;
-    margin: 15px 15px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: row nowrap;
-    
+  line-height: 40px;
+}
+
+.word>input,.meaning>textarea,.synonyms>textarea,.antonym>textarea{
+  width: 90%;
+  background-color: rgb(0,0,0,0);
+  border-style: solid;
+  border-color: white;
+  color: white;
 }
 
 .word>input{
+  font-size: 20px;
   border-width: 0px;
-  background-color: rgba(255, 0, 0, 0);
-  border-bottom-width: 1px;
-  font-size: 20px;
-  padding: 5px;
-  width: 300px;
-  margin-left: 10px;
-  font-weight: 300;
+  border-bottom-width: 2px;
 }
 
-.word>div{
-  font-size: 35px;
+.word>input:focus{
+  border-bottom-color: orange;
 }
 
-
-
-.meaning{
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 3;
-    grid-row-end: 4;
-    background-color: rgb(227, 238, 235);
-    border-radius: 5px;
-    margin: 15px 15px 0 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column nowrap;
+.meaning>textarea:focus,.synonyms>textarea:focus,.antonym>textarea:focus{
+  border-color: orange;
 }
 
-.meaning>div{
-  font-size: 25px;
-}
-
-.meaning>textarea{
-  background-color: rgba(255, 0, 0, 0);
-    font-size: 20px;
-    padding: 0px;
-    font-weight: 300;
-    margin: 0 0 5px 0;
-}
-
-
-.synonyms{
-  grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 4;
-    grid-row-end: 5;
-    background-color: rgb(244, 240, 234);
-    border-radius: 5px;
-    margin: 15px 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column nowrap;
-}
-
-.synonyms>div{
-  font-size: 25px;
-}
-
-.synonyms>textarea{
-  background-color: rgba(255, 0, 0, 0);
-    /* border-bottom-width: 1px; */
-  font-size: 20px;
-  padding: 5px;
-  width: 250px;
-  font-weight: 300;
-}
-
-.antonym{
-  grid-column-start: 2;
-    grid-column-end: 4;
-    grid-row-start: 4;
-    grid-row-end: 5;
-    background-color: rgb(233, 233, 220);
-    border-radius: 5px;
-    margin: 15px 15px 15px 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column nowrap;
-}
-
-.antonym>div{
-  font-size: 25px;
-}
-
-.antonym>textarea{
-  background-color: rgba(255, 0, 0, 0);
-    /* border-bottom-width: 1px; */
-  font-size: 20px;
-  padding: 5px;
-  width: 250px;
-  font-weight: 300;
-}
-
-.cited{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 5;
-    grid-row-end: 6;
-    /* padding: 0px; */
-    /* font-family: "Ubuntu", Arial, Helvetica, sans-serif; */
-    /* list-style: none; */
-    /* text-decoration: none; */
-    background-color: rgb(225, 235, 227);
-    border-radius: 5px;
-    margin: 0 15px;
-}
-
-.sendBox{
-    grid-column-start: 2;
-    grid-column-end: 4;
-    grid-row-start: 5;
-    grid-row-end: 6;
-    background-color: rgb(224, 172, 73);
-    border-radius: 5px;
-    margin: 0 15px 0 0;
-    display: flex;
-    transition: background-color 0.5s ease;
-    cursor: pointer;
-}
-
-.nowBookBlock{
-      color: black;
-    font-size: 25px;
-    line-height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px 15px;
-}
-
-.searchForm>input{
-      border-width: 0;
-    background-color: #fefff0;
-    font-size: 30px;
-    margin: 0px auto 5px;
-    /* text-align: center; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom-width: 1px;
-}
-
-.explain{
-  margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: dimgray;
-    padding-bottom: 5px;
-}
-
-.cited{
-  font-weight: 100;
-    font-size: 16px;
-    padding: 10px;
-
-}
-
-.sendCard{
-  border-width: 0;
+.searchPopMenu{
   display: flex;
-  margin: auto;
-  cursor:pointer;
-  padding: 5px;
-  font-size: 25px;
-  border-radius: 5px;
-  color: black;
-  white-space: normal;
-  background-color: rgb(0,0,0,0);
-}
-
-
-
-@media (max-width: 1000px) {
-
-
-.popMenu{
-  position: absolute;
-    background-color: whitesmoke;
-   font-size: 20px;
-    width: 280px;
-    top: 50px;
-    left: calc(30% - 140px);
-    border-width: 1px;
-    border-color: grey;
-    border-style: solid;
-}
-
-
-.addCardBox{
-  grid-template-columns: 2.5fr 0.6fr 1.9fr;
-}
-
-
-
-.word{
-  flex-direction: column;
-}
-
-.searchForm>input{
-  font-size: 25px;
-}
-
-.meaning > textarea{
-  width: 450px;
-}
-
-.antonym > textarea{
-  width: 200px;
-}
-
-.synonyms > textarea{
-  width: 200px;
-}
-
-}
-
-@media (max-width: 768px) {
-
-  .selectBlock{
-    height: 200px;
-    width: 300px;
-    left: calc(50% - 150px);
-  }
-
-  .selectBlockX{
-    left: 280px;
-  }
-
-  .bookSelectOpt{
-    height: 40px;
-    width: 280px;
-    padding: 0 10px;
-    margin-left: 10px;
-    margin-top: 30px;
-    border-width: 1px;
-    font-size: 16px;
-  }
-  .selectBlockSend{
-    font-size: 18px;
-    border-width: 1px;
-    width: 150px;
-    padding: 5px;
-    left: calc(50% - 85px);
-    top: 40px;
-  }
-
-  .nowBookBlock{
-    height: 210px;
-  }
-
-  .popMenu{
-    font-size: 20px;
-    width: 220px;
-    top: 273px;
-    left: 25%;
-  }
-
-  .searchForm > input{
-    font-size: 23px;
-  }
-
-  .word > div{
-    font-size: 25px;
-  }
-
-  .word > input{
-    margin-bottom: 5px;
-  }
-
-.meaning > textarea{
-  width: 300px;
-  font-size: 16px;
-}
-
-.synonyms > textarea{
-  margin: 0 0 5px 0;
-  font-size: 16px;
-}
-
-.antonym > textarea{
-  margin: 0 0 5px 0;
-  font-size: 16px;
-}
-
-.addCardBox{
-  grid-template-columns: 2.5fr 1fr 1.9fr;
-}
-
-.addCardBox{
-  grid-template-columns: 100%;
-  grid-template-rows: 3fr 1.2fr 1.2fr 1.7fr 1.5fr 1.5fr 0.8fr 0.5fr;
-  width: 70%;
-  height: 900px;
-}
-
-.nowBookBlock{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-}
-
-
-.explain{
-  font-size: 14px;
-  padding-bottom: 5px;
-}
-
-.searchForm{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-}
-
-.word{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 3;
-    grid-row-end: 4;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-    
-}
-
-
-.meaning{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 4;
-    grid-row-end: 5;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-}
-
-.synonyms{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 5;
-    grid-row-end: 6;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-}
-
-
-.antonym{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 6;
-    grid-row-end: 7;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-}
-
-.sendBox{
-      grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 7;
-    grid-row-end: 8;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-
-  }
-
-.cited{
-  grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 8;
-    grid-row-end: 9;
-    border-radius: 5px;
-    margin:0px 0 15px 0;
-}
-
-
-
-
-}
-
-
-
-@media (max-width: 500px) {
-
-.popMenu{
-      width: 190px;
-    top: 265px;
-    left: calc(35vw - 100px);
-}
-
-  .searchForm > input{
-    font-size: 18px;
-    width: 200px;
-}
-
-  .word{
     flex-direction: column;
-  }
-
-  .word>div{
-    font-size: 20px;
-    margin-top: 10px;
-  }
-
-   .word>input{
-     width: 160px;
-    margin: 0 0 10px 0;
-   }
-
-   .meaning > textarea{
-    width: 163px;
-    font-size: 16px;
-    height: 75px;
-
-   }
-
-   .meaning > div {
-    font-size: 20px;
+    position: absolute;
+    background-color: #24293c;
+    width: 150px;
+    box-shadow: 0px 0px 5px orange;
+    /* position: relative; */
+    top: 50px;
+    left: 40px;
 }
 
-.meaning >textarea{
-  width: 150px;
-  font-size: 16px;
+.addWordBlocks{
+  position: relative;
 }
 
-  .synonyms > div {
-    font-size: 20px;
-    margin-top: 5px;
+
+
+.searchPopMenu>li{
+  line-height: 20px;
 }
 
-.synonyms >textarea{
-  width: 150px;
-  margin-bottom: 5px;
-  font-size: 16px;
+.searchPopMenu>li:hover{
+  background-color:orange;
 }
 
-  .antonym > div {
-    font-size: 20px;
-    margin-top: 5px;
+.moreWordsBlock{
+  background-color: #24293c;
+  width: 100%;
+  height: 80px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 80px;
+  margin-top: 20px;
 }
 
-.antonym >textarea{
-  width: 150px;
-  margin-bottom: 5px;
-  font-size: 16px;
-}
-
-.sendCard{
-  font-size:16px;
-}
-
+.moreWords:hover{
+  color:orange;
 }

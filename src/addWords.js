@@ -17,7 +17,8 @@ class AddWords extends React.Component {
       menuPop: true,
       renderBookOpt: false,
       nowBookText: "",
-      docSend: false
+      docSend: false,
+      newWord:1
     };
     this.searchSend = this.searchSend.bind(this)
     this.searchDic = this.searchDic.bind(this)
@@ -29,6 +30,9 @@ class AddWords extends React.Component {
     this.renderBookID = this.renderBookID.bind(this)
     this.showBookID = this.showBookID.bind(this)
     this.getBookID = this.getBookID.bind(this)
+    this.addNewWords = this.addNewWords.bind(this)
+    this.newWordsBlock = this.newWordsBlock.bind(this)
+    this.wordsBlock = this.wordsBlock.bind(this)
   }
 
   searchSend(e) {
@@ -56,8 +60,56 @@ class AddWords extends React.Component {
     }
   }
 
-  sendWord(e) {
+  newWordsBlock(i) {
+    return (
+        <div key={i} className="addWordBlocks">
+          {this.renderSearch(i)}
+        <div className="upper">
+          <div className="word">
+            {/* <div>word</div> */}
+            <input type="text" value={this.state.searchWord} onChange={(e) => this.changeCardInput(e)} placeholder="Enter word"></input>
+          </div>
+
+          <div className="meaning">
+            {/* <div>meaning</div> */}
+            <textarea rows="3" cols="50" value={this.state.meaning || ""} onChange={(e) => this.changeCardInput(e)} placeholder="Meaning"></textarea>
+          </div>
+        </div>
+
+        <div className="mid">
+          <div className="synonyms">
+            {/* <div>synonyms</div> */}
+            <textarea rows="3" cols="50" value={this.state.synonyms || ""} onChange={(e) => this.changeCardInput(e)} placeholder="synonyms"></textarea>
+          </div>
+
+          <div className="antonym">
+            {/* <div>antonym</div> */}
+            <textarea rows="3" cols="50" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)} placeholder="antonym"></textarea>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  addNewWords() {
+    this.setState(prevState => ({ newWord: prevState.newWord + 1 }))
+  }
+
+  wordsBlock() {
+    let All = []
+    for (let i = 0; i < this.state.newWord; i++) {
+      All.push(this.newWordsBlock(i))
+    }
+    return (
+        <div>
+        {All}
+      </div>
+    )
+  }
+
+  sendWord(e,index) {
     let word = e.target.textContent
+    this.setState({ searchWord: word})
     console.log(e.target.textContent)
     //meaning
     fetch("https://dictionaryapi.com/api/v3/references/ithesaurus/json/" + e.target.textContent + "?key=68dac210-bb56-4bfb-bc92-b86dfcbda9d6")
@@ -65,7 +117,6 @@ class AddWords extends React.Component {
       .then(
         (result) => {
           let def = []
-          let syn = []
           let ant = []
           let syns = []
           
@@ -77,13 +128,14 @@ class AddWords extends React.Component {
               if (i < 1) {
                 word += result[i]
               } else {
-                word += ("," + result[i])
+                /* word += ("," + result[i]) */
+                word += result[i]
               }
             }
             alert('查無此字，請再試一次，試試看這些相近的字吧：\n'+word)
           } else {
             //def
-            console.log(result[0].shortdef)
+            
             if (result[0].shortdef.length > 0) {
               for (let i = 0; i < result[0].shortdef.length; i++){
                 if (i < 1) {
@@ -93,9 +145,10 @@ class AddWords extends React.Component {
                 }
               }
             }
+            console.log(def)
             //syn
             if (result[0].meta.syns.length > 1) {
-              console.log(result[0].meta.syns[0])
+              
               for (let i = 0; i < result[0].meta.syns[0].length; i++) {
                   if (i < 1) {
                     syns += result[0].meta.syns[0][i]
@@ -105,7 +158,7 @@ class AddWords extends React.Component {
                 }
               
             } else {
-              console.log(result[0].meta.syns)
+              
               if (result[0].meta.syns[0] === undefined) {
                 syns = ""
                 console.log("result[0].meta.syns[0] === undefined")
@@ -115,7 +168,7 @@ class AddWords extends React.Component {
             }
             //ant
             if (result[0].meta.ants.length > 1) {
-              console.log(result[0].meta.ants[0])
+              
               for (let i = 0; i < result[0].meta.ants[0].length; i++) {
                 if (i < 1) {
                   ant += result[0].meta.ants[0][i]
@@ -124,7 +177,7 @@ class AddWords extends React.Component {
                 }
               }
             } else {
-              console.log(result[0].meta.ants)
+              
               if (result[0].meta.ants[0] === undefined) {
                 console.log("result[0].meta.ants[0] === undefined")
                 ant = ""
@@ -135,10 +188,72 @@ class AddWords extends React.Component {
             }
           }
 
-          this.setState({ word: word })
-          this.setState({ meaning: def })
-          this.setState({ synonyms: syns })
-          this.setState({ antonym: ant })
+          console.log('index : ' + index)
+
+  
+          
+          let wordJoind = [...this.state.word]
+          for (let i = 0; i < wordJoind.length; i++) {
+            if (wordJoind[i].hasOwnProperty(index)) {
+
+              wordJoind.splice(i, 1);
+
+            }
+          }
+          let wordobj = {}
+          wordobj[index] = word
+          wordJoind.push(wordobj)
+          this.setState({ word: wordJoind })
+
+
+          let defJoind = [...this.state.meaning]
+          
+          for (let i = 0; i < defJoind.length; i++){
+            if (defJoind[i].hasOwnProperty(index)) {
+              
+              defJoind.splice(i, 1);
+              
+            }
+          }
+          let defobj = {}
+          defobj[index] = def
+          defJoind.push(defobj)
+          
+
+          this.setState({ meaning: defJoind })
+
+
+          
+          let synsJoind = [...this.state.synonyms]
+          for (let i = 0; i < synsJoind.length; i++) {
+            if (synsJoind[i].hasOwnProperty(index)) {
+              
+              synsJoind.splice(i, 1);
+              
+            }
+          }
+          let synsobj = {}
+          synsobj[index] = syns
+          synsJoind.push(synsobj)
+          this.setState({ synonyms: synsJoind })
+
+
+
+          
+          let antJoind = [...this.state.antonym]
+          for (let i = 0; i < antJoind.length; i++) {
+            if (antJoind[i].hasOwnProperty(index)) {
+              
+              antJoind.splice(i, 1);
+              
+            }
+          }
+          let antobj = {}
+          antobj[index] = ant
+          antJoind.push(antobj)
+          this.setState({ antonym: antJoind })
+
+
           this.setState({ menuPop:false})
           
 
@@ -149,13 +264,13 @@ class AddWords extends React.Component {
 
   }
 
-  renderSearch() {
+  renderSearch(index) {
     let all = []
     for (let i = 0; i < this.state.relatedWord.length; i++) {
-      all.push(<li key={i} style={{ display: this.state.menuPop ? "block":"none"}} onClick={(e) => {this.sendWord(e)}}>{this.state.relatedWord[i].word}</li>)
+      all.push(<li key={i} style={{ display: this.state.menuPop ? "block":"none"}} onClick={(e) => {this.sendWord(e,index)}}>{this.state.relatedWord[i].word}</li>)
     }
     return (
-      <ul className="popMenu">
+      <ul className="searchPopMenu">
         {all}
       </ul>
       )
@@ -165,44 +280,56 @@ class AddWords extends React.Component {
 
     return (
       <div className="addCardBox">
+         
+        <div className="addBookSubTitle">Select a Word Book</div>
         
         {this.renderBookID()}
        
         
         <div className="nowBookBlock" onClick={() => { this.setState({ renderBookOpt: true }) }}>{this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.state.nowBookText : "Please select one of your wordbook"} </div>
+
+        <div className="addBookSubTitle">Add words to the book</div>
+        {/*
+      <div className="addWordBlocks">
         
-        <form className="searchForm" action="" onSubmit={this.sendWord}><br></br>
-          <input type="text" placeholder="Enter your search term ..." onChange={(e) => { this.searchSend(e) }}></input>
-          <div className="explain">{"( "+ "or fill in the blank yourself"+" )"}</div>
-          
-          </form>
 
         {this.renderSearch()}
           
-          <div className="word">
-            <div>word</div>
-            <input type="text" value={this.state.word || ""} onChange={(e) => this.changeCardInput(e)}></input>
+
+          <div className="upper">
+            <div className="word">
+              
+              <input type="text" value={this.state.word || ""} onChange={(e) => this.changeCardInput(e)} placeholder="Enter word"></input>
+            </div> 
+
+            <div className="meaning">
+              
+              <textarea rows="3" cols="50" value={this.state.meaning || ""} onChange={(e) => this.changeCardInput(e)} placeholder="Meaning"></textarea>
+            </div>
           </div>
 
-          <div className="meaning">
-            <div>meaning</div>
-          <textarea rows="3" cols="50" value={this.state.meaning || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
-          </div>
+          <div className="mid">
+            <div className="synonyms">
+              
+              <textarea rows="3" cols="50" value={this.state.synonyms || ""} onChange={(e) => this.changeCardInput(e)} placeholder="synonyms"></textarea>
+            </div>
 
-          <div className="synonyms">
-            <div>synonyms</div>
-          <textarea rows="3" cols="50" value={this.state.synonyms || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
+            <div className="antonym">
+              
+              <textarea rows="3" cols="50" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)} placeholder="antonym"></textarea>
+            </div>
           </div>
+        </div> */}
+        {this.wordsBlock()}
 
-          <div className="antonym">
-            <div>antonym</div>
-          <textarea rows="3" cols="50" value={this.state.antonym || ""} onChange={(e) => this.changeCardInput(e)}></textarea>
+        <div className="moreWordsBlock" onClick={this.addNewWords}>
+          <div className="moreWords">✚　Create New Words</div>
         </div>
         
-        <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#FFD700" : "#e0ac49" }}>
+        {/* <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#FFD700" : "#e0ac49" }}>
           <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "SEND"} ></input>
         </form>
-        <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
+        <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div> */}
 
 
         </div>
@@ -214,7 +341,8 @@ class AddWords extends React.Component {
   changeCardInput(e) {
     console.log(e.target.parentElement.className)
     if (e.target.parentElement.className === "word") {
-      this.setState({ word: e.target.value })
+      /* this.setState({ word: e.target.value }) */
+      this.searchSend(e)
     } else if (e.target.parentElement.className === "meaning") {
       this.setState({ meaning: e.target.value })
     } else if (e.target.parentElement.className === "synonyms") {
@@ -298,7 +426,7 @@ class AddWords extends React.Component {
         
         return (
           <div className="selectBlock" style={{ display: this.state.renderBookOpt ? "block" : "none" }} >
-            <div className="selectBlockX" onClick={()=>{this.setState({renderBookOpt:false})}}>X</div>
+            {/* <div className="selectBlockX" onClick={()=>{this.setState({renderBookOpt:false})}}>X</div> */}
           <select className="bookSelectOpt"  onChange={(e) => { this.getBookID(e) }}>
             <option key={this.props.showBook.length + 1} value=" " >———— Choose One Wordbook ————</option>
             {all}
