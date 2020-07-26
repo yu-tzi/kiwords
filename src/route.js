@@ -67,7 +67,7 @@ class RoutePage extends React.Component{
               <AddWords showBook={this.props.showBook}/>
             </Route>
             <Route path="/wordbooks">
-              <WordBook userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} />
+              <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} />
             </Route>
             <Route path="/details">
               <BookDtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/>

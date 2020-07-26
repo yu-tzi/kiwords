@@ -19,9 +19,9 @@ class WordBook extends React.Component {
 
   convertImg() {
 
-    if (this.props.img.length < 5) {
+    if (this.props.img?.length < 5) {
       return (
-        <div className="wordbookImg" >{this.props.name.slice(0, 1)}</div>
+        <div className="wordbookImg" >{this.props.name?.slice(0, 1)}</div>
       )
     } else {
       return (
@@ -36,10 +36,10 @@ class WordBook extends React.Component {
 
     let name
 
-    if (this.props.name.length < 19) {
+    if (this.props.name?.length < 19) {
       name = this.props.name
     } else {
-      name = this.props.name.slice(0, 18)
+      name = this.props.name?.slice(0, 18)
       name = name + "..."
     }
     return (
@@ -621,7 +621,7 @@ class MyBook extends React.Component {
                 <div className="addBookShow bookformat" key={index} onClick={(event) => { event.stopPropagation(),window.location.href = ('https://kiwords-c058b.web.app/details/' + obj.bookID) }}>
                   <div className={"bookTitle " + obj.bookID} >{obj.bookName}</div>
                   {/* <div className="bookBtn" onClick={() => { window.location.href=('https://kiwords-c058b.web.app/details/' + obj.bookID)}}>編輯單字</div> */}
-                  <div className="bookBtnPlus" onClick={(event) => { event.stopPropagation(),window.location.href = ('https://kiwords-c058b.web.app/addwords') }}>Add Words</div>
+                  <div className="bookBtnPlus" onClick={(event) => { event.stopPropagation(), window.location.href = ('https://kiwords-c058b.web.app/addwords?' + obj.bookID)+"&"+obj.bookName }}>Add Words</div>
                   {/* <div className="bookBtnView" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + obj.bookID) }}>View</div> */}
                 </div>)
           

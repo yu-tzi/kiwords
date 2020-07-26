@@ -26,7 +26,7 @@ export default function sketch(p) {
 
 
   p.draw =function () {
-    p.background(43,43,43);
+    p.background(13, 14, 19);
     /* p.setGradient(0, 0, p.width, p.height, b1, b2, Y_AXIS); */
     p.stroke(colorX, 150, colorY);//white line
     p.noFill();//以下不填滿

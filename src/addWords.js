@@ -13,10 +13,10 @@ class AddWords extends React.Component {
       meaning: "",
       synonyms: "",
       antonym: "",
-      nowBook: "",
+      nowBook:  "",
       menuPop: true,
       renderBookOpt: false,
-      nowBookText: "",
+      nowBookText:  "",
       docSend: false,
       newWord: 1,
       menuPopIndex:""
@@ -36,11 +36,25 @@ class AddWords extends React.Component {
     this.wordsBlock = this.wordsBlock.bind(this)
   }
 
+
+  componentDidMount() {
+
+    if (window.location.href.split("?")[1] !== undefined) {
+
+      this.setState({ nowBookText: decodeURI(window.location.href.split("?")[1].split("&")[1]) })
+      this.setState({ nowBook: window.location.href.split("?")[1].split("&")[0] })
+         
+      
+    }
+  }
+
   searchSend(e) {
     this.setState({ searchWord: e.target.value })
     this.searchDic()
     this.setState({ menuPop: true })
   }
+
+  /* sample url https://kiwords-c058b.web.app/addwords?1594451117472uZKW3V1cCDUYWmitdYpwoNp764j1&Merriam-Webster%20Learner%27s%20Core%20Vocabulary */
 
   searchDic() {
     event.preventDefault()
@@ -295,6 +309,8 @@ class AddWords extends React.Component {
   
   renderCard() {
 
+    
+
     return (
       <div className="addCardBox">
          
@@ -346,8 +362,9 @@ class AddWords extends React.Component {
 
 
         <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#77dddd" : "#e0ac49" }}>
-          <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "SEND WORDS"} ></input>
+          <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "Send Words"} ></input>
         </form>
+        <div className="viewCard" onClick={() => { window.location.href=("https://kiwords-c058b.web.app/details/" + this.state.nowBook) }}>View Word Cards</div>
         <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
 
 
@@ -420,21 +437,22 @@ class AddWords extends React.Component {
       
 
       if (this.state.word[i].length < 1) {
-        alert('Please make sure you fill in every word blank.')
+        alert('Please make sure you fill the blank.')
       }
       
         let cards =
         {
-          word: Object.values(this.state.word[i]),
-          meaning: Object.values(this.state.meaning[i]),
-          synonyms: Object.values(this.state.synonyms[i]),
-          antonym: Object.values(this.state.antonym[i])
+          word: Object.values(this.state.word[i])[0],
+          meaning: Object.values(this.state.meaning[i])[0],
+          synonyms: Object.values(this.state.synonyms[i])[0],
+          antonym: Object.values(this.state.antonym[i])[0]
         }
-    
+        console.log(cards);
         db.collection("books").doc(this.state.nowBook).update({
           cards: firebase.firestore.FieldValue.arrayUnion(cards)
         })
-          .then(()=> {
+          .then(() => {
+            
             console.log("Document successfully updated!");
             this.setState({ docSend: true })
 
@@ -464,6 +482,19 @@ class AddWords extends React.Component {
       let all = []
       let count = 0
       let j = 1
+
+      
+      /* if (window.location.href.split("?").length > 1) {
+        this.setState({ nowBook: window.location.href.split("?")[1] })
+        for (let i = 0; i < this.props.showBook.length; i++) {
+          console.log(this.props.showBook[i])
+          if (this.props.showBook[i].bookID === window.location.href.split("?")[1]) {
+            this.setState({ nowBookText: this.props.showBook[i].bookName })
+          }
+        }
+      } */
+        
+      
       for (let i = 0; i < this.props.showBook.length; i++) {
         all.push(this.showBookID(this.props.showBook[i],i))
         count++ 
