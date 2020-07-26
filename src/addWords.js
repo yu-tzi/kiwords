@@ -340,13 +340,15 @@ class AddWords extends React.Component {
         {this.wordsBlock()}
 
         <div className="moreWordsBlock" onClick={this.addNewWords}>
-          <div className="moreWords">✚　Create New Words</div>
+          <div className="moreWords">✚　Add more word cards </div>
         </div>
         
-        {/* <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#FFD700" : "#e0ac49" }}>
-          <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "SEND"} ></input>
+
+
+        <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#77dddd" : "#e0ac49" }}>
+          <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "SEND WORDS"} ></input>
         </form>
-        <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div> */}
+        <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
 
 
         </div>
@@ -408,36 +410,25 @@ class AddWords extends React.Component {
   submitCard() {
     event.preventDefault()
     console.log('submit')
+    let load = 0
 
-    let confirm = false
+    if (this.state.word.length < 1) {
+      alert('Please make sure you fill in every word blank.')
+    }
 
-    if (this.state.word.replace(/\s+/g, "").length < 1) {
-      alert('請填寫內容')
-    } else {
-      confirm = true
-      if (this.state.meaning.length > 1 && this.state.synonyms.length > 1 && this.state.antonym.length > 1) {
-        
-        if (this.state.meaning.toString().replace(/\s+/g, "").length < 1 || this.state.synonyms.toString().replace(/\s+/g, "").length < 1 || this.state.antonym.toString().replace(/\s+/g, "").length < 1) {
+    for (let i = 0; i < this.state.word.length; i++){
+      
 
-          if (!window.confirm("資料不完全，可能影響測驗成效，繼續送出嗎？")) {
-            console.log('跳出')
-            confirm = false
-          }
-        }
-      } else if (this.state.meaning.length < 1 || this.state.synonyms.length < 1 || this.state.antonym.length < 1) {
-        if (!window.confirm("資料不完全，可能影響測驗成效，繼續送出嗎？")) {
-          console.log('跳出')
-          confirm = false
-        }
+      if (this.state.word[i].length < 1) {
+        alert('Please make sure you fill in every word blank.')
       }
-
-      if (confirm === true) {
+      
         let cards =
         {
-          word: this.state.word,
-          meaning: this.state.meaning,
-          synonyms: this.state.synonyms,
-          antonym: this.state.antonym
+          word: Object.values(this.state.word[i]),
+          meaning: Object.values(this.state.meaning[i]),
+          synonyms: Object.values(this.state.synonyms[i]),
+          antonym: Object.values(this.state.antonym[i])
         }
     
         db.collection("books").doc(this.state.nowBook).update({
@@ -446,19 +437,25 @@ class AddWords extends React.Component {
           .then(()=> {
             console.log("Document successfully updated!");
             this.setState({ docSend: true })
-            setTimeout(() => {
-              this.setState({ word: "" })
-              this.setState({ meaning: "" })
-              this.setState({ synonyms: "" })
-              this.setState({ antonym: "" })
-              this.setState({ docSend: false })
-            }, 2000);
+
+            if (load = this.state.word.length + 1) {
+              setTimeout(() => {
+                this.setState({ word: "" })
+                this.setState({ meaning: "" })
+                this.setState({ synonyms: "" })
+                this.setState({ antonym: "" })
+                this.setState({ newWord: 1})
+                this.setState({ docSend: false })
+              }, 2000);
+            }
           })
           .catch(function (error) {
             console.error("Error updating document: ", error);
           });
-      }
     }
+    
+    
+    /* } */
   }
 
   renderBookID() {
