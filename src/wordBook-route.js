@@ -30,13 +30,13 @@ class BookDtail extends React.Component {
         books.push(this.props.saveBook[i].bookID)
       }
     }
-    if (this.props.popularBook.length > 0) {
+    /* if (this.props.popularBook.length > 0) {
       for (let i = 0; i < 3; i++) {
         if (!books.includes(this.props.popularBook[i].bookID)) {
           books.push(this.props.popularBook[i].bookID)
         }
       }
-    }
+    } */
     return books.map((bookID) => {
       let bookUrl = "/details/" + bookID
       return (
@@ -62,13 +62,13 @@ class BookDtail extends React.Component {
     }
   
 
-    if (this.props.popularBook.length > 0) {
+    /* if (this.props.popularBook.length > 0) {
       for (let i = 0; i < 3 ; i++) {
         if (!books.includes(this.props.popularBook[i].bookID)) {
           books.push(this.props.popularBook[i].bookID)
         }
       }
-    }
+    } */
     
     
     return books.map((bookID) => {

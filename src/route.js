@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import AddWords from "./addWords"
 import Dashboard from "./dashboard"
-import Quiz from "./quiz"
+import Dtail from "./wordBook-detail"
 import Statistics from "./statistics"
 import WordBook from "./wordBooks"
 import Home from "./home"
@@ -50,9 +50,9 @@ class RoutePage extends React.Component{
               {/* <Home logIn={this.props.logIn}/> */}
               {/* <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
-              <AddWords showBook={this.props.showBook} />
+              {/* <AddWords showBook={this.props.showBook} /> */}
+              <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/>
               {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail}/> */}
-              {/* <Dtail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
               {/* <QuizMatch showBook={this.props.showBook}/> */}
               {/* <Statistics /> */}
             </Route>
@@ -121,7 +121,7 @@ class MenuPop extends React.Component {
     <div>
       <span className="trianglePopMenu"></span>
       <div className="menuPop">
-          <a href={rootURL + "/addWords"}>Add Words</a>
+          {/* <a href={rootURL + "/addWords"}>Add Words</a> */}
           <a href={rootURL +"/wordBooks"}>Wordbook</a>
           <a href={rootURL +"/quiz"}>Quiz</a>
       </div>
@@ -234,7 +234,7 @@ class RouteNav extends React.Component{
                 <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"
                   onClick={logIn ? this.toggleMenuPop.bind(this) : this.redirectToLogin.bind(this)}></img>
             {this.state.menuPop ? <MenuPop /> : null}  
-                <a href={logIn ? rootURL + "/addwords" : rootURL + "/login"} className="menuItem">Add Words<div className="decoline"></div></a>
+                {/* <a href={logIn ? rootURL + "/addwords" : rootURL + "/login"} className="menuItem">Add Words<div className="decoline"></div></a> */}
                 <a href={logIn ? rootURL + "/wordbooks" : rootURL + "/login"} className="menuItem">Wordbook<div className="decoline"></div></a>
                 <a href={logIn ? rootURL + "/quiz" : rootURL + "/login"} className="menuItem">Quiz<div className="decoline"></div></a>
               </ul>

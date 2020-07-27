@@ -37,6 +37,10 @@
   color:white;
 }
 
+.toggleOption:last-child{
+  display:none;
+}
+
 .wordbookImg, .wordbookN{
   color:white;
 }
@@ -219,6 +223,7 @@
   border-style: solid;
   border-width: 2px;
   overflow: hidden;
+  display:none;
 }
 
 .toggleOption{

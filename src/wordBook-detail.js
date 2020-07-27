@@ -1,5 +1,6 @@
 import React from "react";
 import { db, firebase } from "./firebaseConfig"
+import './style/wordbook-detail.scss';
 
 
 
@@ -10,49 +11,119 @@ class Dtail extends React.Component {
     this.state = {
       cards: [],
       bookOwner: "",
-      starCheck: [false, false, false, false, false]
+      starCheck: [false, false, false, false, false],
+      wordDetail: false,
+      nowWord: "",
+      wordRenew: false,
+      page: 0,
+      lastValue: 0
     };
     this.renderWords = this.renderWords.bind(this)
     this.renderCards = this.renderCards.bind(this)
     this.clickStars = this.clickStars.bind(this)
     this.saveBook = this.saveBook.bind(this)
     this.renderStar = this.renderStar.bind(this)
+    this.popWord = this.popWord.bind(this)
+    this.renderPage = this.renderPage.bind(this)
+    this.renderPageDetail = this.renderPageDetail.bind(this)
+    this.changePage = this.changePage.bind(this)
+  }
+
+  componentDidiMount() {
+    console.log('componentDidMount')
   }
 
 
-
   componentDidUpdate() {
+    console.log('componentDidUpdate')
+    let url = "https://kiwords-c058b.web.app/details/159586061875685aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%205000%20Words"
+    /* let url = window.location.href */
 
-   let url = window.location.href
-
-    /* let url = "https://kiwords-c058b.web.app/details/1594285544251vevyGeH2tHhy61LPAwNv59AkiZm2" */
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
     }
+   
     
     let count = 0
-    if (target.length > 0 && this.state.cards.length<1) {
+    console.log(this.state.cards.length)
+    if (target.split("?")[0].length > 0 && this.state.cards.length < 1) {
+      console.log(target.split("?")[0])
+
       let cards = []
-      db.collection("books").doc(target).get().then((doc) => {
+      db.collection("books").doc(target.split("?")[0]).get().then((doc) => {
+
+       /*  console.log(this.state.page)
+        console.log(doc.data().cards) */
+
+        //新增條件，doc exists 但沒有 cards
+        /* console.log("db update") */
         if (doc.exists) {
-          /* console.log("Document data:", doc.data().cards); */
-          for (let i = 0; i < doc.data().cards.length; i++) {
+
+
+          if (doc.data().cards.length > 0) {
+
+          this.setState({ page: Math.floor(doc.data().cards.length / 8) + 1 })
+
+            let lastNum
+            if (8 > doc.data().cards.length) {
+              lastNum = doc.data().cards.length % 8
+            } else {
+              lastNum = 8
+            }
+            /* console.log("Document data:", doc.data().cards); */
+            for (let i = 0; i < lastNum; i++) {
+              cards.push(this.renderCards(doc.data().cards[i], i))
+              count++
+              console.log("renderCards in update")
+            }
+            if (count = doc.data().cards.length) {
+            
+              console.log('cards state change')
+              this.setState({ cards: cards })
+              this.setState({ bookOwner: doc.data().created })
+            }
+
+          } else {
+            console.log("No cards :(")
+          }
+          //end of if doc exist
+        } else {
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      })
+
+    } else if (target.split("?")[0].length > 0 && this.state.cards.length > 1 && this.state.wordRenew) {
+      let cards = []
+      
+      db.collection("books").doc(target.split("?")[0]).get().then((doc) => {
+        if (doc.exists) {
+        /* console.log("Document data:", doc.data().cards); */
+          let lastNum
+          if (this.state.lastValue + 8 > doc.data().cards.length) {
+            lastNum = this.state.lastValue + doc.data().cards.length % 8
+          } else {
+            lastNum = this.state.lastValue + 8
+          }
+          for (let i = this.state.lastValue; i < lastNum; i++) {
             cards.push(this.renderCards(doc.data().cards[i], i))
             count++
           }
           if (count = doc.data().cards.length) {
-            console.log(cards)
+            /* console.log(cards) */
+            console.log('cards state change')
             this.setState({ cards: cards })
-            this.setState({ bookOwner: doc.data().created})
+            this.setState({ bookOwner: doc.data().created })
+            this.setState({ wordRenew: false})
           }
         } else {
           console.log("No such document!");
         }
       }).catch(function (error) {
         console.log("Error getting document:", error);
-      });
-
+      })
     }
 
 
@@ -61,6 +132,7 @@ class Dtail extends React.Component {
 
 
   renderWords() {
+    /* console.log('render words') */
       return (
         <div>
         {this.state.cards}
@@ -68,19 +140,76 @@ class Dtail extends React.Component {
       )
   }
 
+  popWord(e) {
+    /* console.log(e.target)
+    console.log(e.target.className) */
+    this.setState({ wordDetail: !this.state.wordDetail })
+    this.setState({ nowWord: e.target.className })
+    this.setState({ wordRenew: true })
+    /* console.log(typeof (this.state.wordDetail))
+    console.log(this.state.wordDetail)
+    if (this.state.wordDetail){console.log('say hi')} */
+    
+  }
+
+  deleteWord(e) {
+    /* let url = window.location.href */
+
+
+    let url = "https://kiwords-c058b.web.app/details/159586061875685aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%205000%20Words"
+    let target = ""
+    for (let i = 0; i < url.split("/").length; i++) {
+      target = url.split("/")[i]
+    }
+
+    let all = []
+    let className
+    className = e.target.className
+    console.log(e.target.className)
+    db.collection("books").doc(target.split("?")[0]).get().then((doc) => {
+      console.log(doc.data().cards)
+        
+      for (let i = 0; i < doc.data().cards.length; i++){
+          if (parseInt(className) === i) {
+            console.log("catch"+i)
+          } else {
+            all.push(doc.data().cards[i])
+          }
+      }
+      console.log(all)
+           
+    }).then(() => {
+      console.log(all)
+      
+      db.collection("books").doc(target.split("?")[0]).update({
+        cards : all
+      }).then(() => { this.setState({ wordRenew:true})})
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    })
+  }
 
   
   renderCards(data, i) {
-    let newStr = ""
-    if (data.meaning.length > 65) {
-      newStr = data.meaning.slice(0, 60) + "..." 
-    } else {
-      newStr = data.meaning
-    }
+    console.log(data)
+    
     return (
-      <div key={i}>{data.word + " : " + newStr }</div>
+      <div key={i}>
+        <div className="wordBlock">
+        <div onClick={(e) => { this.popWord(e) }} className={i} >{data.word}</div>
+          <div className={i} onClick={(e) => { this.deleteWord(e)}}>Delete</div>
+      </div>
+          <div className={i} style={{ display: this.state.wordDetail && parseInt(this.state.nowWord) === i? "block":"none"}}>
+            <div>{data.meaning}</div>
+            <div>{data.synonyms}</div>
+            <div>{data.antonym}</div>
+        </div>
+        
+      </div>
+      
     )
   }
+
 
   renderStar(score) {
     let star = Math.round(score)
@@ -103,8 +232,8 @@ class Dtail extends React.Component {
 
   saveBook(e) {
     if (this.props.userData.length > 0) {
-      console.log(e.target.className.split(' ')[0])
-      console.log(this.props.userData[0].uid)
+      /* console.log(e.target.className.split(' ')[0])
+      console.log(this.props.userData[0].uid) */
 
       db.collection("users").doc(this.props.userData[0].uid).update({
         "savedBook": firebase.firestore.FieldValue.arrayUnion(e.target.className.split(' ')[0])
@@ -129,14 +258,14 @@ class Dtail extends React.Component {
       let data = []
       if (typeof (doc.data().evaluation) === "number") {
         data.push(doc.data().evaluation)
-        console.log(data)
+        /* console.log(data) */
         data.push(score)
       } else if (typeof (doc.data().evaluation) === "string" || typeof (doc.data().evaluation) === "object") {
         data = doc.data().evaluation
-        console.log(data)
+        /* console.log(data) */
         data.push(score)
       } else {
-        console.log(typeof (doc.data().evaluation))
+        /* console.log(typeof (doc.data().evaluation)) */
         data.push(score)
       }
       db.collection("books").doc(bookid).update({
@@ -146,19 +275,19 @@ class Dtail extends React.Component {
           console.log("Document successfully updated!");
           //change avg
           db.collection("books").doc(bookid).get().then((doc) => {
-            console.log("document data:", doc.data());
+            /* console.log("document data:", doc.data()); */
             prevScore = doc.data().evaluation
-            console.log(prevScore)
+            /* console.log(prevScore) */
             for (let i = 0; i < prevScore.length; i++) {
-              console.log(prevScore[i])
+              /* console.log(prevScore[i]) */
               avgScore += prevScore[i]
             }
             avgScore = avgScore / prevScore.length
-            console.log(avgScore)
+            /* console.log(avgScore) */
             db.collection("books").doc(bookid).update({
               "averageEvaluation": avgScore
             }).then(() => {
-              console.log(avgScore)
+              /* console.log(avgScore) */
             })
           }).catch(function (error) {
             console.log("Error getting cached document:", error);
@@ -175,7 +304,7 @@ class Dtail extends React.Component {
     db.collection("users").doc(uid).update({
       "userExp.likeBook": firebase.firestore.FieldValue.arrayUnion(bookid)
     }).then(() => {
-      console.log(uid)
+      /* console.log(uid) */
     }).catch((err) => { console.log(err) })
 
 
@@ -188,12 +317,42 @@ class Dtail extends React.Component {
     }
   }
 
+  renderPage() {
+
+    let All = []
+    for (let i = 0; i < this.state.page; i++){
+      All.push(this.renderPageDetail(i))
+    }
+    return (
+      <div className="pageLeaf">
+        {All}
+      </div>
+    )
+  }
+
+  changePage(i) {
+    console.log(i)
+    let num = parseInt(i) * 8
+    console.log(num)
+    this.setState({ lastValue: num })
+    this.setState({wordRenew:true})
+  }
+
+  renderPageDetail(i) {
+    return (
+      <div className="page" key={i} onClick={() => { this.changePage(i) }}>
+        {i}
+      </div>
+    )
+  }
+
 
 
   render() {
-     let url = window.location.href
+     /* let url = window.location.href */
 
-    /* let url = "https://kiwords-c058b.web.app/details/1594285544251vevyGeH2tHhy61LPAwNv59AkiZm2" */
+    
+    let url = "https://kiwords-c058b.web.app/details/159586061875685aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%205000%20Words"
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
@@ -207,19 +366,21 @@ class Dtail extends React.Component {
     }
 
     return (
-      <div>
+      <div className="bookDetailBody">
+        {/* render 單字本 */}
+        <div className="bookDetailTitle">{decodeURI(target.split("?")[1])}</div>
         {/* render單字 */}
-        {this.renderWords()}
-        {/* 評分按鈕 */}
-        <div style={{ display: this.state.bookOwner === uid ? "none" : "block" }}>
-          <div className={target + " 1"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[0] ? "yellow" : "grey" }}>★</div>
-          <div className={target + " 2"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[1] ? "yellow" : "grey" }}>★</div>
-          <div className={target + " 3"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[2] ? "yellow" : "grey" }}>★</div>
-          <div className={target + " 4"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[3] ? "yellow" : "grey" }}>★</div>
-          <div className={target + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div>
-        </div> 
-        {/* 收藏按鈕 */}
-        <div className={target} onClick={(e) => this.saveBook(e)} style={{ display: this.state.bookOwner === uid ? "none" : "block" }} >收藏</div> 
+        {this.state.cards.length > 1 ? this.renderWords() :
+          <div>
+          <div className="noWordsTitle">There's no words in this wordbook</div>
+            <div className="noWordsSubtitle" onClick={() => {
+              window.location.href = ('https://kiwords-c058b.web.app/addwords?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1])
+            }}>Try adding some word</div>
+          </div>
+        }
+        {/* render頁碼 */}
+        {this.renderPage()}
+        
       </div>
     )
   }

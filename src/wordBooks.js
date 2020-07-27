@@ -272,7 +272,7 @@ class PopularBook extends React.Component {
         <div className={data.bookID + " 5"} onClick={(e) => this.clickStars(e)} style={{ color: this.state.starCheck[4] ? "yellow" : "grey" }}>★</div> */}
         {/* 評分按鈕-借放 */}
         {/* <div className={data.bookID +" bookBtn " + " saveBookBtn"} onClick={(e) => this.saveBook(e)} style={{ display: data.created === uid ? "none" : "block" }} >收藏</div>*/}
-        <div className={data.bookID + " viewBookBtn"} onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + data.bookID)}} >View</div>
+        <div className={data.bookID + " viewBookBtn"} onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + data.bookID + "?" + data.bookName)}} >View</div>
       </div> 
     )
   }
@@ -447,7 +447,7 @@ class SaveBook extends React.Component {
         <div className="bookTitle">{data.bookName}</div>
         <div className="searchAuthor">{"Author： "+data.author}</div>
           {this.renderStar(data.averageEvaluation)}
-        <div className="viewBookBtn" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + data.bookID) }}>View</div>
+        <div className="viewBookBtn" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/details/' + data.bookID + "?" + data.bookName) }}>View</div>
       </div>
 
     )
@@ -618,7 +618,7 @@ class MyBook extends React.Component {
             this.props.showBook.map((obj, index) => {
 
               return (
-                <div className="addBookShow bookformat" key={index} onClick={(event) => { event.stopPropagation(),window.location.href = ('https://kiwords-c058b.web.app/details/' + obj.bookID) }}>
+                <div className="addBookShow bookformat" key={index} onClick={(event) => { event.stopPropagation(), window.location.href = ('https://kiwords-c058b.web.app/details/' + obj.bookID + "?" + obj.bookName) }}>
                   <div className={"bookTitle " + obj.bookID} >{obj.bookName}</div>
                   {/* <div className="bookBtn" onClick={() => { window.location.href=('https://kiwords-c058b.web.app/details/' + obj.bookID)}}>編輯單字</div> */}
                   <div className="bookBtnPlus" onClick={(event) => { event.stopPropagation(), window.location.href = ('https://kiwords-c058b.web.app/addwords?' + obj.bookID)+"&"+obj.bookName }}>Add Words</div>
