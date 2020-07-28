@@ -1,15 +1,73 @@
 .bookDetailBody{
   color: white;
+  width: 80%;
+  margin: auto;
+  max-width: 1000px;
   
 }
 
-.bookDetailBody>div>div{
-      background-color: blue;
-    margin-bottom: 10px;
-}
-
-.wordBlock{
+#wordBlock{
   display:flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
+.bookDetailTitle{
+  text-align: center;
+  font-size: 28px;
+  line-height: 40px;
+  margin-bottom: 0px;
+}
+
+.wordSub{
+  color: #3ccfcf;
+  font-weight: 600;
+}
+
+.upperPart{
+  display: flex;
+    justify-content: space-evenly;
+    padding: 30px 0 15px 0;
+}
+
+.takeQuizBtn{
+    font-size: 16px;
+    background-color: orange;
+    width: 150px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    color: #303545;
+    text-align: center;
+    margin-bottom: 0px;
+    
+}
+
+.wordSub{
+  color: #3ccfcf;
+  font-weight: 600;
+  padding-top: 20px;
+  width: 80%;
+  margin: auto;
+}
+
+.wordCardBox{
+  margin: auto;
+  width: 80%;
+}
+
+#wordBlock{
+  border-radius: 3px;
+  background-color: #24293c;
+  padding: 5px;
+  margin: 10px 0 5px;
+  border-color: #24293c;
+  border-width: 5px;
+  border-style: solid;
+}
+
+#wordBlock:hover{
+  border-bottom-color:orange;
+}
+
+#trashCan{
+  height: 15px;
+}

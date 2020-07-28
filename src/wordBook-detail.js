@@ -36,7 +36,7 @@ class Dtail extends React.Component {
 
   componentDidUpdate() {
     console.log('componentDidUpdate')
-    let url = "https://kiwords-c058b.web.app/details/159586061875685aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%205000%20Words"
+    let url = "https://kiwords-c058b.web.app/details/159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2?TOEIC%20essential%20words"
     /* let url = window.location.href */
 
     let target = ""
@@ -53,17 +53,19 @@ class Dtail extends React.Component {
       let cards = []
       db.collection("books").doc(target.split("?")[0]).get().then((doc) => {
 
-       /*  console.log(this.state.page)
-        console.log(doc.data().cards) */
-
-        //新增條件，doc exists 但沒有 cards
-        /* console.log("db update") */
         if (doc.exists) {
 
 
           if (doc.data().cards.length > 0) {
+            console.log(doc.data().cards)
+            console.log(doc.data().cards.length % 8)
 
-          this.setState({ page: Math.floor(doc.data().cards.length / 8) + 1 })
+            if (doc.data().cards.length % 8 === 0) {
+              this.setState({ page: Math.floor(doc.data().cards.length / 8)})
+            } else {
+              this.setState({ page: Math.floor(doc.data().cards.length / 8)+1})
+            }
+          
 
             let lastNum
             if (8 > doc.data().cards.length) {
@@ -73,6 +75,9 @@ class Dtail extends React.Component {
             }
             /* console.log("Document data:", doc.data().cards); */
             for (let i = 0; i < lastNum; i++) {
+              console.log(doc.data().cards[i])
+              //只剩一個時會刪不掉
+              //第二頁刪到剩第一頁的時候，第一頁會無法刪
               cards.push(this.renderCards(doc.data().cards[i], i))
               count++
               console.log("renderCards in update")
@@ -95,22 +100,42 @@ class Dtail extends React.Component {
         console.log("Error getting document:", error);
       })
 
-    } else if (target.split("?")[0].length > 0 && this.state.cards.length > 1 && this.state.wordRenew) {
+    } else if (target.split("?")[0].length > 0 && this.state.cards.length >= 1 && this.state.wordRenew) {
       let cards = []
       
       db.collection("books").doc(target.split("?")[0]).get().then((doc) => {
         if (doc.exists) {
-        /* console.log("Document data:", doc.data().cards); */
-          let lastNum
-          if (this.state.lastValue + 8 > doc.data().cards.length) {
+          console.log("Document data:", doc.data().cards)
+
+          if (doc.data().cards.length > 0) {
+            console.log(doc.data().cards)
+            console.log(doc.data().cards.length % 8)
+
+            if (doc.data().cards.length % 8 === 0) {
+              this.setState({ page: Math.floor(doc.data().cards.length / 8) })
+            } else {
+              this.setState({ page: Math.floor(doc.data().cards.length / 8) + 1 })
+            }
+          }
+
+
+          let lastNum 
+          if (this.state.lastValue + 8 > doc.data().cards.length && doc.data().cards.length > 0) {
             lastNum = this.state.lastValue + doc.data().cards.length % 8
-          } else {
+          } else if (this.state.lastValue + 8 > doc.data().cards.length && this.state.lastValue < 1 && doc.data().cards.length < 1) {
+            cards = []
+            console.log('yo')
+            this.setState({ cards: cards })
+            this.setState({ wordRenew: false })
+          }else {
             lastNum = this.state.lastValue + 8
           }
+
           for (let i = this.state.lastValue; i < lastNum; i++) {
             cards.push(this.renderCards(doc.data().cards[i], i))
             count++
           }
+          
           if (count = doc.data().cards.length) {
             /* console.log(cards) */
             console.log('cards state change')
@@ -134,7 +159,7 @@ class Dtail extends React.Component {
   renderWords() {
     /* console.log('render words') */
       return (
-        <div>
+        <div className="wordCardBox">
         {this.state.cards}
         </div>
       )
@@ -156,7 +181,7 @@ class Dtail extends React.Component {
     /* let url = window.location.href */
 
 
-    let url = "https://kiwords-c058b.web.app/details/159586061875685aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%205000%20Words"
+    let url = "https://kiwords-c058b.web.app/details/159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2?TOEIC%20essential%20words"
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
@@ -180,10 +205,15 @@ class Dtail extends React.Component {
            
     }).then(() => {
       console.log(all)
-      
       db.collection("books").doc(target.split("?")[0]).update({
         cards : all
-      }).then(() => { this.setState({ wordRenew:true})})
+      }).then(() => {
+        this.setState({ wordRenew: true })
+        
+        if (all.length <= this.state.lastValue && this.state.lastValue>0) {
+          this.setState({ lastValue: this.state.lastValue-8})
+        }
+      })
     }).catch(function (error) {
       console.log("Error getting document:", error);
     })
@@ -195,9 +225,10 @@ class Dtail extends React.Component {
     
     return (
       <div key={i}>
-        <div className="wordBlock">
+        <div id="wordBlock" onClick={(e) => { this.popWord(e) }} className={i}>
         <div onClick={(e) => { this.popWord(e) }} className={i} >{data.word}</div>
-          <div className={i} onClick={(e) => { this.deleteWord(e)}}>Delete</div>
+          {/* <div className={i} onClick={(e) => { this.deleteWord(e) }}>Delete</div> */}
+          <img src="https://i.imgur.com/OT847Iy.png" id="trashCan" className={i} onClick={(e) => { this.deleteWord(e) }}></img>
       </div>
           <div className={i} style={{ display: this.state.wordDetail && parseInt(this.state.nowWord) === i? "block":"none"}}>
             <div>{data.meaning}</div>
@@ -352,7 +383,7 @@ class Dtail extends React.Component {
      /* let url = window.location.href */
 
     
-    let url = "https://kiwords-c058b.web.app/details/159586061875685aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%205000%20Words"
+    let url = "https://kiwords-c058b.web.app/details/159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2?TOEIC%20essential%20words"
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
@@ -368,9 +399,17 @@ class Dtail extends React.Component {
     return (
       <div className="bookDetailBody">
         {/* render 單字本 */}
-        <div className="bookDetailTitle">{decodeURI(target.split("?")[1])}</div>
+        <div className="upperPart">
+          <div className="bookDetailTitle">{decodeURI(target.split("?")[1])}</div>
+          <div className="takeQuizBtn">View all wordbook</div>
+        </div>
+          
+          <div className="wordSub">Words in this book</div>
+          
+
+
         {/* render單字 */}
-        {this.state.cards.length > 1 ? this.renderWords() :
+        {this.state.cards.length > 0 ? this.renderWords() :
           <div>
           <div className="noWordsTitle">There's no words in this wordbook</div>
             <div className="noWordsSubtitle" onClick={() => {
@@ -381,6 +420,8 @@ class Dtail extends React.Component {
         {/* render頁碼 */}
         {this.renderPage()}
         
+        <div className="addWordsBtn">Add more words</div>
+        <div className="backToBook">Take a quiz</div>
       </div>
     )
   }

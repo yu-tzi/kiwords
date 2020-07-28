@@ -155,7 +155,7 @@ class AddWords extends React.Component {
               if (i < 1) {
                 word += result[i]
               } else {
-                /* word += ("," + result[i]) */
+                word += ("," + result[i])
                 word += result[i]
               }
             }
