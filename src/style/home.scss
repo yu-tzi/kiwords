@@ -65,6 +65,7 @@ $darkblue: #131a32;
 
 .start:hover{
   color:black;
+  background-color: orange;
 }
 
 .start:visited{
@@ -98,6 +99,11 @@ $darkblue: #131a32;
 .head>a:visited{
   text-decoration:none; 
   color:black;
+}
+
+.head>a{
+   text-decoration: none;
+    color: black;
 }
 
 .btnBox{
@@ -242,6 +248,7 @@ $darkblue: #131a32;
   .start{
     margin: 10px auto;
     color: black;
+    transition: 0.5s;
 }
 
  /* .mktArea{

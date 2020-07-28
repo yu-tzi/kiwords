@@ -39,8 +39,8 @@ class Dtail extends React.Component {
   
   componentDidUpdate() {
     console.log('componentDidUpdate')
-    let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500"
-    /* let url = window.location.href */
+    /* let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500" */
+    let url = window.location.href
 
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
@@ -183,12 +183,12 @@ class Dtail extends React.Component {
 
   deleteWord(e) {
 
-  /* let url = window.location.href */
+  let url = window.location.href
     
     e.stopPropagation()
 
 
-    let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500"
+    /* let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500" */
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
@@ -418,10 +418,10 @@ class Dtail extends React.Component {
 
   render() {
 
-     /* let url = window.location.href */
+     let url = window.location.href
 
     
-    let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500"
+    /* let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500" */
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
@@ -456,7 +456,7 @@ class Dtail extends React.Component {
         {this.state.cards.length > 0 ? this.renderWords() :
           <div className="noWordsBlock">
             <div className="noWordsTitle">There's no words in this wordbook</div>
-            <div className="noWordSubTitle">Try adding some words !</div>
+            <div className="noWordSubTitle">Try adding some words ! Add more than three words to unlock quiz function.</div>
             <div className="noWordsSubtitle" onClick={() => {
               window.location.href = ('https://kiwords-c058b.web.app/addwords?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1])
             }}>Add words</div>

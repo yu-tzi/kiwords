@@ -132,14 +132,29 @@ const QuizContext = createContext({
 
 const QuizContainer = (props) => {
 
-  const [bookIDpop, setBookIDpop] = useState(false)
+  let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words"
+
+
+  let defalutValue = " "
+  let defalutBook = ""
+  if (url.split("?").length > 1) {
+    let target = ""
+    target = url.split("?")[1].split("&")
+    defalutValue = target[0]
+    defalutBook = decodeURI(target[1])
+  }
+
+  const [bookIDpop, setBookIDpop] = useState(true)
   useEffect(() => { console.log("bookIDpop:" + bookIDpop) }, [bookIDpop])
 
-  const [bookName, setBookName] = useState("")
+  const [tutorPop, setTutorPop] = useState(false)
+  useEffect(() => { console.log("tutorPop:" + tutorPop) }, [tutorPop])
+
+  const [bookName, setBookName] = useState(defalutBook)
   useEffect(() => { console.log("bookName:" + bookName) }, [bookName])
 
   const [checked, setChecked] = useState([true])
-  const [bookID, setBookID] = useState([""])
+  const [bookID, setBookID] = useState(defalutValue)
   useEffect(() => {
     let str = bookID
     console.log(str.length)
@@ -475,6 +490,7 @@ const QuizContainer = (props) => {
       
     } else {
       setBookID(" ")
+      setBookName("")
       setStart(true)
     }
 
@@ -502,14 +518,63 @@ const QuizContainer = (props) => {
 
       if (count == props.showBook.length) {
 
+        let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words"
+        
+          //let url = window.location.href 
+          //如果網址有帶到書名&ID，就自動帶入quiz欄位
+          //如果沒有，就跳出 option 讓他選，如果沒選就不讓他送出（引導他去新增單字本？）
+
+        let defalutValue = " "
+        if (url.split("?").length > 1) {
+          let target = ""
+          target = url.split("?")[1].split("&")
+          defalutValue = target[0]
+          
+        //target[0] = ID
+        //decodeURI(target[1]) = book name
+        }
+        
+
+        
+
+
         return (
+          <div className="enterPop" style={{ display: bookIDpop || tutorPop ? "block" : "none" }}>
+            
           <div className="bookIDpop" style={{ display: bookIDpop ? "block" : "none" }}>
-            <div className="bookPopX" onClick={() => { setBookIDpop(false)}}>X</div>
-            <select onChange={(e) => { getBookID(e) }} className="bookSelect">
+              
+            <div className="bookIDpopBox">
+            <div className="bookIDpopTitle">Step1</div> 
+            <div className="bookIDpopSubtitle">Select WordBook As Quiz Resources</div> 
+            {/* <div className="bookPopX" onClick={() => { setBookIDpop(false)}}>X</div> */}
+              <select onChange={(e) => { getBookID(e) }} className="bookSelect" defaultValue={defalutValue}>
               <option key={props.showBook.length + 1} value=" " >———— Please choose one wordbook ————</option>
               {all}
             </select>
-            <div className="bookPopSend" onClick={() => { setBookIDpop(false) }}>SEND</div>
+              <div className="bookPopSend" onClick={() => {
+                if (bookName === "" || bookID===" ") {
+                  alert('Please Select one book :)')
+                } else {
+                  setBookIDpop(false), setTutorPop(true)
+                }
+                }}>Send</div>
+              <div className="bookPopCreateWording">No option ? Try :</div>
+                <div className="bookPopCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/wordbooks")}}>Create wordbook</div>
+            </div>
+
+            </div>
+
+            <div className="tutorPop" style={{ display: tutorPop ? "block" : "none" }}>
+              
+              <div className="tutorPopBox">
+                <div className="tutorPopTitle">Step2</div>
+                  <div className="tutorPopSubtitle">Watch Quick Tutorial</div> 
+                  <iframe src="https://giphy.com/embed/Ol2yHMEFJdYEo" width="480" height="270" frameBorder="0" allowFullScreen></iframe>
+                  <div className="tutorPopBtn" onClick={() => { setTutorPop(false) }}>Start Game</div> 
+              </div>
+
+            </div>            
+
           </div>
         )
       }

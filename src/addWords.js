@@ -156,7 +156,7 @@ class AddWords extends React.Component {
                 word += result[i]
               } else {
                 word += ("," + result[i])
-                word += result[i]
+                
               }
             }
             alert('查無此字，請再試一次，試試看這些相近的字吧：\n'+word)
@@ -365,7 +365,7 @@ class AddWords extends React.Component {
           <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "Send Words"} ></input>
         </form>
         <div className="viewCard" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/details/" + this.state.nowBook + "?" + this.state.nowBookText) }}>View Word Cards</div>
-        <div className="cited">Merriam-Webster's Intermediate Thesaurus (1999).<br></br> Merriam-Webster Incorporated.</div>
+        <div className="cited">Dictionary Citing : <br></br>Merriam-Webster's Intermediate Thesaurus (1999). <br></br>Merriam-Webster Incorporated.</div>
 
 
         </div>
