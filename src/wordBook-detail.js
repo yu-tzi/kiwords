@@ -29,14 +29,17 @@ class Dtail extends React.Component {
     this.changePage = this.changePage.bind(this)
   }
 
+  
+
   componentDidiMount() {
     console.log('componentDidMount')
   }
 
 
+  
   componentDidUpdate() {
     console.log('componentDidUpdate')
-    let url = "https://kiwords-c058b.web.app/details/159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2?TOEIC%20essential%20words"
+    let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500"
     /* let url = window.location.href */
 
     let target = ""
@@ -168,6 +171,7 @@ class Dtail extends React.Component {
   popWord(e) {
     /* console.log(e.target)
     console.log(e.target.className) */
+    e.stopPropagation()
     this.setState({ wordDetail: !this.state.wordDetail })
     this.setState({ nowWord: e.target.className })
     this.setState({ wordRenew: true })
@@ -178,10 +182,13 @@ class Dtail extends React.Component {
   }
 
   deleteWord(e) {
-    /* let url = window.location.href */
+
+  /* let url = window.location.href */
+    
+    e.stopPropagation()
 
 
-    let url = "https://kiwords-c058b.web.app/details/159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2?TOEIC%20essential%20words"
+    let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500"
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
@@ -222,18 +229,48 @@ class Dtail extends React.Component {
   
   renderCards(data, i) {
     console.log(data)
+
+    let synonyms = ""
+    if (typeof (data.synonyms) === "object") {
+      for (let i = 0; i < data.synonyms.length; i++){
+        if (i === 0) {
+          synonyms += data.synonyms[i]
+        } else {
+          synonyms += " ," + data.synonyms[i]
+       }
+      }
+    } else {
+      synonyms = data.synonyms
+    }
+
+    let antonym = ""
+    if (typeof (data.antonym) === "object") {
+      for (let i = 0; i < data.antonym.length; i++) {
+        if (i === 0) {
+          antonym += data.antonym[i]
+        } else {
+          antonym += " ," + data.antonym[i]
+        }
+      }
+    } else {
+      antonym = data.antonym
+    }
+
     
     return (
       <div key={i}>
         <div id="wordBlock" onClick={(e) => { this.popWord(e) }} className={i}>
-        <div onClick={(e) => { this.popWord(e) }} className={i} >{data.word}</div>
+          <div onClick={(e) => { this.popWord(e) }} className={i} >{data.word}</div>
           {/* <div className={i} onClick={(e) => { this.deleteWord(e) }}>Delete</div> */}
           <img src="https://i.imgur.com/OT847Iy.png" id="trashCan" className={i} onClick={(e) => { this.deleteWord(e) }}></img>
       </div>
-          <div className={i} style={{ display: this.state.wordDetail && parseInt(this.state.nowWord) === i? "block":"none"}}>
-            <div>{data.meaning}</div>
-            <div>{data.synonyms}</div>
-            <div>{data.antonym}</div>
+        <div id="popWordDetail" className={i} style={{ display: this.state.wordDetail && parseInt(this.state.nowWord) === i ? "block" : "none" }}>
+          <div className="popWordDetailTitle">Meaning</div>
+          <div className="popWordDetailContent">{data.meaning}</div>
+          <div className="popWordDetailTitle">Synonyms</div>  
+          <div className="popWordDetailContent">{data.synonyms.length > 0 ? synonyms : "No synonyms"}</div>
+          <div className="popWordDetailTitle">Antonym</div>
+          <div className="popWordDetailContent">{data.antonym.length > 0 ? antonym :"No antonym"}</div>
         </div>
         
       </div>
@@ -372,7 +409,7 @@ class Dtail extends React.Component {
   renderPageDetail(i) {
     return (
       <div className="page" key={i} onClick={() => { this.changePage(i) }}>
-        {i}
+        {i+1}
       </div>
     )
   }
@@ -380,10 +417,11 @@ class Dtail extends React.Component {
 
 
   render() {
+
      /* let url = window.location.href */
 
     
-    let url = "https://kiwords-c058b.web.app/details/159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2?TOEIC%20essential%20words"
+    let url = "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500"
     let target = ""
     for (let i = 0; i < url.split("/").length; i++) {
       target = url.split("/")[i]
@@ -395,33 +433,42 @@ class Dtail extends React.Component {
     } else {
       uid = 0
     }
+    let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
     return (
       <div className="bookDetailBody">
         {/* render 單字本 */}
         <div className="upperPart">
           <div className="bookDetailTitle">{decodeURI(target.split("?")[1])}</div>
-          <div className="takeQuizBtn">View all wordbook</div>
+          <div className="upperbtn">
+          <div className="viewAllBookBtn" onClick={() => {
+            window.location.href = (rootURL + '/wordbooks')
+          }}>View other wordbooks</div>
+            <div className="addWordsBtn" onClick={(event) => { event.stopPropagation(), window.location.href = ('https://kiwords-c058b.web.app/addwords?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1]) }}>Add more words</div>
+          </div>
         </div>
           
-          <div className="wordSub">Words in this book</div>
+        <div className="wordSub" style={{ display: this.state.cards.length > 3 ? "block" : "none" }}>Words in this book</div>
           
 
 
         {/* render單字 */}
         {this.state.cards.length > 0 ? this.renderWords() :
-          <div>
-          <div className="noWordsTitle">There's no words in this wordbook</div>
+          <div className="noWordsBlock">
+            <div className="noWordsTitle">There's no words in this wordbook</div>
+            <div className="noWordSubTitle">Try adding some words !</div>
             <div className="noWordsSubtitle" onClick={() => {
               window.location.href = ('https://kiwords-c058b.web.app/addwords?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1])
-            }}>Try adding some word</div>
+            }}>Add words</div>
           </div>
         }
         {/* render頁碼 */}
         {this.renderPage()}
         
-        <div className="addWordsBtn">Add more words</div>
-        <div className="backToBook">Take a quiz</div>
+        <div className="bottomPart" style={{ display: this.state.cards.length>3 ? "flex":"none"}}>
+          <div className="takeQuizTitle">Familiar with all these words ? </div>
+          <div className="takeQuizBtn" onClick={(event) => { event.stopPropagation(), window.location.href = ('https://kiwords-c058b.web.app/quiz?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1]) }}>Take a quiz</div>
+        </div>
       </div>
     )
   }
