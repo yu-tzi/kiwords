@@ -101,6 +101,9 @@ const QuizArea = (props) => {
   return (
     <div className="topic-container">
 
+      <div>The Synonym of</div>
+      <div>{" "+props.topic+" "}</div>
+      <div>{" " + "is"}</div>
       <div
         ref={drop}
         style={{
@@ -111,11 +114,7 @@ const QuizArea = (props) => {
         {props.children}
       </div>
 
-      <div className="topic-Area">
-        <div className="title"><div className="titleL">Meaning  </div>{props.topic[2]?.meaning}</div>
-        <div className="title-antonym"><div className="title-antonymL">Antonym </div>{props.topic[0]?.ant}</div>
-        <div className="title-synonyms"><div className="title-synonymsL">Synonyms  </div>{props.topic[1]?.syn}</div>
-      </div>
+      {/* props.topic */}
 
     </div>
   )
@@ -134,7 +133,9 @@ const QuizContainer = (props) => {
 
   //detect wordbook when you come in 
 
-  let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words"
+  /* let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words" */
+
+  let url = window.location.href
 
 
   let defalutValue = " "
@@ -164,7 +165,7 @@ const QuizContainer = (props) => {
   useEffect(() => { console.log("hasOption:" + hasOption) }, [hasOption])
 
   const [validWords, setvalidWords] = useState(0)
-  useEffect(() => { console.log("validWords:" + validWords) }, [validWords])
+  useEffect(() => { console.log(validWords) }, [validWords])
 
 
   //bookID select form
@@ -177,106 +178,138 @@ const QuizContainer = (props) => {
     if (str.length > 5) {
       //what to do when firstly detect bookID chosen
 
-      setPage(1)
+      setPage(0)
       setScore(0)
       setTopicCount(0)
       setEnd(false)
       setChecked(true)
 
+      console.log(bookID)
 
       db.collection("books").doc(bookID).get().then((doc) => {
-        console.log(doc.data().cards[0].word)
+        
         let options = []
         let validWords = []
-        
+        let answers = []
+        console.log(doc.data())
 
-        //================first :先抓三個出來，接下來用 setPage 推動====================
-        for (let i = 0; i < doc.data().cards.length; i++){
+        if (doc.data().cards.length > 0) {
+          for (let i = 0; i < doc.data().cards.length; i++) {
 
-          if (typeof(doc.data().cards[i].synonyms) === "object") {
-            if (doc.data().cards[i].synonyms.length > 2) {
-              if (typeof(doc.data().cards[i].antonym) === "object") { 
-                if (doc.data().cards[i].antonym.length > 2) {
-                  validWords.push(doc.data().cards[i])
+            if (typeof (doc.data().cards[i].synonyms) === "object") {
+              if (doc.data().cards[i].synonyms.length > 2) {
+                if (typeof (doc.data().cards[i].antonym) === "object") {
+                  if (doc.data().cards[i].antonym.length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
+                } else {
+                  if (doc.data().cards[i].antonym.split(",").length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
                 }
-              } else {
-                if (doc.data().cards[i].antonym.split(",").length > 2) {
-                  validWords.push(doc.data().cards[i])
+              }
+            } else {
+              if (doc.data().cards[i].synonyms.split(",").length > 2) {
+                if (typeof (doc.data().cards[i].antonym) === "object") {
+                  if (doc.data().cards[i].antonym.length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
+                } else {
+                  if (doc.data().cards[i].antonym.split(",").length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
                 }
               }
             }
-          } else {
-            if (doc.data().cards[i].synonyms.split(",").length > 2) {
-              if (typeof(doc.data().cards[i].antonym) === "object") {
-                if (doc.data().cards[i].antonym.length > 2) {
-                  validWords.push(doc.data().cards[i])
-                }
-              } else {
-                if (doc.data().cards[i].antonym.split(",").length > 2) {
-                  validWords.push(doc.data().cards[i])
-                }
-              }
-            }
-          } 
+          }
         }
         console.log(validWords)
         setvalidWords(validWords)
 
-
-          
-        if (doc.data().cards.length < 3) {
-          alert('你的單字本字量不夠，請先新增更多單字:(')
-          
-        } else {
+      
+        //set round1 data- ans option topicContent
+        let order = [0, 1, 2]
+        if (validWords.length > 0) {
           for (let i = 0; i < 3; i++) {
-            let option = {
-              id: i,
-              value: doc.data().cards[i].word,
-              status: "unchoose",
-              color: "white"
+            let option
+            if (i < 1) {
+              let ord = Math.floor(Math.random() * order.length)
+              let word = validWords[0].word
+              option = {
+                id: order[ord],
+                value: word,
+                status: "unchoose",
+                color: "white"
+              }
+              let answer = {
+                id: order[ord],
+                value: word,
+                status: "unchoose",
+                color: "white"
+              }
+              answers.push(answer)
+              order.splice(ord, 1)
+            } else {
+              if (typeof (validWords[0].antonym) === "object") {
+                let ord = Math.floor(Math.random() * order.length)
+                let ant = validWords[0].antonym
+                let antOr = Math.floor(Math.random() * ant.length)
+             
+                option = {
+                  id: order[ord],
+                  value: ant[antOr],
+                  status: "unchoose",
+                  color: "white"
+                }
+                order.splice(ord, 1)
+                ant.splice(antOr, 1)
+              } else {
+                let ord = Math.floor(Math.random() * order.length)
+                let ant = validWords[0].antonym.split(',')
+                let antOr = Math.floor(Math.random() * ant.length)
+              
+                option = {
+                  id: order[ord],
+                  value: ant[antOr],
+                  status: "unchoose",
+                  color: "white"
+                }
+                order.splice(ord, 1)
+                ant.splice(antOr, 1)
+              }
             }
+            console.log("order:" + order)
             options.push(option)
-          }
-          let j = Math.floor((Math.random() * 3))
-          let answer = {
-            id: j,
-            value: doc.data().cards[j].word,
-            status: "unchoose",
-            color: "white"
+            console.log(options.sort(function (a, b) { return a.id - b.id }))
+            console.log(answers)
+            setAnswer(answers)
+            setOptionList(options.sort(function (a, b) { return a.id - b.id }))
           }
 
-          let topicContent = []
 
-          if (doc.data().cards[j].antonym.length > 0) {
-            let ant = ""
-            for (let i = 0; i < doc.data().cards[j].antonym.length; i++) {
-              ant = doc.data().cards[j].antonym
+          let synsContent = ""
+          for (let i = 0; i < 2; i++) {
+            if (typeof (validWords[0].synonyms) === "object") {
+              if (i < 1) {
+                synsContent = synsContent + validWords[0].synonyms[i]
+              } else {
+                synsContent = synsContent + "," + validWords[0].synonyms[i]
+              }
+            } else {
+              let syns = validWords[0].synonyms.split(",")
+              if (i < 1) {
+                synsContent = synsContent + syns[i]
+              } else {
+                synsContent = synsContent + "," + syns[i]
+              }
             }
-            ant = ant.toString()
-            topicContent.push({ ant: ant })
-          } else {
-            topicContent.push({ ant: "no antonym" })
           }
-
-          if (doc.data().cards[j].synonyms.length > 0) {
-            let syn = ""
-            for (let i = 0; i < doc.data().cards[j].synonyms.length; i++) {
-              syn = doc.data().cards[j].synonyms
-            }
-            syn = syn.toString()
-            topicContent.push({ syn: syn })
-          } else {
-            topicContent.push({ syn: "no synonyms" })
-          }
-
-          topicContent.push({ meaning: doc.data().cards[j].meaning })
-          setTopic(topicContent)
-
-
-          setAnswer(answer)
-          setOptionList(options)
+        
+          
+        setTopic(synsContent)
+        console.log(synsContent)
         }
-      }
+      } 
       ).catch((error) => {
         alert(error)
       })
@@ -284,81 +317,160 @@ const QuizContainer = (props) => {
   }, [bookID]);
   const [start, setStart] = useState([false])
 
-
-  const [page, setPage] = useState(1)
+//來測 next page
+  const [page, setPage] = useState(0)
   useEffect(() => {
     let str = bookID
     console.log(str.length)
     if (str.length > 5) {
-      console.log(page)
+
+   
       db.collection("books").doc(bookID).get().then((doc) => {
-        console.log(doc.data().cards[0].word)
-        if (doc.data().cards.length <= page + 2) {
-          alert('單字用罄，結束測驗，分數是： ' + score)
-          setEnd(true)
-        } else {
-          let options = []
-          for (let i = 0; i < 3; i++) {
-            let count = parseInt(page)
-            let option = {
-              id: count + i,
-              value: doc.data().cards[count + i].word,
-              status: "unchoose",
-              color: "white"
+
+        let options = []
+        let validWords = []
+        let answers = []
+
+
+        if (doc.data().cards.length > 0) {
+          for (let i = 0; i < doc.data().cards.length; i++) {
+
+            if (typeof (doc.data().cards[i].synonyms) === "object") {
+              if (doc.data().cards[i].synonyms.length > 2) {
+                if (typeof (doc.data().cards[i].antonym) === "object") {
+                  if (doc.data().cards[i].antonym.length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
+                } else {
+                  if (doc.data().cards[i].antonym.split(",").length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
+                }
+              }
+            } else {
+              if (doc.data().cards[i].synonyms.split(",").length > 2) {
+                if (typeof (doc.data().cards[i].antonym) === "object") {
+                  if (doc.data().cards[i].antonym.length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
+                } else {
+                  if (doc.data().cards[i].antonym.split(",").length > 2) {
+                    validWords.push(doc.data().cards[i])
+                  }
+                }
+              }
             }
-            options.push(option)
           }
-          let count = parseInt(page)
-          let j = Math.floor((Math.random() * 3))
-          let answer = {
-            id: count + j,
-            value: doc.data().cards[count + j].word,
-            status: "unchoose",
-            color: "white"
-          }
-
-          let topicContent = []
-
-          if (doc.data().cards[count + j].antonym.length > 0) {
-            let ant = ""
-            for (let i = 0; i < doc.data().cards[count + j].antonym.length; i++) {
-              ant = doc.data().cards[count + j].antonym
-            }
-            ant = ant.toString()
-            topicContent.push({ ant: ant })
-          } else {
-            topicContent.push({ ant: "no antonym" })
-          }
-
-          if (doc.data().cards[count + j].synonyms.length > 0) {
-            let syn = ""
-            for (let i = 0; i < doc.data().cards[count + j].synonyms.length; i++) {
-              syn = doc.data().cards[count + j].synonyms
-            }
-            syn = syn.toString()
-            topicContent.push({ syn: syn })
-          } else {
-            topicContent.push({ syn: "no synonyms" })
-          }
-
-          topicContent.push({ meaning: doc.data().cards[count + j].meaning })
-          setTopic(topicContent)
-
-
-          setAnswer(answer)
-          setOptionList(options)
-
-
-          setAnswer(answer)
-          setOptionList(options)
-          setChecked(true)
         }
+        console.log(validWords)
+        setvalidWords(validWords)
+
+
+        //set round1 data- ans option topicContent
+        let str = bookID
+        if (str.length > 5) {
+          console.log(page)
+
+          if (validWords.length <= page) {
+            alert('Theres no other words, your score is : ' + score)
+            setEnd(true)
+          } else {
+            let order = [0, 1, 2]
+            for (let i = 0; i < 3; i++) {
+              let option
+              if (i < 1) {
+                let ord = Math.floor(Math.random() * order.length)
+                let word = validWords[page].word
+                option = {
+                  id: order[ord],
+                  value: word,
+                  status: "unchoose",
+                  color: "white"
+                }
+                let answer = {
+                  id: order[ord],
+                  value: word,
+                  status: "unchoose",
+                  color: "white"
+                }
+                answers.push(answer)
+                order.splice(ord, 1)
+              } else {
+                if (typeof (validWords[page].antonym) === "object") {
+                  let ord = Math.floor(Math.random() * order.length)
+                  let ant = validWords[page].antonym
+                  let antOr = Math.floor(Math.random() * ant.length)
+
+                  option = {
+                    id: order[ord],
+                    value: ant[antOr],
+                    status: "unchoose",
+                    color: "white"
+                  }
+                  order.splice(ord, 1)
+                  ant.splice(antOr, 1)
+                } else {
+                  let ord = Math.floor(Math.random() * order.length)
+                  let ant = validWords[page].antonym.split(',')
+                  let antOr = Math.floor(Math.random() * ant.length)
+
+                  option = {
+                    id: order[ord],
+                    value: ant[antOr],
+                    status: "unchoose",
+                    color: "white"
+                  }
+                  order.splice(ord, 1)
+                  ant.splice(antOr, 1)
+                }
+              }
+              console.log("order:" + order)
+              options.push(option)
+              console.log(options.sort(function (a, b) { return a.id - b.id }))
+              console.log(answers)
+              setAnswer(answers)
+              setOptionList(options.sort(function (a, b) { return a.id - b.id }))
+              setChecked(true)
+            }
+          }
+
+
+          let synsContent = ""
+          if (validWords.length <= page) {
+          
+          } else {
+            for (let i = 0; i < 2; i++) {
+              if (typeof (validWords[page].synonyms) === "object") {
+                if (i < 1) {
+                  synsContent = synsContent + validWords[page].synonyms[i]
+                } else {
+                  synsContent = synsContent + "," + validWords[page].synonyms[i]
+                }
+              } else {
+                let syns = validWords[page].synonyms.split(",")
+                if (i < 1) {
+                  synsContent = synsContent + syns[i]
+                } else {
+                  synsContent = synsContent + "," + syns[i]
+                }
+              }
+            }
+          }
+
+
+          setTopic(synsContent)
+          console.log(synsContent)
+        }
+      
+
       }
       ).catch((error) => {
         alert(error)
       })
     }
-  }, [page])
+  }, [page]); 
+  //====
+    
 
   const [score, setScore] = useState(0)
   useEffect(() => {
@@ -430,8 +542,10 @@ const QuizContainer = (props) => {
     let ans = 0
     for (let i = 0; i < optionList.length; i++) {
       if (optionList[i].status === "chosen") {
+        console.log(optionList)
+        console.log(answer)
 
-        if (optionList[i].value === answer.value) {
+        if (optionList[i].value === answer[0].value) {
           correct = true
           setChecked(false)
           chooseAns = -1
@@ -515,19 +629,24 @@ const QuizContainer = (props) => {
       let blue
       let red
       let white
-      if (optionList[i].id === answer.id) {
+      console.log(i)
+      if (optionList[i].id === answer[0].id) {
         blue = optionList[i]
         blue.color = "blue"
         newList.push(blue)
+        console.log(blue)
+
       }
       if (optionList[i].id === chooseID) {
         red = optionList[i]
         red.color = "red"
         newList.push(red)
+        console.log(red)
       }
-      if (optionList[i].id !== answer.id && optionList[i].id !== chooseID) {
+      if (optionList[i].id !== answer[0].id && optionList[i].id !== chooseID) {
         white = optionList[i]
         newList.push(white)
+        console.log(white)
       }
     }
     console.log(newList)
@@ -553,6 +672,7 @@ const QuizContainer = (props) => {
       setBookName("")
       setStart(true)
       setHasOption(false)
+      setvalidWords("")
     }
 
   }
@@ -579,8 +699,9 @@ const QuizContainer = (props) => {
 
       if (count == props.showBook.length) {
 
-        let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words"
+        /* let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words" */
         
+        let url = window.location.href
 
         let target = ""
         let defalutValue = " "
@@ -617,16 +738,16 @@ const QuizContainer = (props) => {
                   setBookIDpop(false), setTutorPop(true)
                 }
                 }}
-                style={{ display: validWords.length > 0 ? "block" : "none" }}
+                  style={{ display: validWords.length > 0 || !hasOption ? "block" : "none" }}
                 >Send</div>
 
                 <div className="bookPopCreateWording" style={{ display: hasOption? "none":"block"}}>No option ? Try :</div>
                 <div className="bookPopCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/wordbooks") }} style={{ display: hasOption ? "none" : "block" }}>Create wordbook</div>
 
                 <div className="validWords" style={{ display: hasOption ? "block" : "none" }}>
-                  <div className="bookPopCreateWording" >{"Useable wordcards in this book : " + validWords.length}</div>
-                  <div className="bookPopCreateWording" style={{ display: validWords.length > 0 ? "none" : "block" }}>Add words with more then 2 synonyms and antonyms ! </div>
-                  <div className="bookPopCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/addwords?" + target[0] + " & " + decodeURI(target[1])) }} style={{ display: validWords.length > 0 ? "none" : "block" }}>Add Words</div>
+                  <div className="usableWords" >{"Useable wordcards in this book : " + validWords.length}</div>
+                  <div className="usableWordsWording" style={{ display: validWords.length > 0 ? "none" : "block" }}>Add words with more then 2 synonyms and antonyms ! </div>
+                  <div className="usableWordsCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/addwords?" + target[0] + " & " + decodeURI(target[1])) }} style={{ display: validWords.length > 0 ? "none" : "block" }}>Add Words</div>
                   </div>
             </div>
 
@@ -661,7 +782,7 @@ const QuizContainer = (props) => {
   
   return (
     <div className="quizContainer">
-      <div className="bookIDpopBtn" onClick={() => { setBookIDpop(true) }}>{bookName === "" ? "Please Choose One of Your Wordbook" : bookName}</div>
+      <div className="bookIDpopBtn" onClick={() => { setBookIDpop(true) }}>{bookName === "" ? "Please Choose One of Your Wordbook" : "Now in : " + bookName}</div>
       {renderBookID()}
 
       
@@ -697,12 +818,12 @@ const QuizContainer = (props) => {
             </AnsArea>
 
           </QuizContext.Provider>
-
+ 
 
       {/* setSendSwitch */}
-       <div onClick={() => { setPage(page + 2) }} className="next">NEXT</div>
-       <div onClick={checkAns} className="send">SEND</div>
-       <div onClick={() => { endQuiz() }} className="end-quiz">QUIT</div>
+      <div className="next" style={{ display: sendSwitch ? "block" : "none" }} onClick={() => { setPage(page + 1),setSendSwitch(false) }}>NEXT</div>
+      <div onClick={() => { checkAns(), setSendSwitch(true) }} className="send" style={{ display: sendSwitch ? "none":"block"}}>SEND</div>
+      <div onClick={() => { endQuiz()}} className="end-quiz" >QUIT</div>
            
          
         
