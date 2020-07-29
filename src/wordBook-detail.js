@@ -456,7 +456,7 @@ class Dtail extends React.Component {
         {this.state.cards.length > 0 ? this.renderWords() :
           <div className="noWordsBlock">
             <div className="noWordsTitle">There's no words in this wordbook</div>
-            <div className="noWordSubTitle">Try adding some words ! Add more than three words to unlock quiz function.</div>
+            <div className="noWordSubTitle">Try adding some words ! Add words with more then 2 synonyms and antonyms to unlock quiz function.</div>
             <div className="noWordsSubtitle" onClick={() => {
               window.location.href = ('https://kiwords-c058b.web.app/addwords?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1])
             }}>Add words</div>
@@ -465,7 +465,7 @@ class Dtail extends React.Component {
         {/* render頁碼 */}
         {this.renderPage()}
         
-        <div className="bottomPart" style={{ display: this.state.cards.length>3 ? "flex":"none"}}>
+        <div className="bottomPart" style={{ display: this.state.cards.length>1 ? "flex":"none"}}>
           <div className="takeQuizTitle">Familiar with all these words ? </div>
           <div className="takeQuizBtn" onClick={(event) => { event.stopPropagation(), window.location.href = ('https://kiwords-c058b.web.app/quiz?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1]) }}>Take a quiz</div>
         </div>

@@ -132,18 +132,23 @@ const QuizContext = createContext({
 
 const QuizContainer = (props) => {
 
+  //detect wordbook when you come in 
+
   let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words"
 
 
   let defalutValue = " "
   let defalutBook = ""
+  let hasDefaultOption = false
   if (url.split("?").length > 1) {
     let target = ""
     target = url.split("?")[1].split("&")
     defalutValue = target[0]
     defalutBook = decodeURI(target[1])
+    hasDefaultOption = true
   }
 
+  //tutor pop
   const [bookIDpop, setBookIDpop] = useState(true)
   useEffect(() => { console.log("bookIDpop:" + bookIDpop) }, [bookIDpop])
 
@@ -154,22 +159,74 @@ const QuizContainer = (props) => {
   useEffect(() => { console.log("bookName:" + bookName) }, [bookName])
 
   const [checked, setChecked] = useState([true])
+
+  const [hasOption, setHasOption] = useState(hasDefaultOption)
+  useEffect(() => { console.log("hasOption:" + hasOption) }, [hasOption])
+
+  const [validWords, setvalidWords] = useState(0)
+  useEffect(() => { console.log("validWords:" + validWords) }, [validWords])
+
+
+  //bookID select form
   const [bookID, setBookID] = useState(defalutValue)
+
+
   useEffect(() => {
     let str = bookID
     console.log(str.length)
     if (str.length > 5) {
+      //what to do when firstly detect bookID chosen
+
       setPage(1)
       setScore(0)
       setTopicCount(0)
       setEnd(false)
       setChecked(true)
+
+
       db.collection("books").doc(bookID).get().then((doc) => {
         console.log(doc.data().cards[0].word)
         let options = []
+        let validWords = []
+        
+
+        //================first :先抓三個出來，接下來用 setPage 推動====================
+        for (let i = 0; i < doc.data().cards.length; i++){
+
+          if (typeof(doc.data().cards[i].synonyms) === "object") {
+            if (doc.data().cards[i].synonyms.length > 2) {
+              if (typeof(doc.data().cards[i].antonym) === "object") { 
+                if (doc.data().cards[i].antonym.length > 2) {
+                  validWords.push(doc.data().cards[i])
+                }
+              } else {
+                if (doc.data().cards[i].antonym.split(",").length > 2) {
+                  validWords.push(doc.data().cards[i])
+                }
+              }
+            }
+          } else {
+            if (doc.data().cards[i].synonyms.split(",").length > 2) {
+              if (typeof(doc.data().cards[i].antonym) === "object") {
+                if (doc.data().cards[i].antonym.length > 2) {
+                  validWords.push(doc.data().cards[i])
+                }
+              } else {
+                if (doc.data().cards[i].antonym.split(",").length > 2) {
+                  validWords.push(doc.data().cards[i])
+                }
+              }
+            }
+          } 
+        }
+        console.log(validWords)
+        setvalidWords(validWords)
+
+
+          
         if (doc.data().cards.length < 3) {
           alert('你的單字本字量不夠，請先新增更多單字:(')
-          /*  redirect to add card page */
+          
         } else {
           for (let i = 0; i < 3; i++) {
             let option = {
@@ -226,6 +283,8 @@ const QuizContainer = (props) => {
     }
   }, [bookID]);
   const [start, setStart] = useState([false])
+
+
   const [page, setPage] = useState(1)
   useEffect(() => {
     let str = bookID
@@ -481,6 +540,7 @@ const QuizContainer = (props) => {
     console.log(e.target.value)
     if (e.target.value !== " ") {
       setBookID(e.target.value)
+      setHasOption(true)
       setStart(false)
       for (let i = 0; i < props.showBook.length; i++){
         if (e.target.value === props.showBook[i].bookID) {
@@ -492,6 +552,7 @@ const QuizContainer = (props) => {
       setBookID(" ")
       setBookName("")
       setStart(true)
+      setHasOption(false)
     }
 
   }
@@ -520,13 +581,11 @@ const QuizContainer = (props) => {
 
         let url = "https://kiwords-c058b.web.app/quiz?159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2&TOEIC%20essential%20words"
         
-          //let url = window.location.href 
-          //如果網址有帶到書名&ID，就自動帶入quiz欄位
-          //如果沒有，就跳出 option 讓他選，如果沒選就不讓他送出（引導他去新增單字本？）
 
+        let target = ""
         let defalutValue = " "
         if (url.split("?").length > 1) {
-          let target = ""
+          
           target = url.split("?")[1].split("&")
           defalutValue = target[0]
           
@@ -557,9 +616,18 @@ const QuizContainer = (props) => {
                 } else {
                   setBookIDpop(false), setTutorPop(true)
                 }
-                }}>Send</div>
-              <div className="bookPopCreateWording">No option ? Try :</div>
-                <div className="bookPopCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/wordbooks")}}>Create wordbook</div>
+                }}
+                style={{ display: validWords.length > 0 ? "block" : "none" }}
+                >Send</div>
+
+                <div className="bookPopCreateWording" style={{ display: hasOption? "none":"block"}}>No option ? Try :</div>
+                <div className="bookPopCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/wordbooks") }} style={{ display: hasOption ? "none" : "block" }}>Create wordbook</div>
+
+                <div className="validWords" style={{ display: hasOption ? "block" : "none" }}>
+                  <div className="bookPopCreateWording" >{"Useable wordcards in this book : " + validWords.length}</div>
+                  <div className="bookPopCreateWording" style={{ display: validWords.length > 0 ? "none" : "block" }}>Add words with more then 2 synonyms and antonyms ! </div>
+                  <div className="bookPopCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/addwords?" + target[0] + " & " + decodeURI(target[1])) }} style={{ display: validWords.length > 0 ? "none" : "block" }}>Add Words</div>
+                  </div>
             </div>
 
             </div>
