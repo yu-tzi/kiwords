@@ -5,51 +5,20 @@
   left: 40%;
 }
 
-.bookIDpopBtn{
-  background-color: #e0ac49;
-  margin: 10px;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  font-size: 23px;
-  padding: 10px;
-  line-height: 35px;
-  overflow: scroll;
-
-}
-
 
 
 .optionDrop{
-  margin: 10px;
-  border-radius: 5px;
-  text-align: center;
+  padding: 10px;
   font-size: 23px;
 }
-
-
 
 .quizOption{
-  line-height: 36px;
-  height: 40px;
-  margin: 5px;
-  border-radius: 5px;
+      background-color: rgb(43, 39, 39);
+    cursor: grab;
+    color: white;
+
 }
 
-
-.topic-container{
-  margin: 10px;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  font-size: 23px;
-  flex-direction: column;
-  background-color: #eef0e6;
-  padding: 20px;
-  overflow: scroll;
-}
 
 
 .answerDrop{
@@ -58,59 +27,9 @@
   border-width: 1px;
   border-style: solid;
   width: 300px;
-  border-radius: 5px;
+
 }
 
-
-.topic-Area>div{
-  margin: 20px auto;
-  width: 450px;
-  overflow-wrap: break-word;
-  font-weight: 300;
-  
-}
-
-.titleL,.title-antonymL,.title-synonymsL{
-  font-weight: 400;
-  font-size: 28px;
-  padding-bottom:5px;
-}
-
-
-.topic-Area{
-  height: 300px;
-}
-
-
-.next, .send{
-  background-color: #d8f2e9;
-  margin: 10px;
-  border-radius: 5px;
-  font-size: 20px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  font-size: 25px;
-  font-weight: 500;
-}
-
-.end-quiz{
-  grid-column: 3/4;
-  grid-row: 3/4;
-  background-color: #e6f2ee;
-  margin: 10px;
-  border-radius: 5px;
-  font-size: 20px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  font-size: 25px;
-  font-weight: 500;
-}
 
 .bookIDpop{
     background-color: #24293c;
@@ -120,13 +39,6 @@
     border-radius: 5px;
 }
 
-.bookPopX{
-  color: white;
-    font-size: 25px;
-    position: absolute;
-    right: 10px;
-    top: 5px;
-}
 
 .bookSelect{
     background-color: rgba(0, 0, 0, 0.1);
@@ -196,8 +108,9 @@
 
 
 
-.tutorPopBox>iframe{
+.tutorPopBox>img{
   width: 100%;
+  padding: 10px 0 20px;
 }
 
 .tutorPopBtn{
@@ -258,5 +171,134 @@
     margin: 20px auto;
     width: 100px;
     text-align: center;
+    
 }
 
+.quizContainer{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topic-container{
+    background-color: #24293c;
+    width: 600px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.topic-container>div{
+    display: flex;
+    font-size: 25px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topic-container>div>div{
+  font-size: 25px;
+  margin-right: 10px;
+  min-height: 30px;
+}
+
+.answerDrop{
+  border-color: white;
+  border-width: 2px;
+  border-style: solid;
+  width: 150px;
+  background-color: #24293c;
+  height: auto;
+}
+
+.questionBlock{
+      display: flex;
+    justify-content: space-between;
+    background-color: #24293c;
+    padding: 10px 15px;
+    align-items: center;
+}
+
+.questionTitle{
+  font-size: 20px;
+}
+
+.optionArea{
+  width: 600px;
+  display: flex;
+      flex-direction: column;
+}
+
+.optionBlock{
+    display: flex;
+    justify-content: center;
+    background-color: #4d5165;
+    padding: 10px 15px;
+    align-items: center;
+   
+}
+
+.bookIDpopBtn{
+  color: #3ccfcf;
+    font-weight: 600;
+    padding: 20px;
+}
+
+
+
+.optionDrop{
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+}
+
+.btnBlock{
+  display: flex;
+    width: 600px;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.next,.send,.end-quiz{
+      font-size: 16px;
+    background-color: orange;
+    border-radius: 3px;
+    padding: 8px 10px;
+    color: #303545;
+    text-align: center;
+    line-height: 22px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    transition: 0.5s;
+    width: 150px;
+}
+
+.end-quiz{
+  background-color: #3ccfcf;
+}
+
+.next:hover,.send:hover,.end-quiz:hover{
+  background-color: #303545;
+  color: orange;
+}
+
+
+.quizOption{
+      line-height: 30px;
+    text-align: center;
+    cursor: grab;
+    color: white;
+    height: 30px;
+    margin: 5px;
+    font-size: 22px;
+    padding: 5px 10px;
+  }
+
+.optionSubTitle{
+      font-weight: 800;
+}

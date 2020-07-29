@@ -75,7 +75,7 @@ const AnsArea = (props) => {
     <div
       ref={drop}
       style={{
-        backgroundColor: isOver ? "lightgrey" : "whitesmoke"
+        backgroundColor: isOver ? "whitesmoke" : "#4d5165"
       }}
       className="optionDrop"
     >
@@ -101,17 +101,22 @@ const QuizArea = (props) => {
   return (
     <div className="topic-container">
 
-      <div>The Synonym of</div>
-      <div>{" "+props.topic+" "}</div>
-      <div>{" " + "is"}</div>
+    <div>
+      <div>The synonym of</div>
+        <div>{props.topic}</div>
+    </div>
+    <div>
+      <div>is</div>
       <div
         ref={drop}
         style={{
-          backgroundColor: isOver ? "lightgrey" : "whitesmoke"
+          backgroundColor: isOver ? "whitesmoke" : "#24293c"
         }}
         className="answerDrop"
       >
         {props.children}
+        </div>
+        <div>.</div>
       </div>
 
       {/* props.topic */}
@@ -757,8 +762,8 @@ const QuizContainer = (props) => {
               
               <div className="tutorPopBox">
                 <div className="tutorPopTitle">Step2</div>
-                  <div className="tutorPopSubtitle">Watch Quick Tutorial</div> 
-                  <iframe src="https://giphy.com/embed/Ol2yHMEFJdYEo" width="480" height="270" frameBorder="0" allowFullScreen></iframe>
+                  <div className="tutorPopSubtitle">Quick Tutorial</div> 
+                  <img src="https://i.imgur.com/npqeJsW.gif" ></img>
                   <div className="tutorPopBtn" onClick={() => { setTutorPop(false) }}>Start Game</div> 
               </div>
 
@@ -778,12 +783,13 @@ const QuizContainer = (props) => {
   /* const [end, setEnd] = useState(false) */
 /* <div style={{ display: start ? "none" : "block" }} className="quizContainer"> */
   /* <div className="quizArea" style={{ display: end ? "none" : "block" }}> */
-  
+  let questionCount = topicCount+1
   
   return (
     <div className="quizContainer">
-      <div className="bookIDpopBtn" onClick={() => { setBookIDpop(true) }}>{bookName === "" ? "Please Choose One of Your Wordbook" : "Now in : " + bookName}</div>
+      <div className="bookIDpopBtn" onClick={() => { setBookIDpop(true) }}>{bookName === "" ? "Please Choose One of Your Wordbook" : "Resources :  " + bookName}</div>
       {renderBookID()}
+
 
       
         
@@ -791,6 +797,18 @@ const QuizContainer = (props) => {
 
           <QuizContext.Provider value={{ chooseItem, unChooseItem }}>
 
+        <div className="questionArea">
+          
+          <div className="questionBlock">
+            <div className="questionTitle">
+              {"Question " + questionCount}
+            </div>
+            {/* <div className="questionSubTitle">
+              ▼ Drag option-blocks below to fill the blank ▼ 
+            </div> */}
+          </div>
+
+          
             <QuizArea topic={topic}>
               {
                 optionList
@@ -802,7 +820,21 @@ const QuizContainer = (props) => {
                     }
                   })
               }
-            </QuizArea>
+          </QuizArea>
+
+        </div>
+
+        
+        <div className="optionArea">
+          
+          <div className="optionBlock">
+            {/* <div className="optionTitle">
+              Option
+            </div> */}
+            <div className="optionSubTitle">
+              Drag the block to fill the question-blank upside.
+            </div>
+          </div>
 
             <AnsArea>
               {
@@ -816,14 +848,20 @@ const QuizContainer = (props) => {
                   })
               }
             </AnsArea>
+          
+
+        </div>
+
 
           </QuizContext.Provider>
  
 
       {/* setSendSwitch */}
-      <div className="next" style={{ display: sendSwitch ? "block" : "none" }} onClick={() => { setPage(page + 1),setSendSwitch(false) }}>NEXT</div>
-      <div onClick={() => { checkAns(), setSendSwitch(true) }} className="send" style={{ display: sendSwitch ? "none":"block"}}>SEND</div>
-      <div onClick={() => { endQuiz()}} className="end-quiz" >QUIT</div>
+      <div className="btnBlock">
+        <div className="next" style={{ display: sendSwitch ? "block" : "none" }} onClick={() => { setPage(page + 1),setSendSwitch(false) }}>NEXT</div>
+        <div onClick={() => { checkAns(), setSendSwitch(true) }} className="send" style={{ display: sendSwitch ? "none":"block"}}>Send</div>
+        <div onClick={() => { endQuiz() }} className="end-quiz" >Quit Quiz</div>
+      </div>
            
          
         
