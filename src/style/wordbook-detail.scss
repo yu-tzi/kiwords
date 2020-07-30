@@ -88,6 +88,11 @@
   background-color: #303545;
 }
 
+.bottomBlank{
+  height:80px;
+  width:80px;
+}
+
 .addWordsBtn{
   font-size: 16px;
     background-color: orange;
@@ -205,10 +210,33 @@
 
 .takeQuizTitle{
   font-size: 22px;
+  
 
 }
 
 .addWordsBtn:hover,.viewAllBookBtn:hover,.takeQuizBtn:hover{
   background-color: #303545;
   color: orange ;
+}
+
+
+@media (max-width: 450px) {
+
+.takeQuizTitle{
+  width: 80%;
+}
+
+.upperPart{
+  flex-direction: column;
+}
+
+.upperbtn{
+  display: block;
+}
+
+.viewAllBookBtn,.addWordsBtn{
+  margin: 10px auto;
+  width: 70%;
+}
+
 }

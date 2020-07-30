@@ -2,7 +2,7 @@
 
 export default function sketch(p) {
 
-  let c = 70;
+  let c = 60;
   let x = [];
   let y = [];
   let colorX = 0

@@ -27,10 +27,10 @@ html, body {
   padding: 0px;
 }
 
-.footer{
+/* .footer{
   height: 200px;
   background-color: #0d0e13;
-}
+} */
 
 
 .navBox{
@@ -195,7 +195,7 @@ html, body {
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 14vw;
+  right: 10vw;
   top:80px;
   background-color: #e4e4e4;
   /* box-shadow: 2px 2px 5px rgb(213, 213, 213); */
@@ -224,8 +224,8 @@ html, body {
   border-width: 0 10px 30px 10px;
   border-color: transparent transparent #e4e4e4 transparent;
   position: absolute;
-  right: 15vw;
-  top:55px;
+  right: 12vw;
+  top: 60px;
   z-index: 15;
 }
 

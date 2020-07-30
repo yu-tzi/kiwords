@@ -91,13 +91,14 @@ class AddWords extends React.Component {
           {this.renderSearch(i)}
         <div className="upper">
           <div className="word">
-            {/* <div>word</div> */}
-            <input type="text" className={index + " " + keyvalue} value={this.state.word[index]?.[keyvalue] || this.state.searchWord} onChange={(e) => this.changeCardInput(e)} placeholder="Enter word"></input>
+            <input type="text" className={index + " " + keyvalue} value={this.state.word[index]?.[keyvalue] || this.state.searchWord} onChange={(e) => this.changeCardInput(e)} placeholder="First ,let's enter any word !"></input>
+            <div>WORD</div>
           </div>
 
           <div className="meaning">
             
             <textarea rows="3" className={index + " " + keyvalue} cols="50" value={this.state.meaning[index]?.[keyvalue] || ""} onChange={(e) => this.changeCardInput(e)} placeholder="Meaning"></textarea>
+            <div>MEANING</div>
           </div>
         </div>
 
@@ -105,12 +106,15 @@ class AddWords extends React.Component {
           <div className="synonyms">
             {/* <div>synonyms</div> */}
             <textarea rows="3" className={index + " " + keyvalue} cols="50" value={this.state.synonyms[index]?.[keyvalue] || ""} onChange={(e) => this.changeCardInput(e)} placeholder="synonyms"></textarea>
+            <div>SYNONYMS</div>
           </div>
 
           <div className="antonym">
             {/* <div>antonym</div> */}
             
             <textarea rows="3" className={index + " " + keyvalue} cols="50" value={this.state.antonym[index]?.[keyvalue] || ""} onChange={(e) => this.changeCardInput(e)} placeholder="antonym"></textarea>
+            <div>ANTONYM</div>
+
           </div>
         </div>
       </div>

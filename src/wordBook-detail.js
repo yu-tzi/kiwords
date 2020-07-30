@@ -469,6 +469,7 @@ class Dtail extends React.Component {
           <div className="takeQuizTitle">Familiar with all these words ? </div>
           <div className="takeQuizBtn" onClick={(event) => { event.stopPropagation(), window.location.href = ('https://kiwords-c058b.web.app/quiz?' + target.split("?")[0]) + "&" + decodeURI(target.split("?")[1]) }}>Take a quiz</div>
         </div>
+        <div className="bottomBlank"></div>
       </div>
     )
   }

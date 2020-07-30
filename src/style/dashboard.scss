@@ -9,39 +9,43 @@
 
 
 .profileImg{
-  width:150px;
-  height: 150px;
-  background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%);
-  border-radius: 50%; 
-  line-height: 150px;
-  text-align: center;
-  font-size: 50px;
-  color: white;
+      background-color: #19295e;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 100px;
+    border-width: 2px;
+    border-style: solid;
+    margin-right: 35px;
+    border-color: #646f90;
+    font-weight: 100;
+    color: white;
+}
 
+.profileInforBox{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: overlay;
+  word-wrap: break-word;
+  align-items: center;
 }
 
 .profileTitle{
-  font-size: 25px;
-  padding: 15px 0;
-  position: relative;
+  font-size: 45px;
+}
+
+.profileInfor{
+  padding: 5px 0px;
 }
 
 .profileImgBox{
   position: relative;
 }
 
-.profileBox{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 30%;
-  background-color: rgb(232, 232, 232);
-  border-radius: 5px;
-  padding: 50px 20px;
-  height: 600px;
-  margin: 0 40px 0 0;
-  position:relative;
-}
+
 
 .changePassword{
   border-radius: 5px;
@@ -53,38 +57,6 @@
 
 
 
-
-
-
-.dashContainer{
-  display: flex;
-  flex-flow: row nowrap;
-  width: 85%;
-  margin: 10px auto 0px;
-  max-width: 1100px;
-}
-
-.statisBox{
-  width: 70%;
-}
-
-.statisUp{
-  height: 200px;
-  width: auto;
-  background-color: rgb(233, 238, 209);
-  border-radius:5px;
-  margin-bottom:30px;
-  height: 300px;
-}
-
-.statisDown{
-  height: 200px;
-  width: auto;
-  background-color: rgb(238, 228, 209);
-  border-radius: 5px;
-  margin-bottom:80px;
-  height: 350px;
-}
 
 .editImg{
   margin: 10px 0;
@@ -113,18 +85,20 @@
   border-width: 0px;
   border-bottom-width: 2px;
   background-color: #e8e8e8;
+  border-style: none;
 }
 
-.uploadTitleForm>input:last-child{
-    margin: 0px 5px;
-    border-width: 0px;
-    background-color: grey;
-    color: white;
-    width: 60px;
-    height: 20px;
-    letter-spacing: 3px;
-    
-}
+ .uploadTitleForm > input:last-child{
+   border-style: none;
+       padding: 3px 15px;
+    background-color: orange;
+    color: #24293c;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100px;
+    text-align: center;
+    margin-top: 15px;
+ }
 
 
 .titleUploadPop{
@@ -159,80 +133,128 @@
 }
 
 
-.uploadBtnBox{
-  display: flex;
-  position: absolute;
-  left: 10px;
-  bottom: 20px;
-  flex-direction: column;
+
+.profileBox{
+      justify-content: center;
+    display: flex;
+    align-items: center;
+    padding-top: 50px;
 }
 
-@media (max-width: 768px) {
 
-  .dashContainer{
-    flex-direction: column;
-  }
+.editImgBox,.editTitleBox{
+      font-size: 16px;
+    background-color: orange;
+    width: 150px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    color: #303545;
+    text-align: center;
+    cursor: pointer;
+    margin: 0px 5px;
+    transition: 0.5s;
+}
 
-  .profileBox{
-    width:100%;
-    height:400px;
-    padding: 30px 0;
-    margin:  0 0 40px 0;
-  }
+.editImgBox:hover,.editTitleBox:hover{
+  color: orange;
+  background-color: #303545;
+}
 
-  .uploadBtnBox{
-    flex-direction: row;
-    left: 10%;
-    bottom: 20px;
-  }
+.titleUploadPop,.imageUploadPop{
+  left: 0;
+    display: block;
+    position: fixed;
+    background-color: rgb(0, 0, 0, 0.9);
+    height: 100%;
+    width: 100%;
+    top: 0;
+}
 
-  .uploadBtnBox>div{
-    border-color: #6d6d6d;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 6px;
-    margin: 0 5px;
+.imageUploadPopbox,.titleUploadPopbox{
+    background-color: #24293c;
+    height: 200px;
+    width: 320px;
+    left: calc(50% - 160px);
+    border-radius: 5px;
+    position: absolute;
+    top: 200px;
+}
 
-  }
+.imageUploadclose,.titleUploadclose{
+    font-size: 25px;
+    right: 15px;
+    width: 20px;
+    position: absolute;
+    top: 10px;
+}
 
-  .titleUploadPop {
+.imageUploadPopbox>input{
   position: absolute;
-  top: -50px;
+    top: 80px;
+    left: 70px;
+    width: 200px;
 }
 
 .uploadTitleForm{
-  position: relative;
-  display: flex;
+  position: absolute;
+    top: 60px;
+    left: 55px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.titleUploadClose, .imgUploadClose{
-  top: 0px;
-    position: relative;
-    right: 0px;
-    color: grey;
-    width: 10px;
-}
-
-.edit{
-  padding: 5px;
-  margin: 0;
-}
-
-.imageUploadPop{
-      display: none;
-    position: absolute;
-    top: -73px;
-    left: 0px;
+.uploadTitleForm>input:first-child{
+      border-radius: 5px;
+    height: 23px;
+    width: 230px;
 }
 
 
+.uploadBtnBox{
+      display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
 
-  .statisBox{
-    width:100%;
+
+
+
+/* @media (max-width: 1000px) { */
+@media (max-width: 700px) {
+  
+  .profileImg{
+    margin: 0px 0px 10px 0px;
+    width: 100px;
+    height: 100px;
+    font-size: 70px;
+    
   }
 
+  .profileBox{
+    width: 90%;
+    margin: auto;
+    flex-direction: column;
+  }
+
+  .profileTitle{
+    font-size: 35px;
+
+  }
+
+}
 
 
+@media (max-width: 400px) {
 
+  .uploadBtnBox{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .editTitleBox{
+    margin-bottom: 10px;
+  }
 
 }

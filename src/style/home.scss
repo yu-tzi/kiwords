@@ -23,21 +23,18 @@ $darkblue: #131a32;
 }
 
 .mktArea{
-  /* height: 550px; */
-  /* background: linear-gradient(135deg, #1b7e7e 0%,#11fa7a 100%);  */
-  background-color: rgb(43, 43, 43);
   position: relative;
-  /* width: 90%; */
-  margin: auto;
-  max-width: 1200px;
-  overflow: hidden;
   height: 100%;
+  width: 90%;
+  margin: auto;
+  overflow: hidden;
+  max-width: 1200px;
 }
 
 .head{
   position: absolute;
   top: 120px;
-  left: 10%;
+  left: 5%;
 }
 
 
@@ -246,7 +243,7 @@ $darkblue: #131a32;
   }
 
   .start{
-    margin: 10px auto;
+    margin: 0;
     color: black;
     transition: 0.5s;
 }

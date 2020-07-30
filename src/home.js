@@ -26,13 +26,15 @@ class Head extends React.Component {
           <P5Wrapper sketch={sketch} />
         </div> 
 
-        <div className="head">
-          {/* <a href={rootURL +"/login"} > */}
-          <div className="logoH">KiWords</div>
-          {/* <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img> */}
-          <div className="subtitle">KiWords makes simple learning tools that let you study English. Start learning today with flashcards & quizes !</div>
-          <a href={this.props.logIn ? rootURL + "/wordbooks" : rootURL + "/login"} ><div className="start">START</div></a>
-        </div>
+        
+          <div className="head">
+            {/* <a href={rootURL +"/login"} > */}
+            <div className="logoH">KiWords</div>
+            {/* <img src="https://i.imgur.com/xV8JpBB.png" alt="" className="logoH"></img> */}
+            <div className="subtitle">KiWords makes simple learning tools that let you study English. Start learning today with flashcards & quizes !</div>
+            <a href={this.props.logIn ? rootURL + "/wordbooks" : rootURL + "/login"} ><div className="start">START</div></a>
+          </div>
+       
         
         {/* <div className="middle">
           <div className="share">評分最高的單字本：</div>

@@ -262,6 +262,7 @@
     width: 600px;
     justify-content: center;
     padding-top: 50px;
+        padding-bottom: 80px;
 }
 
 .next,.send,.end-quiz{
@@ -342,6 +343,7 @@
     margin-bottom: 0px;
     margin-left: 20px;
     transition: 0.5s;
+        display: flex;
     margin-top: 480px;
 }
 

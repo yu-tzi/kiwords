@@ -1,6 +1,7 @@
 import React from "react";
 import { db, storage } from "./firebaseConfig"
 import './style/dashboard.scss';
+import { thresholdSturges, thresholdFreedmanDiaconis } from "d3";
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -48,7 +49,8 @@ class Dashboards extends React.Component {
     }
   }
 
-  titleUploadPop() {
+  titleUploadPop(e) {
+    e.stopPropagation()
     this.setState({ titleUploadPop: true })
     this.setState({ reviseNamePop: true })
     if (this.state.imgUploadPop) {
@@ -69,6 +71,8 @@ class Dashboards extends React.Component {
 
   imageUploadClose() {
     this.setState({ imgUploadPop: false })
+    console.log('imageUploadClose')
+    
   }
 
 
@@ -176,52 +180,56 @@ class Dashboards extends React.Component {
             {this.convertImg()}
           </div>
           
+        <div className="profileInforBox">
           {this.convertName()}
-
-          <div className="profileInfor">{this.props.memberEmail}
-            
-            <div className="uploadBtnBox">
-              
-              <div className="editTitleBox">
-                
-                
-              {/* word upload pop */}
-              <div className="titleUploadPop" style={{ display: this.state.titleUploadPop ? "block" : "none" }}>
-                <form className="uploadTitleForm" onSubmit={this.changeName}>
-                  <input type="text" id="fname" name="fname" className="uploadTitle" placeholder="NEW NAME" onChange={(e) => { this.uploadName(e) }} />
-                  <input type="submit" ></input>
-                </form>
-                <div className="titleUploadClose" onClick={this.titleUploadClose}>✕</div>
-              </div>
-
-
-                <div className="edit editUploadTitle" onClick={this.titleUploadPop}>Change Your Name
-        </div>
-              
-              </div>
-            
-              <div className="editImgBox">
-              {/* image upload pop */}
-              <div className="imageUploadPop" style={{ display: this.state.imgUploadPop ? "block" : "none" }}>
-                <input type="file" name="file" className="uploadPicture" placeholder="上傳檔案" accept="image/*" onChange={this.uploadImg} />
-                <div className="imgUploadClose" onClick={this.imageUploadClose}>✕</div>
-              </div>
-
-
-                <div className="edit editImg" onClick={this.imageUploadPop}>Upload New Photo</div>
-                
-              </div>
-              
-          {/* <img className="edit editImg" src="https://i.imgur.com/W1LMjHf.png" alt=""
-              ></img> */}
-            </div>
+            <div className="profileInfor">{
+              this.props.memberEmail
+            }</div>
           </div>
         </div>
+          
+            
+      <div className="uploadBtnBox">
+              
+          <div className="editTitleBox" onClick={(e) => { this.titleUploadPop(e) }}>Change Your Name
+               
+              <div className="titleUploadPop" style={{ display: this.state.titleUploadPop ? "block" : "none" }}>
 
-        <div className="statisBox">
-          <div className="statisUp"></div>
-          <div className="statisDown"></div>
-        </div>
+              <div className="titleUploadPopbox">
+                <div className="titleUploadclose" onClick={(e) => {
+                  this.setState({
+                    titleUploadPop: false
+                  }), e.stopPropagation()}}>✕</div>
+                <form className="uploadTitleForm" lang="en" onSubmit={this.changeName}>
+                  <input type="text" id="fname" name="fname" className="uploadTitle" placeholder="NEW NAME" onChange={(e) => { this.uploadName(e) }} ></input>
+                    <input type="submit" ></input>
+                  </form>
+              </div>
+                  
+            </div>
+            {/* titleUploadPo */}
+          </div>
+          {/* editTitleBox */}
+            
+          <div className="editImgBox" onClick={this.imageUploadPop}>Upload New Photo
+              
+              <div className="imageUploadPop" style={{ display: this.state.imgUploadPop ? "block" : "none" }}>
+              <div className="imageUploadPopbox">
+              <div className="imageUploadclose" onClick={(e) => {
+                this.setState({
+                  imgUploadPop: false
+                }), e.stopPropagation()
+              }}>✕</div>
+                <input type="file" lang="en" name="file" className="uploadPicture" placeholder="Upload file and wait for a sec" accept="image/*" onChange={this.uploadImg} ></input>
+              </div>
+            </div>
+            
+          </div>
+          {/* editImgBox */}
+          
+          </div>
+        {/* uploadBtnBox */}
+
       </div>
     )
   }

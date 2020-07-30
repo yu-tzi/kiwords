@@ -15,13 +15,16 @@
 }
 
 .nowBookBlock{
-  background-color: #24293c;
-  width: 100%;
-  height: 80px;
-  border-radius: 5px;
-  text-align: center;
-  line-height: 80px;
-  margin-top: 20px;
+ background-color: #24293c;
+    width: 100%;
+    height: 80px;
+    border-radius: 5px;
+    text-align: center;
+    /* line-height: 20px; */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .selectBlock{
@@ -68,25 +71,37 @@
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    height: 120px;
+    height: 190px;
     display: flex;
-    padding: 15px 10px 0px;
+    padding: 15px 5px 0px 20px;
 }
+
 
 
 
 .upper,.mid{
   display: flex;
+  align-items: center;
 }
 
 .word,.meaning,.synonyms,.antonym{
   width: 50%;
-  height:45px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  line-height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.word>div,.meaning>div,.synonyms>div,.antonym>div{
+  line-height: 20px;
+  font-weight: 100;
+    font-size: 14px;
+
 }
 
 .addWordBlocks{
-  height: 120px;
+
   display: flex;
   padding-top: 15px;
 }
@@ -101,6 +116,8 @@
   border-style: solid;
   border-color: white;
   color: white;
+  padding: 5px;
+  font-size: 16px;
   
 }
 
@@ -108,6 +125,7 @@
   font-size: 20px;
   border-width: 0px;
   border-bottom-width: 2px;
+  padding: 0px;
 }
 
 .word>input:focus{
@@ -126,8 +144,8 @@
     width: 150px;
     box-shadow: 0px 0px 5px orange;
     /* position: relative; */
-    top: 50px;
-    left: 40px;
+    top: 65px;
+    left: 2.5%;
 }
 
 .addWordBlocks{
@@ -187,4 +205,44 @@
 
 .moreWords:hover{
   color:orange;
+}
+
+
+@media (max-width: 760px) {
+
+.upper, .mid{
+  flex-direction: column;
+}
+
+.word > input{
+  font-size: 16px;
+}
+
+.word > input, .meaning > textarea, .synonyms > textarea, .antonym > textarea{
+  width:100%;
+  margin-top: 20px;
+}
+
+.word, .meaning, .synonyms, .antonym{
+      width: 80%;
+}
+
+.addWordBlocks{
+  padding: 0px;
+  height: 440px;
+}
+
+
+
+.searchPopMenu{
+  top: 45px;
+  left: 10%;
+}
+
+.word{
+  margin-top: 10px;
+}
+
+
+
 }
