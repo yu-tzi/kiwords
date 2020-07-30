@@ -302,3 +302,51 @@
 .optionSubTitle{
       font-weight: 800;
 }
+
+.endQuiz{
+  position: absolute;
+  display: flex;
+    flex-flow: column wrap;
+    /* justify-content: center; */
+    align-items: center;
+    background-color: #24293c;
+    width: 600px;
+    height: 430px;
+    top: 140px;
+
+}
+
+.yourScoreTitle{
+      font-size: 28px;
+    margin-top: 80px;
+}
+
+.yourScore{
+      font-size: 25px;
+    margin-top: 60px;
+}
+
+.scoreIs{
+      font-size: 60px;
+    margin-top: 20px;
+}
+
+.yourScorebtn{
+   font-size: 16px;
+    background-color: orange;
+    border-radius: 3px;
+    padding: 8px 20px;
+    color: #303545;
+    text-align: center;
+    line-height: 22px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    transition: 0.5s;
+    margin-top: 480px;
+}
+
+.yourScorebtn:hover{
+background-color: #303545;
+color: orange;
+}
+

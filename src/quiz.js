@@ -377,7 +377,7 @@ const QuizContainer = (props) => {
           console.log(page)
 
           if (validWords.length <= page) {
-            alert('Theres no other words, your score is : ' + score)
+            /* alert('Theres no other words, your score is : ' + score) */
             setEnd(true)
           } else {
             let order = [0, 1, 2]
@@ -556,19 +556,19 @@ const QuizContainer = (props) => {
           chooseAns = -1
           setScore(score + 1)
           setTopicCount(topicCount + 1)
-          alert('正確答案')
+          /* alert('正確答案') */
         } else {
           chooseAns = optionList[i].id
           setChecked(false)
           setTopicCount(topicCount + 1)
-          alert('不是正確答案')
+          /* alert('不是正確答案') */
         }
       } else {
         ans += 1
       }
 
       if (ans > 2) {
-        alert('尚未選擇答案')
+        alert('Please drag the block below and drop in the question-blank.')
       } else {
         SendItem(chooseAns)
       }
@@ -776,7 +776,7 @@ const QuizContainer = (props) => {
   }
 
   const endQuiz = () => {
-    alert('單字用罄，結束測驗，分數是： ' + score)
+    /* alert('單字用罄，結束測驗，分數是： ' + score) */
     setEnd(true)
   }
 
@@ -785,6 +785,13 @@ const QuizContainer = (props) => {
   /* <div className="quizArea" style={{ display: end ? "none" : "block" }}> */
   let questionCount = topicCount+1
   
+  url = window.location.href
+  let target = ""
+  if (url.split("?").length > 1) {
+    target = url.split("?")[1].split("&")
+  }
+
+
   return (
     <div className="quizContainer">
       <div className="bookIDpopBtn" onClick={() => { setBookIDpop(true) }}>{bookName === "" ? "Please Choose One of Your Wordbook" : "Resources :  " + bookName}</div>
@@ -797,7 +804,7 @@ const QuizContainer = (props) => {
 
           <QuizContext.Provider value={{ chooseItem, unChooseItem }}>
 
-        <div className="questionArea">
+        <div className="questionArea" style={{ display: end ? "none" : "block" }}>
           
           <div className="questionBlock">
             <div className="questionTitle">
@@ -825,7 +832,7 @@ const QuizContainer = (props) => {
         </div>
 
         
-        <div className="optionArea">
+        <div className="optionArea" style={{ display: end ? "none" : "block" }}>
           
           <div className="optionBlock">
             {/* <div className="optionTitle">
@@ -857,20 +864,22 @@ const QuizContainer = (props) => {
  
 
       {/* setSendSwitch */}
-      <div className="btnBlock">
-        <div className="next" style={{ display: sendSwitch ? "block" : "none" }} onClick={() => { setPage(page + 1),setSendSwitch(false) }}>NEXT</div>
+      <div className="btnBlock" style={{ display: end ? "none" : "flex" }}>
+        <div className="next" style={{ display: sendSwitch ? "block" : "none" }} onClick={() => { setPage(page + 1),setSendSwitch(false) }}>Next</div>
         <div onClick={() => { checkAns(), setSendSwitch(true) }} className="send" style={{ display: sendSwitch ? "none":"block"}}>Send</div>
         <div onClick={() => { endQuiz() }} className="end-quiz" >Quit Quiz</div>
       </div>
            
          
         
-
-        <div className="endQuiz" style={{ display: end ? "block" : "none" }}>
-          <div className="yourScore">你的分數是</div>
+      {/* style={{ display: end ? "block" : "none" }} */}
+      <div className="endQuiz" style={{ display: end ? "flex" : "none" }}>
+          <div className="yourScoreTitle">Quiz finished !</div>
+          <div className="yourScore">Your Score :</div>
           <div className="scoreIs">{score + "/" + topicCount}</div>
-
-        </div>
+        
+      </div>
+      <div className="yourScorebtn" style={{ display: end ? "flex" : "none" }} onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/details/" + target[0] + " ? " + decodeURI(target[1])) }}>Review wordcards</div>
 
       
     </div>
