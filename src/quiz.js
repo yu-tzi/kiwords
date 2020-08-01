@@ -4,7 +4,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useDrag } from 'react-dnd'
 import { useDrop } from 'react-dnd'
-import { db } from "./firebaseConfig"
+import { firebase , db } from "./firebaseConfig"
 import MultiBackend from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import './style/quizMatch.scss';
@@ -13,14 +13,16 @@ class QuizMatch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      
     }
   }
+
+  
 
   render() {
     return (
       <DndProvider backend={MultiBackend} options={HTML5toTouch}>
-        <QuizContainer showBook={this.props.showBook} />
+        <QuizContainer showBook={this.props.showBook} userData={this.props.userData}/>
       </DndProvider>
     )
   }
@@ -171,6 +173,8 @@ const QuizContainer = (props) => {
 
   const [validWords, setvalidWords] = useState(0)
   useEffect(() => { console.log(validWords) }, [validWords])
+
+  
 
 
   //bookID select form
@@ -538,6 +542,21 @@ const QuizContainer = (props) => {
   const [end, setEnd] = useState(false)
   useEffect(() => {
     console.log(end)
+    if (end) {
+      let nowTime = new Date().getTime()
+      let quizHis = {
+        nowTime: nowTime,
+        topicCount: topicCount
+      }
+      let uid = props.userData[0]?.uid
+      console.log(uid)
+      db.collection("users").doc(uid).update({
+        userExp: firebase.firestore.FieldValue.arrayUnion(quizHis)
+      });
+    }
+
+  
+
   }, [end])
 
   const checkAns = () => {
@@ -778,6 +797,7 @@ const QuizContainer = (props) => {
   const endQuiz = () => {
     /* alert('單字用罄，結束測驗，分數是： ' + score) */
     setEnd(true)
+
   }
 
   /* const [end, setEnd] = useState(false) */
@@ -785,11 +805,11 @@ const QuizContainer = (props) => {
   /* <div className="quizArea" style={{ display: end ? "none" : "block" }}> */
   let questionCount = topicCount+1
   
-  url = window.location.href
+  /* url = window.location.href
   let target = ""
   if (url.split("?").length > 1) {
     target = url.split("?")[1].split("&")
-  }
+  } */
 
 
   return (
@@ -879,9 +899,9 @@ const QuizContainer = (props) => {
           <div className="scoreIs">{score + "/" + topicCount}</div>
         
       </div>
-      <div className="yourScorebtn" style={{ display: end ? "flex" : "none" }} onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/details/" + target[0] + " ? " + decodeURI(target[1])) }}>Review wordcards</div>
+      <div className="yourScorebtn" style={{ display: end ? "flex" : "none" }} onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/details/" + defalutValue + " ? " + defalutBook) }}>Review wordcards</div>
 
-      
+
     </div>
 
   )

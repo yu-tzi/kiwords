@@ -2,20 +2,125 @@ import React, { useEffect,useRef,useState } from "react";
 import './style/statistic.scss';
 import * as d3 from "d3";
 import { select } from "d3";
+import { firebase, db } from "./firebaseConfig"
+import moment from 'moment';
+moment().format();
 
-class Statistics extends React.Component {
-  render() {
+
+const Statistics = (props) => {
+
+  let data = []
+  let fakeData = []
+
+  const [fkdata, setData] = useState("")
+  useEffect(() => { 
+    console.log(fkdata)
+  }, [fkdata])
+
+  const [userID, setUserID] = useState("")
+  useEffect(() => {
+    
+    console.log(userID)
+    if (userID !== "") {
+      db.collection("users").doc(userID).get().then((doc) => {
+        if (doc.exists) {
+          console.log(doc.data().userExp);
+          let date = moment()
+          /* console.log(date.weekday(0).startOf('day').toString())
+          console.log(date.weekday(6).endOf('day').toString())
+          console.log(date.weekday(0).startOf('day').valueOf())
+          console.log(date.weekday(6).endOf('day').valueOf()) */
+
+          //make data
+          for (let i = 0; i < doc.data().userExp.length;i++){
+            let start = date.weekday(0).startOf('day').valueOf()
+            let end = date.weekday(6).endOf('day').valueOf()
+            /* console.log(doc.data().userExp[i].nowTime)
+            console.log(end >= doc.data().userExp[i].nowTime && doc.data().userExp[i].nowTime >= start) */
+            if (end >= doc.data().userExp[i].nowTime && doc.data().userExp[i].nowTime >= start) {
+              /* console.log(moment(doc.data().userExp[i].nowTime).toString())
+              console.log(moment(doc.data().userExp[i].nowTime).hour())
+              console.log(moment(doc.data().userExp[i].nowTime).day() + 1) */
+              //如果有一樣的值要加上去
+
+              let nowLength = data.length
+              let same = true
+            
+              for (let j = 0; j < nowLength; j++){
+                if (moment(doc.data().userExp[i].nowTime).day() + 1 !== data[j].day || moment(doc.data().userExp[i].nowTime).hour() !== data[j].hour) {
+                /* data[j].count += doc.data().userExp[i].topicCount */
+                  console.log('yo')
+                } else {
+                  console.log(data[j].count + doc.data().userExp[i].topicCount)
+                  data[j].count += doc.data().userExp[i].topicCount
+                  same = false
+                }
+              }
+
+              if (same) {
+                data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
+              }
+              console.log(data)
+              
+            }
+            
+          }
+
+          for (let i = 1; i < 8; i++){
+            for (let j = 0; j < 24; j++){
+              let needData = true
+              for (let k = 0; k < data.length; k++){
+                if (data[k].day === i && data[k].hour === j) {
+                  console.log(data[k])
+                  needData = false
+                  fakeData.push(data[k])
+                }
+              }
+              if (needData) {
+                fakeData.push({ day: i, hour: j, count: 0 })
+              }
+            }
+          }
+          
+          /* console.log(fakeData) */
+          setData(fakeData)
+          
+
+        } else {
+          console.log("No such document!");
+        }
+      }).catch((err) => { alert(err) })
+    }
+  }, [userID])
+
+
+  const [load, setLoad] = useState(true)
+
+  if (props.userData.length > 0 && load) {
+    console.log(props.userData)
+    setUserID(props.userData[0].uid)
+    setLoad(false)
+  }
+
+
+  const sendDate = (fromDate) => {
+    console.log(fromDate)
+  }
+
+ 
     return (
       <div className="statistics">Statistics
-        <Svg/>
+        <Svg fakeData={fkdata}/>
+        <Date sendDate={sendDate}/>
       </div>
     )
-  }
+
 }
 
 export default Statistics
 
-const Svg = () => {
+const Svg = (props) => {
+  console.log(props.fakeData)
 
   //setting data
   let fakeData = [
@@ -265,17 +370,13 @@ const Svg = () => {
       .attr("transform", `translate(${block / 2},-2)`)
     
     //圖例
-    //RWD(可切兩半ㄇ？)
+    
     
     
     
     
     
   }, [data])
-
-
-  
-
   
   return (
     <div>
@@ -283,7 +384,30 @@ const Svg = () => {
     </div>
   )
 
+}
+
+
+const Date = (props) => {
+
+  const [fromDate, setFromDate] = useState("")
+  useEffect(() => {
+    console.log(fromDate)
+  }, [fromDate])
+
+  const handleFromDate = (e) => {
+    setFromDate(e.target.value)
+    
+  }
+
+
+  
+  return (
+    <div>
+      {/* 顯示出本週時間，有左邊跟右邊的按鈕可以調整時間 */}
+    </div>
+  )
+
+
 
 
 }
-

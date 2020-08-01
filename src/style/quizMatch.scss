@@ -33,17 +33,33 @@
 
 .bookIDpop{
     background-color: #24293c;
-    height: 400px;
-    width: 300px;
-    left: calc(50% - 150px);
+    height: 450px;
+    width: 500px;
+    left: calc(50% - 250px);
     border-radius: 5px;
+
 }
+
+.bookIDpopTitle{
+  padding-top: 40px;
+  font-size: 30px;
+}
+
+.tutorPopTitle{
+  padding-top: 20px;
+    font-size: 30px;
+}
+
+
+
 
 
 .bookSelect{
     background-color: rgba(0, 0, 0, 0.1);
     color: white;
-    width: 280px;
+    width: 400px;
+    font-size: 18px;
+    margin-top: 80px;
 }
 
 .bookIDpopBox{
@@ -64,30 +80,29 @@
 }
 
 .bookPopSend{
-  padding: 5px 10px;
+      padding: 5px 10px;
     background-color: orange;
     color: #24293c;
     border-radius: 5px;
-    font-size: 18px;
-    margin-top: 60px;
-    width: 100px;
+    font-size: 20px;
+    margin-top: 100px;
+    width: 160px;
     text-align: center;
 }
 
 .bookPopCreateWording{
-  margin-top: 80px;
+  margin-top: 70px;
 }
 
 .tutorPop{
-      display: block;
     background-color: #24293c;
-    height: 400px;
-    width: 300px;
-    left: calc(50% - 150px);
+    height: 570px;
+    width: 600px;
+    left: calc(50% - 300px);
     border-radius: 5px;
-    top: 20%;
+    top: 10%;
     position: absolute;
-}
+  }
 
 .tutorPopBox{
   display: flex;
@@ -109,8 +124,12 @@
 
 
 .tutorPopBox>img{
-  width: 100%;
-  padding: 10px 0 20px;
+  
+  width: 90%;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+    margin: 20px 0 20px;
 }
 
 .tutorPopBtn{
@@ -118,8 +137,8 @@
     background-color: orange;
     color: #24293c;
     border-radius: 5px;
-    font-size: 18px;
-    width: 100px;
+    font-size: 20px;
+    width: 160px;
     text-align: center;
 }
 
@@ -132,7 +151,7 @@
 }
 
 .bookSelect{
-      margin-top: 50px;
+      font-size: 20px;
 }
 
 .endQuiz{
@@ -247,6 +266,7 @@
   color: #3ccfcf;
     font-weight: 600;
     padding: 20px;
+    text-align: center;
 }
 
 
@@ -259,10 +279,11 @@
 
 .btnBlock{
   display: flex;
-    width: 600px;
-    justify-content: center;
-    padding-top: 50px;
-        padding-bottom: 80px;
+  width: 600px;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 80px;
+  flex-direction: row;
 }
 
 .next,.send,.end-quiz{
@@ -301,7 +322,8 @@
   }
 
 .optionSubTitle{
-      font-weight: 800;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .endQuiz{
@@ -340,11 +362,11 @@
     color: #303545;
     text-align: center;
     line-height: 22px;
-    margin-bottom: 0px;
     margin-left: 20px;
     transition: 0.5s;
         display: flex;
     margin-top: 480px;
+    margin-bottom: 50px;
 }
 
 .yourScorebtn:hover{
@@ -352,3 +374,166 @@ background-color: #303545;
 color: orange;
 }
 
+@media (max-width: 760px) {
+
+  .endQuiz{
+    width: 80%;
+  }
+
+  .bookIDpop{
+    background-color: #24293c;
+    height: 400px;
+    width: 300px;
+    left: calc(50% - 150px);
+    border-radius: 5px;
+        top: 20%;
+    position: absolute;
+  }
+
+  .bookIDpopTitle{
+    font-size: 22px;
+  }
+
+
+  .bookIDpopBox{
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bookPopSend{
+        padding: 5px 10px;
+    background-color: orange;
+    color: #24293c;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 60px;
+    width: 100px;
+    text-align: center;
+  }
+
+  .tutorPopBtn{
+    font-size: 18px;
+    width: 100px;
+    margin-top: 10px;
+  }
+
+  .usableWords{
+        margin-top: 80px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .bookIDpopSubtitle{
+    font-size: 16px;
+  }
+
+  .bookSelect{
+    width: 270px;
+    margin-top: 50px;
+    font-size: 16px;
+  }
+
+  .bookPopCreateWording{
+    margin-top: 100px;
+  }
+
+  
+
+  .tutorPop{
+      display: block;
+    background-color: #24293c;
+    height: 400px;
+    width: 300px;
+    left: calc(50% - 150px);
+    border-radius: 5px;
+    top: 20%;
+    position: absolute;
+}
+
+  .tutorPopBox{
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+
+
+  .questionArea{
+    width: 80%;
+  }
+
+  .topic-container{
+    width: auto;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .topic-container > div {
+    display: flex;
+    font-size: 25px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.topic-container > div > div{
+    font-size: 25px;
+    min-height: 30px;
+}
+
+.topic-container > div > div:last-child{
+  margin-top: 15px;
+}
+
+.topic-container > div:last-child{
+  flex-direction: row;
+}
+
+.optionArea{
+  display: block;
+    width: 80%;
+}
+
+.tutorPopBox > img{
+  width: 100%;
+  margin: 10px 0 20px;
+  width: calc(100% - 4px);
+  border-width: 1px;
+}
+
+.tutorPopTitle{
+  font-size: 22px;
+}
+
+.tutorPopSubtitle{
+  font-size: 16px;
+}
+
+.btnBlock{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  width: auto;
+}
+
+.end-quiz{
+  margin-top: 15px;
+}
+
+.questionTitle{
+  font-size: 16px;
+}
+
+.quizOption{
+  font-size: 16px;
+}
+
+
+
+}
