@@ -1,10 +1,90 @@
-.statistics{
-  background-color: lightblue;
-}
+
 
 .color{
   width:200px;
-  height:20px;
-  background: linear-gradient(to right, #f4f4e6 0%, rgb(255, 0, 0) 100%)
+  height:10px;
+  background: linear-gradient(to right, #19295e 0%, #bec5dc 100%)
   
+}
+
+.svgContainer>div{
+  display:flex;
+  width: 80%;
+  margin: auto;
+  
+}
+
+.svgContainer>div>svg:first-child{
+  margin: auto;
+}
+
+.svgContainer>div>svg:not(:first-child){
+  display: none;
+}
+
+.colorBar{
+  margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.colorStart,.colorEnd{
+  color: white;
+    padding: 0 5px;
+}
+
+.timeSelector{
+  color: white;
+  display: flex;
+  padding-top: 40px;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.minus,.plus{
+    text-align: center;
+    margin: 0 15px;
+    border-radius: 5px;
+    background-color: #3ccfcf;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    width: 40px;
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+.minus:hover,.plus:hover{
+  background-color: white;
+  color: #3ccfcf;
+}
+
+.timeBlock{
+      display: flex;
+    min-width: 400px;
+    justify-content: center;
+}
+
+
+@media (max-width: 1000px) {
+
+  .svgContainer > div{
+    width: 100%;
+  }
+
+
+}
+
+@media (max-width: 765px) {
+
+  .svgContainer > div{
+    width: 100%;
+  }
+
+  .statistics{
+    display:none;
+  }
+
 }
