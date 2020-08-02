@@ -17,30 +17,102 @@ const Statistics = (props) => {
     console.log(fkdata)
   }, [fkdata])
 
+  const [nowDate, setNowDate] = useState("")
+  useEffect(() => {
+    
+
+    if (nowDate !== "" && nowDate !== moment()) {
+      
+      db.collection("users").doc(userID).get().then((doc) => {
+        if (doc.exists) {
+          /* console.log(doc.data().userExp); */
+          let date = moment(nowDate)
+
+
+          //make data
+          for (let i = 0; i < doc.data().userExp.length; i++) {
+            let start = date.weekday(0).startOf('day').valueOf()
+            let end = date.weekday(6).endOf('day').valueOf()
+
+            if (end >= doc.data().userExp[i].nowTime && doc.data().userExp[i].nowTime >= start) {
+
+              //如果有一樣的值要加上去
+
+              let nowLength = data.length
+              let same = true
+
+              for (let j = 0; j < nowLength; j++) {
+                if (moment(doc.data().userExp[i].nowTime).day() + 1 !== data[j].day || moment(doc.data().userExp[i].nowTime).hour() !== data[j].hour) {
+
+                  console.log('yo')
+                } else {
+                  console.log(data[j].count + doc.data().userExp[i].topicCount)
+                  data[j].count += doc.data().userExp[i].topicCount
+                  same = false
+                }
+              }
+
+              if (same) {
+                data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
+              }
+              console.log(data)
+
+            }
+
+          }
+
+          for (let i = 1; i < 8; i++) {
+            for (let j = 0; j < 24; j++) {
+              let needData = true
+              for (let k = 0; k < data.length; k++) {
+                if (data[k].day === i && data[k].hour === j) {
+                  console.log(data[k])
+                  needData = false
+                  fakeData.push(data[k])
+                }
+              }
+              if (needData) {
+                fakeData.push({ day: i, hour: j, count: 0 })
+              }
+            }
+          }
+
+
+          setData(fakeData)
+
+
+        } else {
+          console.log("No such document!");
+        }
+      }).catch((err) => { alert(err) })
+    }
+  }, [nowDate])
+
   const [userID, setUserID] = useState("")
   useEffect(() => {
     
     console.log(userID)
     if (userID !== "") {
+      let date = moment()
+
+    /* [date.weekday(0).startOf('day').format("MMMM Do YYYY").toString(), date.weekday(6).endOf('day').format("MMMM Do YYYY").toString()] */
+      
+      setNowDate(moment())
+      
       db.collection("users").doc(userID).get().then((doc) => {
         if (doc.exists) {
           console.log(doc.data().userExp);
-          let date = moment()
-          /* console.log(date.weekday(0).startOf('day').toString())
-          console.log(date.weekday(6).endOf('day').toString())
-          console.log(date.weekday(0).startOf('day').valueOf())
-          console.log(date.weekday(6).endOf('day').valueOf()) */
+          
+          
+          
 
           //make data
           for (let i = 0; i < doc.data().userExp.length;i++){
             let start = date.weekday(0).startOf('day').valueOf()
             let end = date.weekday(6).endOf('day').valueOf()
-            /* console.log(doc.data().userExp[i].nowTime)
-            console.log(end >= doc.data().userExp[i].nowTime && doc.data().userExp[i].nowTime >= start) */
+            
             if (end >= doc.data().userExp[i].nowTime && doc.data().userExp[i].nowTime >= start) {
-              /* console.log(moment(doc.data().userExp[i].nowTime).toString())
-              console.log(moment(doc.data().userExp[i].nowTime).hour())
-              console.log(moment(doc.data().userExp[i].nowTime).day() + 1) */
+              
               //如果有一樣的值要加上去
 
               let nowLength = data.length
@@ -48,7 +120,7 @@ const Statistics = (props) => {
             
               for (let j = 0; j < nowLength; j++){
                 if (moment(doc.data().userExp[i].nowTime).day() + 1 !== data[j].day || moment(doc.data().userExp[i].nowTime).hour() !== data[j].hour) {
-                /* data[j].count += doc.data().userExp[i].topicCount */
+                
                   console.log('yo')
                 } else {
                   console.log(data[j].count + doc.data().userExp[i].topicCount)
@@ -82,7 +154,7 @@ const Statistics = (props) => {
             }
           }
           
-          /* console.log(fakeData) */
+          
           setData(fakeData)
           
 
@@ -108,10 +180,23 @@ const Statistics = (props) => {
   }
 
  
+
+ 
     return (
-      <div className="statistics">Statistics
+      <div className="statistics">
+        
+        <div>
+          <div onClick={() => { setNowDate(moment(nowDate).subtract(7, 'days'))}}>◀︎</div>
+          <div>{moment(nowDate).weekday(0).startOf('day').format("MMMM Do YYYY").toString()}</div>
+          <div>～</div>
+          <div>{moment(nowDate).weekday(6).endOf('day').format("MMMM Do YYYY").toString()}</div>
+          <div onClick={() => { setNowDate(moment(nowDate).add(7, 'days')) }}>►</div>
+        </div>
+
         <Svg fakeData={fkdata}/>
-        <Date sendDate={sendDate}/>
+        <div className="color"></div>
+        <div className="colorStart">0</div>
+        <div className="colorEnd">30</div>
       </div>
     )
 
@@ -120,7 +205,8 @@ const Statistics = (props) => {
 export default Statistics
 
 const Svg = (props) => {
-  console.log(props.fakeData)
+  /* console.log(props.fakeData) */
+
 
   //setting data
   let fakeData = [
@@ -285,13 +371,13 @@ const Svg = (props) => {
     { day: 5, hour: 23, count: 1 },
     { day: 6, hour: 23, count: 0 },
     { day: 7, hour: 23, count: 0 },
-    { day: 1, hour: 24, count: 2 },
-    { day: 2, hour: 24, count: 5 },
-    { day: 3, hour: 24, count: 8 },
-    { day: 4, hour: 24, count: 0 },
-    { day: 5, hour: 24, count: 1 },
-    { day: 6, hour: 24, count: 0 },
-    { day: 7, hour: 24, count: 0 },
+    { day: 1, hour: 0, count: 2 },
+    { day: 2, hour: 0, count: 5 },
+    { day: 3, hour: 0, count: 8 },
+    { day: 4, hour: 0, count: 0 },
+    { day: 5, hour: 0, count: 1 },
+    { day: 6, hour: 0, count: 0 },
+    { day: 7, hour: 0, count: 0 },
   ]
   //setting x,y information
   let days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
@@ -304,6 +390,8 @@ const Svg = (props) => {
   let height = block*(days.length)
   
 
+
+  
   const svgRef = useRef()
   const [data, setData] = useState(fakeData)
   useEffect(() => {
@@ -321,19 +409,19 @@ const Svg = (props) => {
 
     const colorTranslator =
       d3.scaleLinear()
-        .domain([0, 10, 50])
-        .range(["#f4f4e6", "#ED973B", "#DA0707"])
+        .domain([0, 30])
+        .range(["#f4f4e6","rgb(255, 0, 0)"])
     
     //heatmap block
     const g = select(".g")
     g.selectAll(".blocks") 
-      .data(fakeData)
+      .data(data)
       .enter()
       .append("rect")
       .attr("width", block)
       .attr('height',block)
       .attr("x", (d) => {
-        return (d.hour - 1)*block
+        return (d.hour /* - 1 */)*block
       })
       .attr("y", (d) => {
         return(d.day -1)*block
@@ -368,46 +456,31 @@ const Svg = (props) => {
       })
       .style("text-anchor", "middle")
       .attr("transform", `translate(${block / 2},-2)`)
-    
-    //圖例
-    
+
     
     
-    
-    
-    
+    console.log(data)
   }, [data])
-  
-  return (
-    <div>
-      <div ref={svgRef}>Hi there</div>
-    </div>
-  )
 
-}
+  const [load, setLoad] = useState(true)
+  console.log(JSON.stringify(props.fakeData) !== JSON.stringify(data))
 
-
-const Date = (props) => {
-
-  const [fromDate, setFromDate] = useState("")
-  useEffect(() => {
-    console.log(fromDate)
-  }, [fromDate])
-
-  const handleFromDate = (e) => {
-    setFromDate(e.target.value)
-    
+  if (JSON.stringify(props.fakeData) !== JSON.stringify(data) && props.fakeData.length > 0) {
+    setData(props.fakeData)
   }
 
-
+  if (props.fakeData.length > 0 && load) {
+    /* console.log(props.fakeData) */
+    setData(props.fakeData)
+    setLoad(false)
+  }
   
   return (
     <div>
-      {/* 顯示出本週時間，有左邊跟右邊的按鈕可以調整時間 */}
+      <div ref={svgRef}></div>
     </div>
   )
 
-
-
-
 }
+
+
