@@ -59,6 +59,7 @@ html, body {
 .menu>a{
   color: white;
   margin: 0 13px;
+  cursor: pointer;
 }
 
 
@@ -121,6 +122,7 @@ html, body {
 
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
+  cursor: pointer;
 }
 
 .memberImgFrame:hover{
@@ -164,6 +166,7 @@ html, body {
 
 .menuHam{
   display: none;
+  cursor: pointer;
 }
 
 .member{
@@ -189,6 +192,7 @@ html, body {
   font-size: 35px;
   color: white;
   padding: 20px 0;
+  cursor: pointer;
 }
 
 .memPop{
@@ -202,6 +206,8 @@ html, body {
   z-index: 10; 
   border-radius: 10px;
   padding: 10px 0;
+  cursor: pointer;
+
 }
 
 .menuPop{
@@ -215,6 +221,7 @@ html, body {
   z-index: 10; 
   border-radius: 10px;
   padding: 10px 0;
+  cursor: pointer;
 }
 
 .trianglePop{
@@ -289,6 +296,7 @@ bottom: 0px;
 .memberImgFrame{
   width: 30px;
   border-width: 3px;
+
 }
 
 .memberImg{

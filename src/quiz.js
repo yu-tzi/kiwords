@@ -656,14 +656,14 @@ const QuizContainer = (props) => {
       console.log(i)
       if (optionList[i].id === answer[0].id) {
         blue = optionList[i]
-        blue.color = "blue"
+        blue.color = "rgb(77, 155, 255)"
         newList.push(blue)
         console.log(blue)
 
       }
       if (optionList[i].id === chooseID) {
         red = optionList[i]
-        red.color = "red"
+        red.color = "#ff5f5f"
         newList.push(red)
         console.log(red)
       }
@@ -763,7 +763,7 @@ const QuizContainer = (props) => {
                 }
                 }}
                   style={{ display: validWords.length > 0 || !hasOption ? "block" : "none" }}
-                >Send</div>
+                >Next</div>
 
                 <div className="bookPopCreateWording" style={{ display: hasOption? "none":"block"}}>No option ? Try :</div>
                 <div className="bookPopCreate" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/wordbooks") }} style={{ display: hasOption ? "none" : "block" }}>Create wordbook</div>
@@ -783,7 +783,7 @@ const QuizContainer = (props) => {
                 <div className="tutorPopTitle">Step2</div>
                   <div className="tutorPopSubtitle">Quick Tutorial</div> 
                   <img src="https://i.imgur.com/npqeJsW.gif" ></img>
-                  <div className="tutorPopBtn" onClick={() => { setTutorPop(false) }}>Start Game</div> 
+                  <div className="tutorPopBtn" onClick={() => { setTutorPop(false) }}>Start</div> 
               </div>
 
             </div>            
@@ -898,8 +898,14 @@ const QuizContainer = (props) => {
           <div className="yourScore">Your Score :</div>
           <div className="scoreIs">{score + "/" + topicCount}</div>
         
+        {/* 正確連結應該要像這樣： https://kiwords-c058b.web.app/details/159585446911785aFFbQvKxZmidyhpfaKGrl2uPL2?TOEIC%20essential%20words
+        目前是：https://kiwords-c058b.web.app/details/%20%20? */} 
       </div>
-      <div className="yourScorebtn" style={{ display: end ? "flex" : "none" }} onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/details/" + defalutValue + " ? " + defalutBook) }}>Review wordcards</div>
+
+      <div className="yourScorebtnblock">
+      <div className="yourScorebtn" style={{ display: end ? "flex" : "none" }} onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/details/" + bookID + "?" + bookName) }}>Review wordcards</div>
+        <div className="yourScorebtnCheck" style={{ display: end ? "flex" : "none" }} onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/dashboard") }}>See achievements</div>
+      </div>
 
 
     </div>

@@ -36,6 +36,7 @@
   font-weight:500;
   text-align: center;
   margin: 25px 0 15px 0;
+  cursor: default;
 }
 
 .signInComtainer form,.signUpComtainer form{
@@ -60,6 +61,7 @@
   color:white;
   font-size: 16px;
   border-style: none;
+  cursor: pointer;
 }
 
 .signInInput{
@@ -77,6 +79,8 @@
   text-align: center;
   color: rgb(16, 72, 145);
   font-weight: 500;
+  cursor: pointer;
+  text-decoration:underline;
 
 }
 
@@ -84,6 +88,8 @@
   color: rgb(113, 113, 113);
   margin: 10px 0 15px;
   font-weight: 400;
+  cursor: default;
+  text-decoration: none;
 }
 
 .signInComtainer button{
@@ -96,6 +102,7 @@
   color:white;
   font-size: 16px;
   height: 32px;
+  cursor: pointer;
 }
 
 .signInComtainer button:last-child{
@@ -106,6 +113,7 @@
   position: absolute;
   right: 8px;
   font-size: 30px;
+  cursor: pointer;
 }
 
 

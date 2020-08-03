@@ -609,8 +609,8 @@ class MyBook extends React.Component {
 
           <div className="newBookHide" style={{ display: this.state.newBookPop ? "block" : "none" }}>
             <form onSubmit={this.manageBookData} className="bookEnterFrame">
-              <input className="bookEnter" type="text" placeholder="Enter a title, like: TOEIC words 3000" onChange={(e) => this.getBookData(e)}></input>
-              <input className="bookSend" type="submit" value="SEND"></input>
+              <input className="bookEnter" type="text" placeholder="Enter a title, like: TOEIC words" onChange={(e) => this.getBookData(e)}></input>
+              <input className="bookSend" type="submit" value="OK"></input>
             </form>
           </div>
         

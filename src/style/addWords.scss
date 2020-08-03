@@ -121,6 +121,11 @@
   
 }
 
+.meaning>textarea,.synonyms>textarea,.antonym>textarea{
+  cursor: default;
+  border-color: grey;
+}
+
 .word>input{
   font-size: 20px;
   border-width: 0px;
@@ -132,9 +137,9 @@
   border-bottom-color: orange;
 }
 
-.meaning>textarea:focus,.synonyms>textarea:focus,.antonym>textarea:focus{
+/* .meaning>textarea:focus,.synonyms>textarea:focus,.antonym>textarea:focus{
   border-color: orange;
-}
+} */
 
 .searchPopMenu{
   display: flex;
@@ -207,6 +212,15 @@
   color:orange;
 }
 
+@media (max-width: 1000px) {
+
+.selectBlock{
+  width: 50%;
+  left: 20%;
+}
+
+}
+
 
 @media (max-width: 760px) {
 
@@ -243,6 +257,24 @@
   margin-top: 10px;
 }
 
+.selectBlock{
+  width: 80%;
+  height: 60px;
+  top: 140px;
+  left: 10%;
+}
+
+.bookSelectOpt{
+  top: 10px;
+  left: 30px;
+  width: 200px;
+}
+
+.selectBlockSend{
+  top: 35px;
+    left: 100px;
+    width: 50px;
+}
 
 
 }

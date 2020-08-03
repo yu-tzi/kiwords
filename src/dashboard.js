@@ -239,6 +239,7 @@ class Dashboards extends React.Component {
   }
 }
 
+//======== statistic ========= 
 const Statistics = (props) => {
 
   let data = []
@@ -249,9 +250,15 @@ const Statistics = (props) => {
     console.log(fkdata)
   }, [fkdata])
 
+  const [weekWords, setWeekWords] = useState(0)
+  useEffect(() => {
+    console.log(weekWords)
+  }, [weekWords])
+
   const [nowDate, setNowDate] = useState("")
   useEffect(() => {
 
+    let originalCount = 0
 
     if (nowDate !== "" && nowDate !== moment()) {
 
@@ -280,14 +287,17 @@ const Statistics = (props) => {
                 } else {
                   console.log(data[j].count + doc.data().userExp[i].topicCount)
                   data[j].count += doc.data().userExp[i].topicCount
+                  originalCount += doc.data().userExp[i].topicCount
                   same = false
                 }
               }
 
               if (same) {
                 data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
+                originalCount += doc.data().userExp[i].topicCount
               }
               console.log(data)
+
 
             }
 
@@ -311,6 +321,7 @@ const Statistics = (props) => {
 
 
           setData(fakeData)
+          setWeekWords(originalCount)
 
 
         } else {
@@ -322,6 +333,7 @@ const Statistics = (props) => {
 
   const [userID, setUserID] = useState("")
   useEffect(() => {
+    let originalCount = 0
 
     console.log(userID)
     if (userID !== "") {
@@ -357,12 +369,15 @@ const Statistics = (props) => {
                 } else {
                   console.log(data[j].count + doc.data().userExp[i].topicCount)
                   data[j].count += doc.data().userExp[i].topicCount
+                  originalCount += doc.data().userExp[i].topicCount
+                  
                   same = false
                 }
               }
 
               if (same) {
                 data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
+                originalCount += doc.data().userExp[i].topicCount
               }
               console.log(data)
 
@@ -388,6 +403,7 @@ const Statistics = (props) => {
 
 
           setData(fakeData)
+          setWeekWords(originalCount)
 
 
         } else {
@@ -416,6 +432,8 @@ const Statistics = (props) => {
 
   return (
     <div className="statistics">
+      
+      
 
       <div className="timeSelector">
         <div className="minus" onClick={() => { setNowDate(moment(nowDate).subtract(7, 'days')) }}>◀︎</div>
@@ -427,12 +445,21 @@ const Statistics = (props) => {
         <div className="plus" onClick={() => { setNowDate(moment(nowDate).add(7, 'days')) }}>▶︎</div>
       </div>
 
+      <div className="statisTitle">You Reviewed {weekWords} Words in This Week</div>
+
       <Svg fakeData={fkdata} />
       <div className="colorBar">
-        <div className="colorStart">0</div>
+        <div className="colorStart">Less</div>
         <div className="color"></div>
-        <div className="colorEnd">20</div>
+        <div className="colorEnd">More</div>
       </div>
+
+      <div className="bottomPart">
+        <div className="takeQuizTitle">Review more words, take quizes !</div>
+        <div className="takeQuizBtn" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/quiz')}}>Take a quiz</div>
+      </div>
+      <div className="bottomBlank"></div>
+
     </div>
   )
 
@@ -649,7 +676,7 @@ const Svg = (props) => {
     const colorTranslator =
       d3.scaleLinear()
         .domain([0, 20])
-        .range(["#19295e", "#bec5dc"])
+        .range(["#24293c", "#ffffff"])
 
     //heatmap block
     const g = select(".g")
@@ -723,6 +750,11 @@ const Svg = (props) => {
 
   return (
     <div className="svgContainer">
+      {/*<div className="statisBox">
+         <div className="statisSubHour">{"(Hour)"}</div> 
+        
+      </div>*/}
+      
       <div ref={svgRef}></div>
     </div>
   )

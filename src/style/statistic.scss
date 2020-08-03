@@ -3,16 +3,28 @@
 .color{
   width:200px;
   height:10px;
-  background: linear-gradient(to right, #19295e 0%, #bec5dc 100%)
+  background: linear-gradient(to right, #24293c 0%, #ffffff 100%)
   
 }
 
 .svgContainer>div{
   display:flex;
-  width: 80%;
+  width: 100%;
   margin: auto;
   
 }
+
+.statistics{
+  padding: 50px 0 80px;
+}
+
+.bottomPart{
+  color: white  !important;
+  max-width: 700px !important;
+    width: 60%  !important;
+    margin-top: 70px  !important;
+}
+
 
 .svgContainer>div>svg:first-child{
   margin: auto;
@@ -47,18 +59,19 @@
     text-align: center;
     margin: 0 15px;
     border-radius: 5px;
-    background-color: #3ccfcf;
+    background-color: #495278;
     color: white;
     height: 30px;
     line-height: 30px;
     width: 40px;
     font-size: 16px;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 .minus:hover,.plus:hover{
   background-color: white;
-  color: #3ccfcf;
+  color: #495278;
 }
 
 .timeBlock{
@@ -66,6 +79,44 @@
     min-width: 400px;
     justify-content: center;
 }
+
+.statisTitle{
+  font-weight: 800;
+    color: #3ccfcf;
+    text-align: center;
+    margin: 10px;
+}
+
+.statisSubHour{
+      color: white;
+  position: absolute;
+    right: 10%;
+    top: -10px;
+}
+
+
+.statisBox{
+  max-width: 900px;
+    position: relative;
+    width: 80%;
+}
+
+@media (max-width: 1100px) {
+
+  .statisBox{
+    width: 100%;
+  }
+
+  .statisSubHour{
+    right: 50px;
+    top: -10px;
+  }
+
+
+
+}
+
+
 
 
 @media (max-width: 1000px) {

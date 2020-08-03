@@ -53,10 +53,10 @@ class LogPage extends React.Component {
             this.props.handleSignUp
           }>
               <input className="signInInput" placeholder="EMAIL" type="text" onChange={this.props.passingEmail} />
-              <input className="signInInput"  placeholder="PASSWORD" type="text" onChange={this.props.passingPassword} />
+              <input className="signInInput" type="password" placeholder="PASSWORD" onChange={this.props.passingPassword} />
               
-              <input className="signInInput"  placeholder="NMAE" type="text" onChange={this.props.passingName} />
-              <input type="submit" className="signInSend" value="SEND" />
+              <input className="signInInput"  placeholder="NAME" type="text" onChange={this.props.passingName} />
+              <input type="submit" className="signInSend" value="SIGN UP" />
               <div className="signInBtn" onClick={this.switchLogIn}>Have an account already ?  Sign in.</div>
             </form>
           </div>
@@ -66,8 +66,8 @@ class LogPage extends React.Component {
             this.props.handleSignIn
           }>
             <input type="text" placeholder="EMAIL" onChange={this.props.passingEmail} />
-              <input type="text" placeholder="PASSWORD" onChange={this.props.passingPassword} />
-            <input type="submit" value="SEND" />
+              <input type="text" type="password" placeholder="PASSWORD" onChange={this.props.passingPassword} />
+            <input type="submit" value="LOG IN" />
             </form>
             
             <div className="signUpBtn" onClick={this.switchSignUp}>Don't have an account ? Join us.</div>

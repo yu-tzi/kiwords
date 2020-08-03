@@ -354,7 +354,7 @@
     margin-top: 20px;
 }
 
-.yourScorebtn{
+.yourScorebtn,.yourScorebtnCheck{
    font-size: 16px;
     background-color: orange;
     border-radius: 3px;
@@ -362,11 +362,9 @@
     color: #303545;
     text-align: center;
     line-height: 22px;
-    margin-left: 20px;
     transition: 0.5s;
-        display: flex;
-    margin-top: 480px;
-    margin-bottom: 50px;
+    display: flex;
+    margin: 10px;
 }
 
 .yourScorebtn:hover{
@@ -374,11 +372,22 @@ background-color: #303545;
 color: orange;
 }
 
+.yourScorebtnblock{
+      display: flex;
+    margin-top: 480px;
+    margin-bottom: 50px;
+}
+
 @media (max-width: 760px) {
 
   .endQuiz{
     width: 80%;
   }
+
+  .yourScorebtnblock{
+        flex-direction: column;
+  }
+
 
   .bookIDpop{
     background-color: #24293c;

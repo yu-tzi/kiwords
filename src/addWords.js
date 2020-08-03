@@ -366,7 +366,7 @@ class AddWords extends React.Component {
 
 
         <form className="sendBox" onSubmit={(event) => { { this.state.nowBook.replace(/\s+/g, "").length > 0 ? this.submitCard(event) : alert('Please select one of your wordbook.'), event.preventDefault() } }} style={{ backgroundColor: this.state.docSend ? "#77dddd" : "#e0ac49" }}>
-          <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "Send Words"} ></input>
+          <input type="submit" className="sendCard" value={this.state.docSend ? "Word Added !" : "Save"} ></input>
         </form>
         <div className="viewCard" onClick={() => { window.location.href = ("https://kiwords-c058b.web.app/details/" + this.state.nowBook + "?" + this.state.nowBookText) }}>View Word Cards</div>
         <div className="cited">Dictionary Citing : <br></br>Merriam-Webster's Intermediate Thesaurus (1999). <br></br>Merriam-Webster Incorporated.</div>
