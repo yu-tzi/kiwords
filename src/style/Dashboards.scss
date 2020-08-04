@@ -1,0 +1,402 @@
+
+
+
+.content{
+  height: 100%;
+  background-color: rgb(250, 248, 248);
+}
+
+
+
+.profileImg{
+      background-color: #19295e;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    text-align: center;
+    line-height: 120px;
+    font-size: 100px;
+    border-width: 2px;
+    border-style: solid;
+    margin-right: 35px;
+    border-color: #646f90;
+    font-weight: 100;
+    color: white;
+}
+
+.profileInforBox{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: overlay;
+  word-wrap: break-word;
+  align-items: center;
+}
+
+.profileTitle{
+  font-size: 45px;
+}
+
+.profileInfor{
+  padding: 5px 0px;
+}
+
+.profileImgBox{
+  position: relative;
+}
+
+
+
+.changePassword{
+  border-radius: 5px;
+  background-color: rgb(227, 227, 227);
+  padding: 5px;
+  margin-top:20px;
+}
+
+
+
+
+
+.editImg{
+  margin: 10px 0;
+  border-radius: 5px;
+  color: rgb(109, 109, 109);
+}
+
+.editUploadTitle{
+  border-radius: 5px;
+  color: rgb(109, 109, 109);
+  font-size: 16px;
+  line-height: 16px;
+  width: 80px;
+  height: 60px;
+}
+
+
+.editUploadTitle:hover, .editImg:hover{
+  background-color: #2b2b2b;
+  color:white;
+  transition: 0.5s;
+}
+
+.uploadTitleForm>input:first-child{
+  border-bottom-color: grey;
+  border-width: 0px;
+  border-bottom-width: 2px;
+  background-color: #e8e8e8;
+  border-style: none;
+}
+
+ .uploadTitleForm > input:last-child{
+   border-style: none;
+       padding: 3px 15px;
+    background-color: orange;
+    color: #24293c;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100px;
+    text-align: center;
+    margin-top: 15px;
+ }
+
+
+.titleUploadPop{
+  position: relative;
+}
+
+.uploadTitleForm{
+  position: relative;
+}
+
+.titleUploadClose, .imgUploadClose{
+  top: 0px;
+  position: relative;
+  right: 0px;
+  color: grey;
+  width: 10px;
+}
+
+.edit{
+  padding: 5px;
+}
+
+.imageUploadPop:first-child{
+  margin: 20px 0px 0px;
+}
+
+
+
+
+.titleUploadPop{
+  margin-bottom: 10px;
+}
+
+
+
+.profileBox{
+      justify-content: center;
+    display: flex;
+    align-items: center;
+    padding-top: 50px;
+}
+
+
+.editImgBox,.editTitleBox{
+      font-size: 16px;
+    background-color: orange;
+    width: 150px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    color: #303545;
+    text-align: center;
+    cursor: pointer;
+    margin: 0px 5px;
+    transition: 0.5s;
+    
+}
+
+.editImgBox:hover,.editTitleBox:hover{
+  color: orange;
+  background-color: #303545;
+}
+
+.titleUploadPop,.imageUploadPop{
+  left: 0;
+    display: block;
+    position: fixed;
+    background-color: rgb(0, 0, 0, 0.9);
+    height: 100%;
+    width: 100%;
+    top: 0;
+}
+
+.imageUploadPopbox,.titleUploadPopbox{
+    background-color: #24293c;
+    height: 200px;
+    width: 320px;
+    left: calc(50% - 160px);
+    border-radius: 5px;
+    position: absolute;
+    top: 200px;
+}
+
+.imageUploadclose,.titleUploadclose{
+    font-size: 25px;
+    right: 15px;
+    width: 20px;
+    position: absolute;
+    top: 10px;
+}
+
+.imageUploadPopbox>input{
+  position: absolute;
+    top: 80px;
+    left: 70px;
+    width: 200px;
+}
+
+.uploadTitleForm{
+  position: absolute;
+    top: 60px;
+    left: 55px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.uploadTitleForm>input:first-child{
+      border-radius: 5px;
+    height: 23px;
+    width: 230px;
+}
+
+
+.uploadBtnBox{
+      display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+
+
+
+/* @media (max-width: 1000px) { */
+@media (max-width: 700px) {
+  
+  .profileImg{
+    margin: 0px 0px 10px 0px;
+    width: 100px;
+    height: 100px;
+    font-size: 70px;
+    
+  }
+
+  .profileBox{
+    width: 90%;
+    margin: auto;
+    flex-direction: column;
+  }
+
+  .profileTitle{
+    font-size: 35px;
+
+  }
+
+}
+
+
+@media (max-width: 400px) {
+
+  .uploadBtnBox{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .editTitleBox{
+    margin-bottom: 10px;
+  }
+
+}
+
+
+.color{
+  width:200px;
+  height:10px;
+  background: linear-gradient(to right, #24293c 0%, #ffffff 100%)
+  
+}
+
+.svgContainer>div{
+  display:flex;
+  width: 100%;
+  margin: auto;
+  
+}
+
+.statistics{
+  padding: 50px 0 80px;
+}
+
+.bottomPart{
+  color: white  !important;
+  max-width: 700px !important;
+    width: 60%  !important;
+    margin-top: 70px  !important;
+}
+
+
+.svgContainer>div>svg:first-child{
+  margin: auto;
+}
+
+.svgContainer>div>svg:not(:first-child){
+  display: none;
+}
+
+.colorBar{
+  margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.colorStart,.colorEnd{
+  color: white;
+    padding: 0 5px;
+}
+
+.timeSelector{
+  color: white;
+  display: flex;
+  padding-top: 40px;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.minus,.plus{
+    text-align: center;
+    margin: 0 15px;
+    border-radius: 5px;
+    background-color: #495278;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    width: 40px;
+    font-size: 16px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.minus:hover,.plus:hover{
+  background-color: white;
+  color: #495278;
+}
+
+.timeBlock{
+      display: flex;
+    min-width: 400px;
+    justify-content: center;
+}
+
+.statisTitle{
+  font-weight: 800;
+    color: #3ccfcf;
+    text-align: center;
+    margin: 10px;
+}
+
+.statisSubHour{
+      color: white;
+  position: absolute;
+    right: 10%;
+    top: -10px;
+}
+
+
+.statisBox{
+  max-width: 900px;
+    position: relative;
+    width: 80%;
+}
+
+@media (max-width: 1100px) {
+
+  .statisBox{
+    width: 100%;
+  }
+
+  .statisSubHour{
+    right: 50px;
+    top: -10px;
+  }
+
+
+
+}
+
+
+
+
+@media (max-width: 1000px) {
+
+  .svgContainer > div{
+    width: 100%;
+  }
+
+
+}
+
+@media (max-width: 765px) {
+
+  .svgContainer > div{
+    width: 100%;
+  }
+
+  .statistics{
+    display:none;
+  }
+
+}

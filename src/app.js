@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Auth from "./auth&db"
+import Auth from "./components/Auth"
 
 
 class App extends React.Component {

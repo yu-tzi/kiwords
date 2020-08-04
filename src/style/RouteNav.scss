@@ -1,0 +1,334 @@
+$background: #1a1d28;
+$darkblue: #131a32;
+
+
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+  list-style: none;
+  text-decoration: none;
+
+}
+
+*:focus {
+    outline: none;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.content{
+  min-height: 100vh;
+  margin: 0 auto -10px;
+  background-color: #0d0e13;
+  padding: 0px;
+}
+
+/* .footer{
+  height: 200px;
+  background-color: #0d0e13;
+} */
+
+
+.navBox{
+  background-color: #0d0e13;
+  width: 90%;
+  margin: auto;
+  max-width: 1200px;
+
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width:90%;
+  margin: auto;
+
+}
+
+.menu{
+  display: flex;
+  color: white;
+  width: 40%;
+}
+
+.menu>a{
+  color: white;
+  margin: 0 13px;
+  cursor: pointer;
+}
+
+
+.decoline{
+  height: 32px;
+  width: 85px;
+  position: absolute;
+  top: 20px;
+  border-bottom-style: solid;
+  border-bottom-color: orange;
+  border-bottom-width:0px;
+  
+}
+
+.decoline:hover{
+  white-space: nowrap;
+  overflow: hidden;
+  animation: type 0.2s steps(10) forwards;
+  -moz-animation:type 0.2s steps(10) forwards;  
+  -webkit-animation:type 0.2s steps(10) forwards;
+}
+
+.decolineLog{
+  height: 32px;
+  width: 120px;
+  position: absolute;
+  top: 20px;
+  border-bottom-style: solid;
+  border-bottom-color: orange;
+  border-bottom-width:0px;
+  
+}
+
+.decolineLog:hover{
+  white-space: nowrap;
+  overflow: hidden;
+  animation: type 0.2s steps(10) forwards;
+  -moz-animation:type 0.2s steps(10) forwards;  
+  -webkit-animation:type 0.2s steps(10) forwards;
+}
+
+@keyframes type
+{
+  0%{ border-bottom-width:0px;}
+	100%{ border-bottom-width:5px;}
+}
+@-moz-keyframes type
+{
+  0%{ border-bottom-width:0px;}
+	100%{ border-bottom-width:5px;}
+}
+@-webkit-keyframes type
+{
+  0%{ border-bottom-width:0px;}
+	100%{ border-bottom-width:5px;}
+}
+
+
+.memberImgFrame{
+
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.memberImgFrame:hover{
+  transition: 0.5s;
+  background-color: rgb(187, 186, 186);
+}
+
+.memberImg{
+  height: 25px;
+  width: 25px;
+  border-radius: 25px;
+  border-color: white;
+  border-style: solid;
+  margin: auto;
+  color: white;
+  background: #19295e;
+  text-align: center;
+  line-height: 25px;
+}
+
+.memberImgWord{
+  color: rgb(40, 40, 40);
+  margin: 0 3px 0 10px;
+  line-height: 30px;
+}
+
+.memberImgWord:hover{
+  color: rgb(72, 72, 72);
+  transition: 0.5s;
+}
+
+
+.memberLogin{
+  color: white;
+}
+
+.memberLogImg{
+  display: none;
+}
+
+
+.menuHam{
+  display: none;
+  cursor: pointer;
+}
+
+.member{
+  display: flex;
+  width: 40%;
+  justify-content: flex-end;
+}
+
+
+.memberFrame{
+  display: flex;
+}
+
+.memberImgFrame{
+  display: flex;
+}
+
+.share{
+  padding-bottom: 20px;
+}
+
+.logo{
+  font-size: 35px;
+  color: white;
+  padding: 20px 0;
+  cursor: pointer;
+}
+
+.memPop{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 10vw;
+  top:80px;
+  background-color: #e4e4e4;
+  /* box-shadow: 2px 2px 5px rgb(213, 213, 213); */
+  z-index: 10; 
+  border-radius: 10px;
+  padding: 10px 0;
+  cursor: pointer;
+
+}
+
+.menuPop{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 9vw;
+  top:80px;
+  background-color: #e4e4e4;
+  /* box-shadow: 2px 2px 5px rgb(213, 213, 213); */
+  z-index: 10; 
+  border-radius: 10px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.trianglePop{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 30px 10px;
+  border-color: transparent transparent #e4e4e4 transparent;
+  position: absolute;
+  right: 12vw;
+  top: 60px;
+  z-index: 15;
+}
+
+.trianglePopMenu{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 30px 10px;
+  border-color: transparent transparent #e4e4e4 transparent;
+  position: absolute;
+  left: 10vw;
+  top:55px;
+  z-index: 15;
+}
+
+.memPop a, .signOut, .menuPop a{
+  color: rgb(43, 43, 43);
+  padding: 10px 40px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.memPop a:hover, .signOut:hover, .menuPop a:hover{
+  color: rgb(72, 72, 72);
+  transition: 0.5s;
+}
+
+/* .signOut{
+  background-color: rgb(63, 63, 63);
+  color: white;
+} */
+
+.tri{
+
+border-style: solid;
+border-width: 15px 20px 0 20px;
+border-color: #ffffff transparent transparent transparent;
+position: absolute;
+left: calc(50% - 15px);
+bottom: 0px;
+}
+
+
+
+
+@media (max-width: 1000px) {
+
+.menuHam{
+  display: block;
+  height: 20px;
+}
+
+.menuItem{
+  display: none;
+}
+
+.memberImgWord{
+  display: none;
+}
+
+.memberImgFrame{
+  width: 30px;
+  border-width: 3px;
+
+}
+
+.memberImg{
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.triangle{
+border-style: solid;
+border-width: 10px 6px 0 6px;
+border-color: #ffffff transparent transparent transparent;
+margin-top:15px;
+margin-left: 5px;
+}
+
+.memberLogin{
+  display: none;
+}
+
+.memberLogImg{
+  display: block;
+  height: 35px;
+}
+
+.memLoginFrame{
+  display: flex;
+}
+
+
+}
+
+@media (max-width: 500px) {
+
+
+}
