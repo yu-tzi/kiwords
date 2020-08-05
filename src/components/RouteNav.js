@@ -7,7 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import AddWords from "./AddWords"
-import Dashboard from "./Dashboards"
+import Dashboards from "./Dashboards"
 import BookDetail from "./BookDetail"
 //import Statistics from "./Statistics"
 import WordBook from "./WordBook"
@@ -31,7 +31,6 @@ class RoutePage extends React.Component{
   }
 
   render() {
-
    /*  if (this.props.logIn) { */
       return (
         <Router>
@@ -47,12 +46,12 @@ class RoutePage extends React.Component{
 
           <Switch>
             <Route exact path="/">
-              {/* <BookDetailRouter showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData} /> */}
               {/* <Home logIn={this.props.logIn} /> */}
-              {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */} 
-              <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
+              {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
+              <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent}/>
               {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail}/> */}
               {/* <AddWords showBook={this.props.showBook} /> */}
+              
               {/* <BookDetail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
               {/* <Quiz showBook={this.props.showBook} userData={this.props.userData}/> */}
               {/* <Statistics userData={this.props.userData}/> */}
@@ -62,16 +61,16 @@ class RoutePage extends React.Component{
               <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
             </Route>
             <Route path="/dashboard">
-              <Dashboard img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} />
+              <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent} />
             </Route>
             <Route path="/addwords">
               <AddWords showBook={this.props.showBook}/>
             </Route>
             <Route path="/wordbooks">
-              <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} />
+              <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook}  img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} />
             </Route>
             <Route path="/details">
-              <BookDetailRouter showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/>
+              <BookDetailRouter showBook={this.props.showBook} userData={this.props.userData}/>
             </Route>
             <Route path="/quiz">
               <Quiz showBook={this.props.showBook} userData={this.props.userData}/>
@@ -147,10 +146,10 @@ class RouteNav extends React.Component{
   }
   
   convertName() {
-    if (this.props.name.length < 19) {
-      name = this.props.name
+    if (this.props.memberData.name?.length < 19) {
+      name = this.props.memberData.name
     } else {
-      name = this.props.name.slice(0, 18)
+      name = this.props.memberData.name?.slice(0, 18)
       name = name + "..."
     }
     return (
@@ -160,13 +159,13 @@ class RouteNav extends React.Component{
 
   convertImg() {
 
-    if (this.props.img.length < 5) {
+    if (this.props.memberData.image?.length < 5) {
       return (
-        <div className="memberImg">{this.props.name.slice(0, 1)}</div>
+        <div className="memberImg">{this.props.memberData.name?.slice(0, 1)}</div>
       )
     } else {
       return (
-        <img className="memberImg memberImgY" src={this.props.img} alt=""
+        <img className="memberImg memberImgY" src={this.props.memberData.image} alt=""
         ></img>
       )
     }
@@ -254,7 +253,30 @@ class RouteNav extends React.Component{
       </div>
 
         
-          <RoutePage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook}/>
+          <RoutePage
+            handleSignUp={this.props.handleSignUp}
+            handleSignIn={this.props.handleSignIn}
+            storeToUser={this.props.storeToUser}
+            passingName={this.props.passingName}
+            passingEmail={this.props.passingEmail}
+            passingPassword={this.props.passingPassword}
+            logIn={this.props.logIn}
+            manageUserData={this.props.manageUserData}
+
+            userData={this.props.userData}
+            showBook={this.props.showBook}
+            memberData={this.props.memberData}
+            
+            uploadImg={this.props.uploadImg}
+            popImageUpload={this.props.popImageUpload}
+            closeImageUpload={this.props.closeImageUpload}
+            imgUploadPop={this.props.imgUploadPop}
+            popTitleUpload={this.props.popTitleUpload}
+            closeTitleUpload={this.props.closeTitleUpload}
+            uploadName={this.props.uploadName}
+            changeName={this.props.changeName}
+            titleUploadPop={this.props.titleUploadPop}
+            titleContent={this.props.titleContent} />
         </div>
 
         <footer className="footer"></footer>

@@ -78,10 +78,10 @@ class WordBook extends React.Component {
         <div><MyBook style={{ display: toggleCreate ? "block" : "none" }} userData={this.props.userData} memberEmail={this.props.memberEmail} showBook={this.props.showBook} toggleCreate={this.state.toggleCreate} /></div>
 
         {/* <div style={{ display: toggleCreate ? "none" : "block"}}  className="mainTitle"></div> */}
-        <div><PopularBook style={{ display: toggleCreate ? "none" : "block" }} userData={this.props.userData} popularBook={this.props.popularBook} toggleCreate={this.state.toggleCreate} saveBook={this.props.saveBook}/></div>
+        {/* <div><PopularBook style={{ display: toggleCreate ? "none" : "block" }} userData={this.props.userData} popularBook={this.props.popularBook} toggleCreate={this.state.toggleCreate} saveBook={this.props.saveBook}/></div> */}
 
           {/* <div style={{ display: toggleCreate ? "none" : "block" }}  className="mainTitle"></div> */}
-        <div><SaveBook style={{ display: toggleCreate ? "none" : "block" }} userData={this.props.userData} saveBook={this.props.saveBook} toggleCreate={this.state.toggleCreate}/></div>
+        {/* <div><SaveBook style={{ display: toggleCreate ? "none" : "block" }} userData={this.props.userData} saveBook={this.props.saveBook} toggleCreate={this.state.toggleCreate}/></div> */}
 
           
 
@@ -110,7 +110,7 @@ class PopularBook extends React.Component {
     this.renderSearchData = this.renderSearchData.bind(this)
     this.formSearchData = this.formSearchData.bind(this)
     this.clickStars = this.clickStars.bind(this)
-    this.saveBook = this.saveBook.bind(this)
+    /* this.saveBook = this.saveBook.bind(this) */
     this.renderStar = this.renderStar.bind(this)
   }
 
@@ -178,7 +178,7 @@ class PopularBook extends React.Component {
     )
   }
   
-  saveBook(e) {
+  /* saveBook(e) {
     if (this.props.userData.length > 0) {
       console.log(e.target.className.split(' ')[0])
       console.log(this.props.userData[0].uid)
@@ -191,7 +191,7 @@ class PopularBook extends React.Component {
         });
    
     }
-  }
+  } */
 
   getSearchData(e) {
     this.setState({searchWord: e.target.value.toLowerCase()})
@@ -358,13 +358,13 @@ class PopularBook extends React.Component {
       <div className="popBookBlock" style={{ display: this.props.toggleCreate ? "none" : "block" }}>
         
         
-        <div className="likedSubtitle" style={{ display: this.props.saveBook ? "block" : "none" }}>Find more study material created by others.</div>
+        {/* <div className="likedSubtitle" style={{ display: this.props.saveBook ? "block" : "none" }}>Find more study material created by others.</div> */}
 
-        <div className="noLikedInfor" style={{ display: this.props.saveBook ? "none" : "flex" }}>
+        {/* <div className="noLikedInfor" style={{ display: this.props.saveBook ? "none" : "flex" }}>
 
           <div className="noLikedTitle">You have no liked book yet</div>
           <div className="noLikedSubtitle">Find study material,try searching for a keyword.</div>
-        </div>
+        </div> */}
 
 
 
@@ -383,7 +383,7 @@ class PopularBook extends React.Component {
 
         {this.renderSearchData()}
 
-        <div className="searchHintTitle" style={{ display: this.props.saveBook ? "block" : "none" }}>Your Liked Books</div>
+        {/* <div className="searchHintTitle" style={{ display: this.props.saveBook ? "block" : "none" }}>Your Liked Books</div> */}
 
       </div>
     )
@@ -391,7 +391,7 @@ class PopularBook extends React.Component {
 }
 
 
-
+/* 
 class SaveBook extends React.Component {
   constructor(props) {
     super(props);
@@ -465,7 +465,7 @@ class SaveBook extends React.Component {
 
 
 }
-
+ */
 
 
 

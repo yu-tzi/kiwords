@@ -13,29 +13,17 @@ class Dashboards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgUploadPop: false,
-      titleUploadPop: false,
-      titleContent: ""
     }
-    this.changeName = this.changeName.bind(this)
     this.renderConvertedName = this.renderConvertedName.bind(this)
-    this.uploadImg = this.uploadImg.bind(this)
-    this.popImageUpload = this.popImageUpload.bind(this)
-    this.storeImg = this.storeImg.bind(this)
     this.renderConvertedImg = this.renderConvertedImg.bind(this)
-    this.uploadName = this.uploadName.bind(this)
-    this.changeName = this.changeName.bind(this)
-    this.popTitleUpload = this.popTitleUpload.bind(this)
-    this.closeTitleUpload = this.closeTitleUpload.bind(this)
-    this.closeImageUpload = this.closeImageUpload.bind(this)
   }
 
   renderConvertedImg() {
-    let imageUrl = this.props.img
-    if (imageUrl.length < 5) {
+    let imageUrl = this.props.memberData.image
+    if (imageUrl?.length < 5) {
       return (
         <div className="profileImg">
-          {this.props.name.slice(0, 1)}
+          {this.props.memberData.name?.slice(0, 1)}
         </div>
       )
     } else {
@@ -48,12 +36,12 @@ class Dashboards extends React.Component {
   }
 
   renderConvertedName() {
-    let origiName = this.props.name
+    let origiName = this.props.memberData.name
     let newName
-    if (origiName.length < 19) {
+    if (origiName?.length < 19) {
       newName = origiName
     } else {
-      newName = origiName.slice(0, 18)
+      newName = origiName?.slice(0, 18)
       newName = newName + "..."
     }
     return (
@@ -63,89 +51,8 @@ class Dashboards extends React.Component {
     )
   }
 
-  popTitleUpload(e) {
-    e.stopPropagation()
-    this.setState({ titleUploadPop: true })
-    if (this.state.imgUploadPop) {
-      this.setState({ imgUploadPop: false })
-    }
-  }
-
-  closeTitleUpload(e) {
-    this.setState({ titleUploadPop: false })
-    e.stopPropagation()
-  }
-
-  popImageUpload() {
-    this.setState({ imgUploadPop: true })
-    if (this.state.titleUploadPop) {
-      this.setState({ titleUploadPop: false })
-    }
-  }
-
-  closeImageUpload(e) {
-    this.setState({ imgUploadPop: false })
-    e.stopPropagation()
-  }
-
-  uploadImg(e) {
-    const storageRef = storage.ref();
-    console.log(e.target.files[0])
-    let name = e.target.files[0].name
-    let memeberRef = storageRef.child(name);
-    memeberRef.put(e.target.files[0]).then( (snapshot)=> {
-      console.log('Uploaded a blob or file!');
-      console.log(snapshot);
-      storageRef.child(name).getDownloadURL().then((res) => {
-        console.log(res)
-        this.storeImg(res)
-      })
-    });
-  }
-
-  storeImg(res) {
-    
-    if (this.props.userData.length > 0 && res.length > 0) {
-      console.log(this.props.userData[0].uid)
-      let uid = this.props.userData[0].uid
-
-      db.collection("users").doc(uid).update({
-        "image": res
-      }).then(() => {
-        console.log("照片修改完成!")
-        window.location.href = rootURL + "/dashboard"
-      })
-        .catch(function (error) {
-          alert("Error getting documents: ", error)
-        });
-
-    }
-  }
-
-  uploadName(e) {
-    this.setState({ titleContent: e.target.value})
-  }
-
-  changeName() {
-
-    if (this.props.userData.length > 0) {
-      let uid = this.props.userData[0].uid
-      /* alert(uid) */
-      event.preventDefault()
-
-      db.collection("users").doc(uid).update({
-        "name": this.state.titleContent
-      }).then(() => {
-        window.location.href = rootURL + "/dashboard"
-      })
-        .catch(function (error) {
-          alert("Error getting documents: ", error)
-        });
-    }
-  }
-
-
   render() {
+    
     return (
       <div className="dashContainer"> 
         
@@ -156,7 +63,7 @@ class Dashboards extends React.Component {
           <div className="profileInforBox">
             {this.renderConvertedName()}
             <div className="profileInfor">
-              {this.props.memberEmail}
+              {this.props.memberData.email}
             </div>
           </div>
         </div>{/* end of profileBox */}
@@ -164,39 +71,39 @@ class Dashboards extends React.Component {
         <div className="uploadBtnBox">
           <div
             className="editTitleBox"
-            onClick={(e) => { this.popTitleUpload(e) }}>
+            onClick={(e) => { this.props.popTitleUpload(e) }}>
             Change Your Name
           </div>
           <div className="editImgBox"
-            onClick={this.popImageUpload}>
+            onClick={this.props.popImageUpload}>
             Upload New Photo
           </div>
         </div>{/* end of uploadBtnBox */}
                 
         <div className="imageUploadPop"
-          style={{ display: this.state.imgUploadPop ? "block" : "none" }}>
+          style={{ display: this.props.imgUploadPop ? "block" : "none" }}>
           <div className="imageUploadPopbox">
             <div className="imageUploadclose"
-              onClick={(e) => { this.closeImageUpload(e) }}>
+              onClick={(e) => { this.props.closeImageUpload(e) }}>
               ✕
             </div>
             <input type="file" lang="en" name="file" className="uploadPicture" placeholder="Upload file and wait for a sec" accept="image/*"
-            onChange={this.uploadImg} >
+            onChange={this.props.uploadImg} >
             </input>
           </div>
         </div>{/* end of imageUploadPop */}
             
         <div className="titleUploadPop"
-          style={{ display: this.state.titleUploadPop ? "block" : "none" }}>
+          style={{ display: this.props.titleUploadPop ? "block" : "none" }}>
           <div className="titleUploadPopbox">
             <div className="titleUploadclose"
-              onClick={(e) => {this.closeTitleUpload(e)}}>
+              onClick={(e) => {this.props.closeTitleUpload(e)}}>
               ✕
             </div>
             <form className="uploadTitleForm"
-              onSubmit={this.changeName}>
+              onSubmit={this.props.changeName}>
               <input type="text" id="fname" name="fname" className="uploadTitle" placeholder="NEW NAME"
-                onChange={(e) => { this.uploadName(e) }} >
+                onChange={(e) => { this.props.uploadName(e) }} >
               </input>
               <input type="submit">
               </input>
@@ -220,12 +127,12 @@ const Statistics = (props) => {
 
   const [fkdata, setData] = useState("")
   useEffect(() => {
-    console.log(fkdata)
+    
   }, [fkdata])
 
   const [weekWords, setWeekWords] = useState(0)
   useEffect(() => {
-    console.log(weekWords)
+    
   }, [weekWords])
 
   const [nowDate, setNowDate] = useState("")
@@ -237,7 +144,7 @@ const Statistics = (props) => {
 
       db.collection("users").doc(userID).get().then((doc) => {
         if (doc.exists) {
-          /* console.log(doc.data().userExp); */
+          
           let date = moment(nowDate)
 
 
@@ -256,9 +163,9 @@ const Statistics = (props) => {
               for (let j = 0; j < nowLength; j++) {
                 if (moment(doc.data().userExp[i].nowTime).day() + 1 !== data[j].day || moment(doc.data().userExp[i].nowTime).hour() !== data[j].hour) {
 
-                  console.log('yo')
+                  
                 } else {
-                  console.log(data[j].count + doc.data().userExp[i].topicCount)
+                  
                   data[j].count += doc.data().userExp[i].topicCount
                   originalCount += doc.data().userExp[i].topicCount
                   same = false
@@ -269,7 +176,7 @@ const Statistics = (props) => {
                 data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
                 originalCount += doc.data().userExp[i].topicCount
               }
-              console.log(data)
+              
 
 
             }
@@ -281,7 +188,7 @@ const Statistics = (props) => {
               let needData = true
               for (let k = 0; k < data.length; k++) {
                 if (data[k].day === i && data[k].hour === j) {
-                  console.log(data[k])
+                  
                   needData = false
                   fakeData.push(data[k])
                 }
@@ -308,7 +215,7 @@ const Statistics = (props) => {
   useEffect(() => {
     let originalCount = 0
 
-    console.log(userID)
+    
     if (userID !== "") {
       let date = moment()
 
@@ -318,7 +225,7 @@ const Statistics = (props) => {
 
       db.collection("users").doc(userID).get().then((doc) => {
         if (doc.exists) {
-          console.log(doc.data().userExp);
+          
 
 
 
@@ -338,9 +245,9 @@ const Statistics = (props) => {
               for (let j = 0; j < nowLength; j++) {
                 if (moment(doc.data().userExp[i].nowTime).day() + 1 !== data[j].day || moment(doc.data().userExp[i].nowTime).hour() !== data[j].hour) {
 
-                  console.log('yo')
+                  
                 } else {
-                  console.log(data[j].count + doc.data().userExp[i].topicCount)
+                  
                   data[j].count += doc.data().userExp[i].topicCount
                   originalCount += doc.data().userExp[i].topicCount
                   
@@ -352,7 +259,7 @@ const Statistics = (props) => {
                 data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
                 originalCount += doc.data().userExp[i].topicCount
               }
-              console.log(data)
+             
 
             }
 
@@ -363,7 +270,7 @@ const Statistics = (props) => {
               let needData = true
               for (let k = 0; k < data.length; k++) {
                 if (data[k].day === i && data[k].hour === j) {
-                  console.log(data[k])
+                  
                   needData = false
                   fakeData.push(data[k])
                 }
@@ -390,14 +297,14 @@ const Statistics = (props) => {
   const [load, setLoad] = useState(true)
 
   if (props.userData.length > 0 && load) {
-    console.log(props.userData)
+    
     setUserID(props.userData[0].uid)
     setLoad(false)
   }
 
 
   const sendDate = (fromDate) => {
-    console.log(fromDate)
+    
   }
 
 
@@ -441,7 +348,7 @@ const Statistics = (props) => {
 
 
 const Svg = (props) => {
-  /* console.log(props.fakeData) */
+  
 
 
   //setting data
@@ -704,19 +611,16 @@ const Svg = (props) => {
       .attr("transform", `translate(${block / 2},-2)`)
 
 
-
-    console.log(data)
   }, [data])
 
   const [load, setLoad] = useState(true)
-  console.log(JSON.stringify(props.fakeData) !== JSON.stringify(data))
 
   if (JSON.stringify(props.fakeData) !== JSON.stringify(data) && props.fakeData.length > 0) {
     setData(props.fakeData)
   }
 
   if (props.fakeData.length > 0 && load) {
-    /* console.log(props.fakeData) */
+    
     setData(props.fakeData)
     setLoad(false)
   }

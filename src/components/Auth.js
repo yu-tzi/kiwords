@@ -1,6 +1,6 @@
 import React from "react";
 import RouteNav from "./RouteNav"
-import { db, firebase } from "../utility/firebaseConfig"
+import { db, firebase, storage } from "../utility/firebaseConfig"
 
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
@@ -15,14 +15,13 @@ class Auth extends React.Component {
       name: "",
       logIn: false,
       userData: [],
-      memberImg: "",
-      memberImgWord: "",
-      memberEmail: "",
-      showBook: "",
-      popularBook: [],
-      saveBook: []
+      showBook: [],
+      memberData: [],
+      renewProfile: false,
+      imgUploadPop: false,
+      titleUploadPop: false,
+      titleContent: ""
     }
-
     this.passingEmail = this.passingEmail.bind(this)
     this.passingPassword = this.passingPassword.bind(this)
     this.passingName = this.passingName.bind(this)
@@ -30,220 +29,113 @@ class Auth extends React.Component {
     this.handleSignIn = this.handleSignIn.bind(this)
     this.storeToUser = this.storeToUser.bind(this)
     this.manageUserData = this.manageUserData.bind(this)
+    this.uploadImg = this.uploadImg.bind(this)
+    this.closeImageUpload = this.closeImageUpload.bind(this)
+    this.popImageUpload = this.popImageUpload.bind(this)
+    this.uploadName = this.uploadName.bind(this)
+    this.changeName = this.changeName.bind(this)
+    this.popTitleUpload = this.popTitleUpload.bind(this)
+    this.closeTitleUpload = this.closeTitleUpload.bind(this)
   }
-
 
   componentDidMount() {
 
-    console.log('initial render detected')
     firebase.auth().onAuthStateChanged((user) => {
-
-      console.log("onAuthStateChanged?")
-
       if (user) {
-
-        console.log("login")
         this.setState({ logIn: true })
         this.setState({ userData: [user] })
-
-        let uid
-        uid = user.uid
-        db.collection("users").where("uid", "==", uid)
+        db.collection("users")
+          .where("uid", "==", user.uid)
           .get()
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-
-              console.log(doc.id, " => ", doc.data());
-              this.setState({ memberImg: doc.data().image })
-              this.setState({ memberImgWord: doc.data().name })
-              console.log(this.state.memberImg)
-              this.setState({ memberEmail: doc.data().email })
-
-
+              this.setState({ memberData: doc.data()})
             });
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log("Error getting documents: ", error)
           });
-
-        //get book data
-        let showBook = []
-
-        db.collection("books").where("created", "==", user.uid).get().then((doc) => {
+        
+        db.collection("books")
+          .where("created", "==", user.uid)
+          .get()
+          .then((doc) => {
           if (doc) {
-
+            let showBook = []
             doc.forEach((doc) => {
               showBook.push(doc.data())
             })
             this.setState({ showBook: showBook })
-
+            console.log(showBook)
           } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
           }
-        }).catch(function (error) {
+        }).catch((error) => {
           console.log("Error getting document:", error);
         });
 
-        //get popular book data
-        db.collection("books").orderBy("averageEvaluation", "desc").limit(7).get().then((doc) => {
-          let popBook = []
-          if (doc) {
-            doc.forEach((doc) => {
-
-              popBook.push(doc.data())
-            })
-
-            this.setState({ popularBook: popBook })
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        }).catch(function (error) {
-          console.log("Error getting document:", error);
-        });
-
-
-        //getSavedData
-        let all = []
-
-        db.collection("users").doc(user.uid).get().then((doc) => {
-
-          if (doc.data()?.savedBook.length > 0) {
-            let total = doc.data().savedBook.length
-            let loaded = 0
-            for (let i = 0; i < doc.data().savedBook.length; i++) {
-              db.collection("books").doc(doc.data().savedBook[i]).get().then((doc) => {
-
-                all.push(doc.data())
-
-                loaded++
-                if (loaded == total) {
-                  this.setState({ saveBook: all })
-                }
-              }).catch((err) => {
-                console.log(err)
-              })
-            }
-          }
-
-        }).catch((err) => {
-          console.log(err)
-        })
-
-
-
-
-      } else {
-        console.log("logout")
+      } else { //if user didn't login
         this.setState({ logIn: false })
         this.setState({ userData: [] })
-
-        //get popular book data
-        db.collection("books").orderBy("averageEvaluation", "desc").limit(7).get().then((doc) => {
-          let popBook = []
-          if (doc) {
-            doc.forEach((doc) => {
-              /* console.log(doc.data()) */
-              popBook.push(doc.data())
-            })
-            console.log(popBook)
-            this.setState({ popularBook: popBook })
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        }).catch(function (error) {
-          console.log("Error getting document:", error);
-        });
       }
     });
-  }
-
-
-
-
-  //================== log functions ================
-
-
-
+  }//end of componentDidMount
 
   passingName() {
     this.setState({ name: event.target.value });
-
   }
 
   passingEmail() {
     this.setState({ email: event.target.value });
   }
 
-
   passingPassword() {
     this.setState({ password: event.target.value });
   }
 
-  handleSignUp(event) {
-    console.log(this.state.logIn)
+  handleSignUp(e) {
+    e.preventDefault();
     if (this.state.logIn) {
-      alert('you have already signin in!')
-      event.preventDefault();
+      alert('You have already signin in!')
     } else {
-      event.preventDefault();
-      console.log(this.state.name)
-      /* alert('A name was submitted: ' + this.state.name); */
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
-          console.log(res)
           this.setState({ userData: res })
-          event.persist();
           this.manageUserData(this.state.userData, this.state.name)
+          e.persist();
         })
         .catch((err) => {
           alert(err.message)
-          console.log(err.message)
-          event.persist();
+          e.persist();
         })
     }
   }
 
-
-  handleSignIn(event) {
-    console.log(this.state.logIn)
+  handleSignIn(e) {
+    e.preventDefault();
     if (this.state.logIn) {
       alert('you have already signin in!')
-      event.preventDefault();
     } else {
-      event.preventDefault();
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
-          console.log(res)
           window.location.href = "/wordbooks"
         })
         .catch((err) => {
           alert(err.message)
-          console.log(err)
         })
     }
   }
 
-  //================== DB functions ================
   manageUserData(userData, name) {
-    console.log(userData)
-    console.log(name)
-    console.log(userData.user.uid)
-    console.log(userData.user.email)
-
 
     let nameEdited
-
     if (userData.user.displayName === null) {
       nameEdited = name
     } else {
       nameEdited = userData.user.displayName
     }
 
-    let image = ""
-
+    let image
     if (userData.user.photoURL === null) {
       image = ""
     } else if (userData.user.photoURL.includes("google")) {
@@ -252,83 +144,132 @@ class Auth extends React.Component {
       image = userData.user.photoURL + "?height=500"
     }
 
-    console.log(nameEdited)
-
-
-    let data = []
-    data =
-
+    let data =
     {
       uid: userData.user.uid,
       email: userData.user.email,
       name: nameEdited,
       image: image,
-      ownedBook: [/* "bookID-1" */],
-      savedBook: [/* "bookID-1" */],
-      userExp: {
-        quizHis: [
-          /* {
-            time: "time-1",
-            score: "score-1"
-          } */
-        ],
-        likeBook: [
-          /* {
-            bookID: "likebook-1",
-            bookScore: "bookScore-1"
-          } */
-        ],
-        addCards: [
-          /* {
-            time: "time-1",
-            amount: "amount-1"
-          } */
-        ]
-      }
+      ownedBook: [],
+      userExp: []
     }
-    //send data
-    console.log(data)
+
     this.storeToUser(data)
   }
 
-
   storeToUser(data) {
-    console.log('storeToUser is triggered!')
-    console.log(data.uid)
-    console.log(data)
-    /* alert('store') */
-
-    firebase.auth().onAuthStateChanged((user) => {
-
-      if (user) {
-        db.collection("users").doc(data.uid).set(data)
-          .then(() => {
-            console.log("fisrt signup: " + data.uid + " is setted!")
-            window.location.href = rootURL + "/wordbooks"
-          })
-          .catch(function (error) {
-            console.error("Error adding document: ", error);
-            alert(err.message);
-          });
-      }
-    })
-
-
-
+    db.collection("users").doc(data.uid).set(data)
+      .then(() => {
+        window.location.href = rootURL + "/wordbooks"
+      })
+      .catch(function (error) {
+        alert(err.message);
+      });
   }
 
-  //==================render item : log page ================
+  uploadImg(e) {
+    const storageRef = storage.ref()
+    let name = e.target.files[0].name
+    let memeberRef = storageRef.child(name)
+    memeberRef.put(e.target.files[0])
+      .then((snapshot) => {
+        storageRef.child(name).getDownloadURL()
+          .then((res) => {
+            this.storeImg(res)
+          })
+      });
+  }
+
+  storeImg(res) {
+      let uid = this.state.userData[0].uid
+      db.collection("users").doc(uid).update({
+        "image": res
+      })
+        .then(() => {
+          let newMemData = this.state.memberData
+          newMemData.image = res
+          this.setState({ memberData: newMemData })
+          this.setState({ imgUploadPop: false })
+        })
+        .catch(function (error) {
+          alert("Error getting documents: ", error)
+        });
+  }
+
+  popImageUpload() {
+    this.setState({ imgUploadPop: true })
+  }
+
+  closeImageUpload(e) {
+    this.setState({ imgUploadPop: false })
+    e.stopPropagation()
+  }
+
+  popTitleUpload(e) {
+    e.stopPropagation()
+    this.setState({ titleUploadPop: true })
+  }
+
+  closeTitleUpload(e) {
+    this.setState({ titleUploadPop: false })
+    e.stopPropagation()
+  }
+
+  uploadName(e) {
+    this.setState({ titleContent: e.target.value })
+  }
+
+  changeName() {
+    let uid = this.state.userData[0].uid
+    event.preventDefault()
+
+    db.collection("users").doc(uid)
+      .update({
+        "name": this.state.titleContent
+      })
+      .then(() => {
+        let newMemData = this.state.memberData
+        newMemData.name = this.state.titleContent
+        this.setState({ memberData: newMemData })
+        this.setState({ titleUploadPop: false })
+      })
+      .catch(function (error) {
+          alert("Error getting documents: ", error)
+      });
+  }
 
   render() {
-    {/* <firebaseConfig/> */ }
     return (
       <div>
-        <RouteNav handleSignUp={this.handleSignUp} handleSignIn={this.handleSignIn} storeToUser={this.storeToUser} passingName={this.passingName} passingEmail={this.passingEmail} passingPassword={this.passingPassword} logIn={this.state.logIn} manageUserData={this.manageUserData} userData={this.state.userData} img={this.state.memberImg} name={this.state.memberImgWord} memberEmail={this.state.memberEmail} showBook={this.state.showBook} popularBook={this.state.popularBook} saveBook={this.state.saveBook} />
+        <RouteNav
+          //login
+          handleSignUp={this.handleSignUp}
+          handleSignIn={this.handleSignIn}
+          storeToUser={this.storeToUser}
+          passingName={this.passingName}
+          passingEmail={this.passingEmail}
+          passingPassword={this.passingPassword}
+          logIn={this.state.logIn}
+          manageUserData={this.manageUserData}
+          //all pages
+          userData={this.state.userData}
+          showBook={this.state.showBook}
+          memberData={this.state.memberData}
+          //dashboard
+          uploadImg={this.uploadImg}
+          popImageUpload={this.popImageUpload}
+          closeImageUpload={this.closeImageUpload}
+          imgUploadPop={this.state.imgUploadPop}
+          popTitleUpload={this.popTitleUpload}
+          closeTitleUpload={this.closeTitleUpload}
+          uploadName={this.uploadName}
+          changeName={this.changeName}
+          titleUploadPop={this.state.titleUploadPop}
+          titleContent={this.state.titleContent} 
+        />
       </div>
-
     )
   }
-
 }
 
 export default Auth
