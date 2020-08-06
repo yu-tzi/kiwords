@@ -46,9 +46,9 @@ class RoutePage extends React.Component{
 
           <Switch>
             <Route exact path="/">
-              {/* <Home logIn={this.props.logIn} /> */}
+              <Home logIn={this.props.logIn} />
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
-              <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent}/>
+              {/* <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent}/> */}
               {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail}/> */}
               {/* <AddWords showBook={this.props.showBook} /> */}
               
