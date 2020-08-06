@@ -108,10 +108,11 @@
   bottom: 15px;
   cursor:pointer;
   font-size: 16px;
+  transition: 0.5s;
 }
 
 .newBookHide{
-  background-color: orange;
+  background-color: #da9c2a;
   width: 280px;
   height: 180px;
   border-radius: 5px;
@@ -119,7 +120,7 @@
   position: relative;
   border-style: solid;
   border-width: 5px;
-  border-color: orange;
+  border-color: #da9c2a;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -192,6 +193,11 @@
   top: 10px;
 }
 
+.addbookShowPopX{
+  color: #303545;
+  position: absolute;
+  right: 5px;
+}
 
 .newBookHide:hover{
   border-bottom-color: #646f90;

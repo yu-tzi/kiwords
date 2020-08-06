@@ -20,7 +20,9 @@ class Auth extends React.Component {
       renewProfile: false,
       imgUploadPop: false,
       titleUploadPop: false,
-      titleContent: ""
+      titleContent: "",
+      addBookPop: false,
+      addBookSucceed: false
     }
     this.passingEmail = this.passingEmail.bind(this)
     this.passingPassword = this.passingPassword.bind(this)
@@ -36,6 +38,10 @@ class Auth extends React.Component {
     this.changeName = this.changeName.bind(this)
     this.popTitleUpload = this.popTitleUpload.bind(this)
     this.closeTitleUpload = this.closeTitleUpload.bind(this)
+    this.storeBookData = this.storeBookData.bind(this)
+    this.popAddBook = this.popAddBook.bind(this)
+    this.closeAddBook = this.closeAddBook.bind(this)
+
   }
 
   componentDidMount() {
@@ -237,6 +243,42 @@ class Auth extends React.Component {
       });
   }
 
+  popAddBook() {
+    this.setState({ addBookPop: true })
+  }
+
+  closeAddBook() {
+    this.setState({ addBookPop: false })
+  }
+
+  storeBookData(bookInfo) {
+    db.collection("books").doc(bookInfo.bookID).set(bookInfo)
+      .then(() => {
+        db.collection("users").doc(this.state.userData[0].uid).update({
+          ownedBook: firebase.firestore.FieldValue.arrayUnion(bookInfo.bookID)
+        })
+          .then(() => {
+            let showBook = this.state.showBook
+            showBook.push(bookInfo)
+            console.log(showBook)
+            this.setState({ showBook: showBook }) 
+            this.setState({ addBookSucceed: true })
+            setTimeout(() => {
+              this.setState({ addBookSucceed: false })
+            }, 1500)
+            setTimeout(() => {
+              this.setState({ addBookPop: false })
+            }, 1700)
+        })
+          .catch((err)=>{
+            console.error("Error adding document: ", err);
+          });
+      })
+      .catch(function (err) {
+        console.error("Error adding document: ", err);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -264,7 +306,13 @@ class Auth extends React.Component {
           uploadName={this.uploadName}
           changeName={this.changeName}
           titleUploadPop={this.state.titleUploadPop}
-          titleContent={this.state.titleContent} 
+          titleContent={this.state.titleContent}
+          //wordbook
+          storeBookData={this.storeBookData}
+          addBookPop={this.state.addBookPop}
+          addBookSucceed={this.state.addBookSucceed}
+          popAddBook={this.popAddBook}
+          closeAddBook={this.closeAddBook}
         />
       </div>
     )

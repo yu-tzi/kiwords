@@ -46,10 +46,10 @@ class RoutePage extends React.Component{
 
           <Switch>
             <Route exact path="/">
-              <Home logIn={this.props.logIn} />
+              {/* <Home logIn={this.props.logIn} /> */}
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
               {/* <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent}/> */}
-              {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail}/> */}
+              <WordBook userData={this.props.userData} showBook={this.props.showBook} memberData={this.props.memberData} storeBookData={this.props.storeBookData} addBookPop={this.props.addBookPop} addBookSucceed={this.props.addBookSucceed} popAddBook={this.props.popAddBook} closeAddBook={this.props.closeAddBook}/>
               {/* <AddWords showBook={this.props.showBook} /> */}
               
               {/* <BookDetail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
@@ -67,7 +67,7 @@ class RoutePage extends React.Component{
               <AddWords showBook={this.props.showBook}/>
             </Route>
             <Route path="/wordbooks">
-              <WordBook userData={this.props.userData} showBook={this.props.showBook} popularBook={this.props.popularBook}  img={this.props.img} name={this.props.name} memberEmail={this.props.memberEmail} />
+              <WordBook userData={this.props.userData} showBook={this.props.showBook} memberData={this.props.memberData} storeBookData={this.props.storeBookData} addBookPop={this.props.addBookPop} addBookSucceed={this.props.addBookSucceed} popAddBook={this.props.popAddBook} closeAddBook={this.props.closeAddBook}/>
             </Route>
             <Route path="/details">
               <BookDetailRouter showBook={this.props.showBook} userData={this.props.userData}/>
@@ -276,7 +276,14 @@ class RouteNav extends React.Component{
             uploadName={this.props.uploadName}
             changeName={this.props.changeName}
             titleUploadPop={this.props.titleUploadPop}
-            titleContent={this.props.titleContent} />
+            titleContent={this.props.titleContent}
+            
+            storeBookData={this.props.storeBookData}
+            addBookPop={this.props.addBookPop}
+            addBookSucceed={this.props.addBookSucceed}
+            popAddBook={this.props.popAddBook}
+            closeAddBook={this.props.closeAddBook}
+            />
         </div>
 
         <footer className="footer"></footer>
