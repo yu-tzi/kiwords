@@ -66,7 +66,6 @@ class Auth extends React.Component {
               showBook.push(doc.data())
             })
             this.setState({ showBook: showBook })
-            console.log(showBook)
           } else {
             console.log("No such document!");
           }

@@ -1,12 +1,10 @@
-import { db, storage } from "../utility/firebaseConfig"
+import { db } from "../utility/firebaseConfig"
 import '../style/Dashboards.scss';
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { select } from "d3";
 import moment from 'moment';
 
-
-let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
 class Dashboards extends React.Component {
 
@@ -119,90 +117,82 @@ class Dashboards extends React.Component {
 }
 
 
-//======== statistic ========= 
+//======== statistic using hook & d3.js ========= 
+
 const Statistics = (props) => {
 
-  let data = []
-  let fakeData = []
-
-  const [fkdata, setData] = useState("")
-  useEffect(() => {
-    
-  }, [fkdata])
-
+  const [nowData, setData] = useState("")
   const [weekWords, setWeekWords] = useState(0)
+  const [load, setLoad] = useState(true)
+
+  const [userID, setUserID] = useState("")
   useEffect(() => {
-    
-  }, [weekWords])
+    if (userID !== "") {
+      let date = moment()
+      setNowDate(date)
+    }
+  }, [userID])
 
   const [nowDate, setNowDate] = useState("")
   useEffect(() => {
-
     let originalCount = 0
-
-    if (nowDate !== "" && nowDate !== moment()) {
+    let data = []
+    let firstData = []
+    if (nowDate !== "") {
 
       db.collection("users").doc(userID).get().then((doc) => {
         if (doc.exists) {
-          
+
           let date = moment(nowDate)
+          let sunday = date.weekday(0).startOf('day').valueOf()
+          let saturday = date.weekday(6).endOf('day').valueOf()
 
-
-          //make data
+          //turn DB quiz data to specific format
           for (let i = 0; i < doc.data().userExp.length; i++) {
-            let start = date.weekday(0).startOf('day').valueOf()
-            let end = date.weekday(6).endOf('day').valueOf()
+            let dataTimeCode = doc.data().userExp[i].nowTime
 
-            if (end >= doc.data().userExp[i].nowTime && doc.data().userExp[i].nowTime >= start) {
+            if (saturday >= dataTimeCode && dataTimeCode >= sunday) {
+              let nowDataLength = data.length
+              let isDifferentData = true
 
-              //如果有一樣的值要加上去
-
-              let nowLength = data.length
-              let same = true
-
-              for (let j = 0; j < nowLength; j++) {
-                if (moment(doc.data().userExp[i].nowTime).day() + 1 !== data[j].day || moment(doc.data().userExp[i].nowTime).hour() !== data[j].hour) {
-
-                  
-                } else {
-                  
+              for (let j = 0; j < nowDataLength; j++) {
+                const isDataTimeRepeated = moment(dataTimeCode).day() + 1 === data[j].day && moment(dataTimeCode).hour() === data[j].hour
+                if (isDataTimeRepeated) {
                   data[j].count += doc.data().userExp[i].topicCount
                   originalCount += doc.data().userExp[i].topicCount
-                  same = false
+                  isDifferentData = false
                 }
               }
 
-              if (same) {
-                data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
+              if (isDifferentData) {
+                data.push({
+                  day: moment(dataTimeCode).day() + 1,
+                  hour: moment(dataTimeCode).hour(),
+                  count: doc.data().userExp[i].topicCount
+                })
                 originalCount += doc.data().userExp[i].topicCount
               }
-              
-
-
             }
-
           }
 
+          //fill the other data 
           for (let i = 1; i < 8; i++) {
             for (let j = 0; j < 24; j++) {
               let needData = true
-              for (let k = 0; k < data.length; k++) {
+              let nowDataLength = data.length
+              for (let k = 0; k < nowDataLength; k++) {
                 if (data[k].day === i && data[k].hour === j) {
-                  
                   needData = false
-                  fakeData.push(data[k])
+                  firstData.push(data[k])
                 }
               }
               if (needData) {
-                fakeData.push({ day: i, hour: j, count: 0 })
+                firstData.push({ day: i, hour: j, count: 0 })
               }
             }
           }
-
-
-          setData(fakeData)
+          setData(firstData)
           setWeekWords(originalCount)
-
 
         } else {
           console.log("No such document!");
@@ -211,135 +201,59 @@ const Statistics = (props) => {
     }
   }, [nowDate])
 
-  const [userID, setUserID] = useState("")
-  useEffect(() => {
-    let originalCount = 0
-
-    
-    if (userID !== "") {
-      let date = moment()
-
-      /* [date.weekday(0).startOf('day').format("MMMM Do YYYY").toString(), date.weekday(6).endOf('day').format("MMMM Do YYYY").toString()] */
-
-      setNowDate(moment())
-
-      db.collection("users").doc(userID).get().then((doc) => {
-        if (doc.exists) {
-          
-
-
-
-
-          //make data
-          for (let i = 0; i < doc.data().userExp.length; i++) {
-            let start = date.weekday(0).startOf('day').valueOf()
-            let end = date.weekday(6).endOf('day').valueOf()
-
-            if (end >= doc.data().userExp[i].nowTime && doc.data().userExp[i].nowTime >= start) {
-
-              //如果有一樣的值要加上去
-
-              let nowLength = data.length
-              let same = true
-
-              for (let j = 0; j < nowLength; j++) {
-                if (moment(doc.data().userExp[i].nowTime).day() + 1 !== data[j].day || moment(doc.data().userExp[i].nowTime).hour() !== data[j].hour) {
-
-                  
-                } else {
-                  
-                  data[j].count += doc.data().userExp[i].topicCount
-                  originalCount += doc.data().userExp[i].topicCount
-                  
-                  same = false
-                }
-              }
-
-              if (same) {
-                data.push({ day: moment(doc.data().userExp[i].nowTime).day() + 1, hour: moment(doc.data().userExp[i].nowTime).hour(), count: doc.data().userExp[i].topicCount })
-                originalCount += doc.data().userExp[i].topicCount
-              }
-             
-
-            }
-
-          }
-
-          for (let i = 1; i < 8; i++) {
-            for (let j = 0; j < 24; j++) {
-              let needData = true
-              for (let k = 0; k < data.length; k++) {
-                if (data[k].day === i && data[k].hour === j) {
-                  
-                  needData = false
-                  fakeData.push(data[k])
-                }
-              }
-              if (needData) {
-                fakeData.push({ day: i, hour: j, count: 0 })
-              }
-            }
-          }
-
-
-          setData(fakeData)
-          setWeekWords(originalCount)
-
-
-        } else {
-          console.log("No such document!");
-        }
-      }).catch((err) => { alert(err) })
-    }
-  }, [userID])
-
-
-  const [load, setLoad] = useState(true)
-
+  
   if (props.userData.length > 0 && load) {
-    
     setUserID(props.userData[0].uid)
     setLoad(false)
   }
 
-
-  const sendDate = (fromDate) => {
-    
-  }
-
-
-
-
   return (
     <div className="statistics">
-      
-      
-
       <div className="timeSelector">
-        <div className="minus" onClick={() => { setNowDate(moment(nowDate).subtract(7, 'days')) }}>◀︎</div>
-        <div className="timeBlock">
-          <div>{moment(nowDate).weekday(0).startOf('day').format("MMMM Do YYYY").toString()}</div>
-          <div>～</div>
-          <div>{moment(nowDate).weekday(6).endOf('day').format("MMMM Do YYYY").toString()}</div>
+        <div className="minus"
+          onClick={() => {
+            setNowDate(moment(nowDate).subtract(7, 'days'))
+          }}>◀︎
         </div>
-        <div className="plus" onClick={() => { setNowDate(moment(nowDate).add(7, 'days')) }}>▶︎</div>
+        <div className="timeBlock">
+          <div>{moment(nowDate).weekday(0).startOf('day').format("MMMM Do YYYY").toString()}
+          </div>
+          <div>～
+          </div>
+          <div>{moment(nowDate).weekday(6).endOf('day').format("MMMM Do YYYY").toString()}
+          </div>
+        </div>
+        <div className="plus"
+          onClick={() => {
+            setNowDate(moment(nowDate).add(7, 'days'))
+          }}>▶︎
+        </div>
       </div>
 
-      <div className="statisTitle">You Reviewed {weekWords} Words in This Week</div>
+      <div className="statisTitle">You Reviewed {weekWords} Words in This Week
+      </div>
 
-      <Svg fakeData={fkdata} />
+      <Svg nowData={nowData} />
       <div className="colorBar">
-        <div className="colorStart">Less</div>
-        <div className="color"></div>
-        <div className="colorEnd">More</div>
+        <div className="colorStart">Less
+        </div>
+        <div className="color">
+        </div>
+        <div className="colorEnd">More
+        </div>
       </div>
 
       <div className="bottomPart">
-        <div className="takeQuizTitle">Review more words, take quizes !</div>
-        <div className="takeQuizBtn" onClick={() => { window.location.href = ('https://kiwords-c058b.web.app/quiz')}}>Take a quiz</div>
+        <div className="takeQuizTitle">Review more words, take quizes !
+        </div>
+        <div className="takeQuizBtn"
+          onClick={() => {
+            window.location.href = ('https://kiwords-c058b.web.app/quiz')
+          }}>Take a quiz
+        </div>
       </div>
-      <div className="bottomBlank"></div>
-
+      <div className="bottomBlank">
+      </div>
     </div>
   )
 
@@ -349,10 +263,7 @@ const Statistics = (props) => {
 
 const Svg = (props) => {
   
-
-
-  //setting data
-  let fakeData = [
+  let firstData = [
     { day: 1, hour: 1, count: 0 },
     { day: 2, hour: 1, count: 0 },
     { day: 3, hour: 1, count: 0 },
@@ -522,25 +433,29 @@ const Svg = (props) => {
     { day: 6, hour: 0, count: 0 },
     { day: 7, hour: 0, count: 0 },
   ]
-  //setting x,y information
-  let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  let hours = d3.range(24)
-  //heatmap block sizes
-  let marginTop = 35
-  let marginLeft = 35
+
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const hours = d3.range(24)
+  const marginTop = 35
+  const marginLeft = 35
   let width = Math.max(Math.min(window.innerWidth, 800), 300) - marginLeft
   let block = Math.floor(width / hours.length)
   let height = block * (days.length)
 
-
-
-
   const svgRef = useRef()
-  const [firstRen, setFirstRen] = useState(true)
+  const [firstLoad, setfirstLoad] = useState(true)
+  const [data, setData] = useState(firstData)
 
-  const [data, setData] = useState(fakeData)
+  let isDataRenewCompleted = JSON.stringify(props.nowData) === JSON.stringify(data)
+  if (!isDataRenewCompleted && props.nowData.length > 0) {
+    setData(props.nowData)
+  }
+  
   useEffect(() => {
-    //svg canvas
+
+    let isFirstData = JSON.stringify(firstData) === JSON.stringify(data) 
+    if (isFirstData && firstLoad) {
+      //svg canvas
       const svg = select(svgRef.current)
       svg
         .append("svg")
@@ -549,14 +464,13 @@ const Svg = (props) => {
         .append("g")
         .attr("class", "g")
         .attr("transform", `translate(${marginTop},${marginLeft})`)
-
+    }
 
     //block color based on word count
-
     const colorTranslator =
-      d3.scaleLinear()
-        .domain([0, 20])
-        .range(["#24293c", "#ffffff"])
+    d3.scaleLinear()
+      .domain([0, 20])
+      .range(["#24293c", "#ffffff"])
 
     //heatmap block
     const g = select(".g")
@@ -567,7 +481,7 @@ const Svg = (props) => {
       .attr("width", block)
       .attr('height', block)
       .attr("x", (d) => {
-        return (d.hour /* - 1 */) * block
+        return (d.hour) * block
       })
       .attr("y", (d) => {
         return (d.day - 1) * block
@@ -578,7 +492,6 @@ const Svg = (props) => {
       .style("fill", (d) => { return colorTranslator(d.count) })
       .style("stroke", "#0d0e13")
       .style("stroke-width", "5px")
-      //.style("stroke-opacity", 0.5)
 
     //day list 
     g.selectAll(".blocks")
@@ -609,30 +522,15 @@ const Svg = (props) => {
       })
       .style("text-anchor", "middle")
       .attr("transform", `translate(${block / 2},-2)`)
-
+    
+    setfirstLoad(false)
 
   }, [data])
 
-  const [load, setLoad] = useState(true)
-
-  if (JSON.stringify(props.fakeData) !== JSON.stringify(data) && props.fakeData.length > 0) {
-    setData(props.fakeData)
-  }
-
-  if (props.fakeData.length > 0 && load) {
-    
-    setData(props.fakeData)
-    setLoad(false)
-  }
-
   return (
     <div className="svgContainer">
-      {/*<div className="statisBox">
-         <div className="statisSubHour">{"(Hour)"}</div> 
-        
-      </div>*/}
-      
-      <div ref={svgRef}></div>
+      <div ref={svgRef}>
+      </div>
     </div>
   )
 
