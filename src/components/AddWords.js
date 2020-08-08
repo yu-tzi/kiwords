@@ -142,9 +142,11 @@ class WordBlock extends React.Component {
     this.submitCard = this.submitCard.bind(this)
     this.searchSend = this.searchSend.bind(this)
     this.searchDic = this.searchDic.bind(this)
-    this.sendWord = this.sendWord.bind(this)
+    this.searchWordApi = this.searchWordApi.bind(this)
     this.createWordBlank = this.createWordBlank.bind(this)
     this.findValueViaKey = this.findValueViaKey.bind(this)
+    this.cardInputFilled = this.cardInputFilled.bind(this)
+    this.convertApiObj = this.convertApiObj.bind(this)
   }
 
   wordsBlock() {
@@ -167,7 +169,6 @@ class WordBlock extends React.Component {
     for (let j = 0; j < state.length; j++){
       if (state[j].hasOwnProperty(keyvalue)) {
         if (state[j][keyvalue]!==undefined) {
-          console.log(state[j][keyvalue] || "")
           return state[j][keyvalue]||""
         }
       }
@@ -222,92 +223,33 @@ class WordBlock extends React.Component {
     )
   }
 
+  cardInputFilled(state, key, wording, value) {
+    let formerData = [...state]
+
+    for (let i = 0; i < formerData.length; i++) {
+      if (formerData[i].hasOwnProperty(key)) {
+        formerData.splice(i, 1);
+      }
+    }
+    let newobj = {}
+    newobj[key] = value
+    formerData.push(newobj)
+    this.setState({ [wording]: formerData })
+    this.setState({ menuPop: false })
+  }
+
   changeCardInput(e) {
+    let key = e.target.className.split(" ")[1]
     if (e.target.parentElement.className === "word") {
-
-      //let All = this.state.word
-      //let index = e.target.className.split(" ")[0]
-      let key = e.target.className.split(" ")[1]
       this.setState({ menuPopIndex: key })
+      this.cardInputFilled(this.state.word, key, "word", e.target.value)
       this.searchSend(e)
-
-      let wordJoind = [...this.state.word]
-
-      for (let i = 0; i < wordJoind.length; i++) {
-        if (wordJoind[i].hasOwnProperty(key)) {
-          wordJoind.splice(i, 1);
-        }
-      }
-      let wordobj = {}
-      wordobj[key] = e.target.value
-      wordJoind.push(wordobj)
-      this.setState({ word: wordJoind })
-
     } else if (e.target.parentElement.className === "meaning") {
-      //let All = this.state.meaning
-      //console.log(e.target.className.split(" "))
-      //let index = e.target.className.split(" ")[0]
-      let key = e.target.className.split(" ")[1]
-      
-      //All[index][key] = e.target.value
-      //console.log(All)
-      //this.setState({ meaning: All })
-      let meaningJoind = [...this.state.meaning]
-
-      for (let i = 0; i < meaningJoind.length; i++) {
-        if (meaningJoind[i].hasOwnProperty(key)) {
-          meaningJoind.splice(i, 1);
-        }
-      }
-      let meaningobj = {}
-      meaningobj[key] = e.target.value
-      meaningJoind.push(meaningobj)
-      this.setState({ meaning: meaningJoind })
-
-
+      this.cardInputFilled(this.state.meaning, key, "meaning", e.target.value)
     } else if (e.target.parentElement.className === "synonyms") {
-      //let All = this.state.synonyms
-      console.log(e.target.className.split(" "))
-      //let index = e.target.className.split(" ")[0]
-      let key = e.target.className.split(" ")[1]
-      //All[index][key] = e.target.value
-      //console.log(All)
-      //this.setState({ synonyms: All })
-
-      let synonymsJoind = [...this.state.synonyms]
-
-      for (let i = 0; i < synonymsJoind.length; i++) {
-        if (synonymsJoind[i].hasOwnProperty(key)) {
-          synonymsJoind.splice(i, 1);
-        }
-      }
-      let synonymsobj = {}
-      synonymsobj[key] = e.target.value
-      synonymsJoind.push(synonymsobj)
-      this.setState({ synonyms: synonymsJoind })
-
+      this.cardInputFilled(this.state.synonyms, key, "synonyms", e.target.value)
     } else if (e.target.parentElement.className === "antonym") {
-
-      //let All = this.state.antonym
-      //console.log(e.target.className.split(" "))
-      //let index = e.target.className.split(" ")[0]
-      let key = e.target.className.split(" ")[1]
-      //All[index][key] = e.target.value
-      //console.log(All)
-      //this.setState({ antonym: All })
-
-      let antonymJoind = [...this.state.antonym]
-
-      for (let i = 0; i < antonymJoind.length; i++) {
-        if (antonymJoind[i].hasOwnProperty(key)) {
-          antonymJoind.splice(i, 1);
-        }
-      }
-      let antonymobj = {}
-      antonymobj[key] = e.target.value
-      antonymJoind.push(antonymobj)
-      this.setState({ antonym: antonymJoind })
-
+      this.cardInputFilled(this.state.antonym, key, "antonym", e.target.value)
     }
   }
 
@@ -319,15 +261,12 @@ class WordBlock extends React.Component {
 
   searchDic() {
     event.preventDefault()
-    console.log(this.state.searchWord)
     if (this.state.searchWord.replace(/\s+/g, "").length > 0) {
       let URL = "https://api.datamuse.com/sug?s=" + this.state.searchWord + "&max=5"
-
       fetch(URL)
         .then(res => res.json())
         .then(
           (result) => {
-            console.log('API called')
             this.setState({ relatedWord: result })
           },
           (error) => {
@@ -338,34 +277,65 @@ class WordBlock extends React.Component {
 
   renderSearch(index) {
     let all = []
+    let isCurrentWordBox = this.state.menuPop && this.state.menuPopIndex === "key" + index
     for (let i = 0; i < this.state.relatedWord.length; i++) {
-      all.push(<li key={i} style={{ display: this.state.menuPop && this.state.menuPopIndex === "key" + index ? "block" : "none" }} onClick={(e) => { this.sendWord(e, index) }}>{this.state.relatedWord[i].word}</li>)
+      all.push(
+        <li key={i}
+          style={{
+            display: isCurrentWordBox ? "block" : "none"
+          }}
+          onClick={(e) => {
+            this.searchWordApi(e, index)
+          }}>{this.state.relatedWord[i].word}
+        </li>
+      )
     }
     return (
       <ul className="searchPopMenu">
-        <li style={{ display: this.state.menuPop && this.state.menuPopIndex === "key" + index ? "block" : "none" }} className="popMenuX" onClick={() => { this.setState({menuPop:false})}}>✕</li>
+        <li className="popMenuX"
+          style={{
+            display: isCurrentWordBox ? "block" : "none"
+          }}
+          onClick={() => {
+            this.setState({ menuPop: false })
+          }}>✕
+        </li>
         {all}
       </ul>
     )
   }
 
+  convertApiObj(state, key, wording, result) {
+    let value = []
+    if (result.length > 1) {
+      for (let i = 0; i < result[0].length; i++) {
+        if (i < 1) {
+          value += result[0][i]
+        } else {
+          value += (" , " + result[0][i])
+        }
+      }
+    } else {
+      if (result[0] === undefined) {
+        value = ""
+      } else {
+        value = result[0]
+      }
+    }
+    this.cardInputFilled(state, key, wording, value)
+  }
 
-  sendWord(e, index) {
+  searchWordApi(e, index) {
     let word = e.target.textContent
     this.setState({ searchWord: "" })
-
-    console.log(e.target.textContent)
-    //meaning
-    fetch("https://dictionaryapi.com/api/v3/references/ithesaurus/json/" + e.target.textContent + "?key=68dac210-bb56-4bfb-bc92-b86dfcbda9d6")
+    fetch("https://dictionaryapi.com/api/v3/references/ithesaurus/json/" + word + "?key=68dac210-bb56-4bfb-bc92-b86dfcbda9d6")
       .then(res => res.json())
       .then(
         (result) => {
           let def = []
-          let ant = []
-          let syns = []
+          let newKey = index
+          newKey = "key" + newKey.toString()
 
-          console.log('API called')
-          console.log(result)
           if (result[0].meta === undefined) {
             let word = ""
             for (let i = 0; i < result.length; i++) {
@@ -373,13 +343,10 @@ class WordBlock extends React.Component {
                 word += result[i]
               } else {
                 word += ("," + result[i])
-
               }
             }
-            alert('查無此字，請再試一次，試試看這些相近的字吧：\n' + word)
+            alert('Cannot find matched result, try again with these keywords ? \n' + word)
           } else {
-            //def
-
             if (result[0].shortdef.length > 0) {
               for (let i = 0; i < result[0].shortdef.length; i++) {
                 if (i < 1) {
@@ -389,144 +356,27 @@ class WordBlock extends React.Component {
                 }
               }
             }
-            console.log(def)
-            //syn
-            if (result[0].meta.syns.length > 1) {
-
-              for (let i = 0; i < result[0].meta.syns[0].length; i++) {
-                if (i < 1) {
-                  syns += result[0].meta.syns[0][i]
-                } else {
-                  syns += (" , " + result[0].meta.syns[0][i])
-                }
-              }
-
-            } else {
-
-              if (result[0].meta.syns[0] === undefined) {
-                syns = ""
-                console.log("result[0].meta.syns[0] === undefined")
-              } else {
-                syns = result[0].meta.syns[0]
-              }
-            }
-            //ant
-            if (result[0].meta.ants.length > 1) {
-
-              for (let i = 0; i < result[0].meta.ants[0].length; i++) {
-                if (i < 1) {
-                  ant += result[0].meta.ants[0][i]
-                } else {
-                  ant += (" , " + result[0].meta.ants[0][i])
-                }
-              }
-            } else {
-
-              if (result[0].meta.ants[0] === undefined) {
-                console.log("result[0].meta.ants[0] === undefined")
-                ant = ""
-              } else {
-                ant = result[0].meta.ants[0]
-              }
-
-            }
+            this.convertApiObj(this.state.synonyms, newKey, "synonyms", result[0].meta.syns)
+            this.convertApiObj(this.state.antonym, newKey, "antonym", result[0].meta.ants)
+            this.cardInputFilled(this.state.word, newKey, "word", word)
+            this.cardInputFilled(this.state.meaning, newKey, "meaning", def)
           }
-
-          console.log('index : ' + index)
-          let newKey = index
-          console.log(newKey.toString())
-          newKey = "key" + newKey.toString()
-          console.log(newKey)
-
-
-          let wordJoind = [...this.state.word]
-          for (let i = 0; i < wordJoind.length; i++) {
-            if (wordJoind[i].hasOwnProperty(newKey)) {
-
-              wordJoind.splice(i, 1);
-
-            }
-          }
-          let wordobj = {}
-          wordobj[newKey] = word
-          wordJoind.push(wordobj)
-          this.setState({ word: wordJoind })
-
-
-          let defJoind = [...this.state.meaning]
-
-          for (let i = 0; i < defJoind.length; i++) {
-            if (defJoind[i].hasOwnProperty(newKey)) {
-
-              defJoind.splice(i, 1);
-
-            }
-          }
-          let defobj = {}
-          defobj[newKey] = def
-          defJoind.push(defobj)
-
-
-          this.setState({ meaning: defJoind })
-
-
-
-          let synsJoind = [...this.state.synonyms]
-          for (let i = 0; i < synsJoind.length; i++) {
-            if (synsJoind[i].hasOwnProperty(newKey)) {
-
-              synsJoind.splice(i, 1);
-
-            }
-          }
-          let synsobj = {}
-          synsobj[newKey] = syns
-          synsJoind.push(synsobj)
-          this.setState({ synonyms: synsJoind })
-
-
-
-
-          let antJoind = [...this.state.antonym]
-          for (let i = 0; i < antJoind.length; i++) {
-            if (antJoind[i].hasOwnProperty(newKey)) {
-
-              antJoind.splice(i, 1);
-
-            }
-          }
-          let antobj = {}
-          antobj[newKey] = ant
-          antJoind.push(antobj)
-          this.setState({ antonym: antJoind })
-
-
-          this.setState({ menuPop: false })
-
-
         },
         (error) => {
           console.log(error)
         })
-
   }
 
   submitCard() {
     event.preventDefault()
-    console.log('submit')
     let load = 0
-
     if (this.state.word.length < 1) {
       alert('Please make sure you fill in every word blank.')
     }
-
     for (let i = 0; i < this.state.word.length; i++) {
-
-
       if (this.state.word[i].length < 1) {
         alert('Please make sure you fill the blank.')
       }
-
       let cards =
       {
         word: Object.values(this.state.word[i])[0],
@@ -534,15 +384,12 @@ class WordBlock extends React.Component {
         synonyms: Object.values(this.state.synonyms[i])[0],
         antonym: Object.values(this.state.antonym[i])[0]
       }
-      console.log(cards);
+  
       db.collection("books").doc(this.props.nowBook).update({
         cards: firebase.firestore.FieldValue.arrayUnion(cards)
       })
         .then(() => {
-
-          console.log("Document successfully updated!");
           this.setState({ docSend: true })
-
           if (load = this.state.word.length + 1) {
             setTimeout(() => {
               this.setState({ word: "" })
@@ -554,18 +401,11 @@ class WordBlock extends React.Component {
             }, 2000);
           }
         })
-        .catch(function (error) {
+        .catch((error)=>{
           console.error("Error updating document: ", error);
         });
     }
-
-
-
   }
-
-  
-  
-
 
   render() {
     return (
