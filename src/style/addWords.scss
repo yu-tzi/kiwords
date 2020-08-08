@@ -8,6 +8,11 @@
   max-width: 1000px;
 }
 
+.popMenuX{
+  position: relative;
+    right: -60px;
+}
+
 .addBookSubTitle{
   color: #77dddd;
   font-weight: 800;
@@ -137,9 +142,9 @@
   border-bottom-color: orange;
 }
 
-/* .meaning>textarea:focus,.synonyms>textarea:focus,.antonym>textarea:focus{
+.meaning>textarea:focus,.synonyms>textarea:focus,.antonym>textarea:focus{
   border-color: orange;
-} */
+}
 
 .searchPopMenu{
   display: flex;
@@ -194,9 +199,10 @@
   line-height: 20px;
 }
 
-.searchPopMenu>li:hover{
+.searchPopMenu>li:not(:first-child):hover{
   background-color:orange;
 }
+
 
 .moreWordsBlock{
   background-color: #24293c;
@@ -249,7 +255,7 @@
 
 
 .searchPopMenu{
-  top: 45px;
+  top: 55px;
   left: 10%;
 }
 
