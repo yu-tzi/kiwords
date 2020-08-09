@@ -1,3 +1,14 @@
+.quizContainer{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+}
+
 
 .bookIDpop{
   top: 20%;
@@ -5,6 +16,22 @@
   left: 40%;
 }
 
+.validWords{
+  position: relative;
+}
+
+.infobox{
+  position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    top: 10px;
+}
+
+.infoIcon{
+  height: 15px;
+  position: absolute;
+  left: 148px;
+  bottom: 20px;
+}
 
 
 .optionDrop{
@@ -327,10 +354,9 @@
 }
 
 .endQuiz{
-  position: absolute;
+
   display: flex;
     flex-flow: column wrap;
-    /* justify-content: center; */
     align-items: center;
     background-color: #24293c;
     width: 600px;
@@ -372,10 +398,17 @@ background-color: #303545;
 color: orange;
 }
 
+.endQuizRender{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 .yourScorebtnblock{
-      display: flex;
-    margin-top: 480px;
-    margin-bottom: 50px;
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 100px;
 }
 
 @media (max-width: 760px) {
@@ -385,7 +418,7 @@ color: orange;
   }
 
   .yourScorebtnblock{
-        flex-direction: column;
+      flex-direction: column;
   }
 
 
@@ -426,6 +459,7 @@ color: orange;
     width: 100px;
     margin-top: 10px;
   }
+
 
   .usableWords{
         margin-top: 80px;
