@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot tests 1`] = `
+<div
+  className="bookDetailBody"
+>
+  <div
+    className="upperPart"
+  >
+    <div
+      className="bookDetailTitle"
+    >
+      undefined
+    </div>
+    <div
+      className="upperbtn"
+    >
+      <div
+        className="viewAllBookBtn"
+        onClick={[Function]}
+      >
+        View other wordbooks
+      </div>
+      <div
+        className="addWordsBtn"
+        onClick={[Function]}
+      >
+        Add more words
+      </div>
+    </div>
+  </div>
+  <div
+    className="wordSub"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    Words in this book
+  </div>
+  <div
+    className="noWordsBlock"
+  >
+    <div
+      className="noWordsTitle"
+    >
+      There's no words in this wordbook
+    </div>
+    <div
+      className="noWordSubTitle"
+    >
+      Try adding some words ! Add words with more then 2 synonyms and antonyms to unlock quiz function.
+    </div>
+    <div
+      className="noWordBtn"
+      onClick={[Function]}
+    >
+      Add words
+    </div>
+  </div>
+  <div
+    className="pageLeaf"
+  />
+  <div
+    className="bottomPart"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
+    <div
+      className="takeQuizTitle"
+    >
+      Familiar with all these words ?
+    </div>
+    <div
+      className="takeQuizBtn"
+      onClick={[Function]}
+    >
+      Take a quiz
+    </div>
+  </div>
+  <div
+    className="bottomBlank"
+  />
+</div>
+`;

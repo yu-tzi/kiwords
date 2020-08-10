@@ -1,6 +1,7 @@
 import React from "react";
-import { db, firebase } from "../utility/firebaseConfig"
+import { db } from "../utility/firebaseConfig"
 import '../style/BookDetail.scss';
+
 
 class BookDetail extends React.Component {
 
@@ -39,24 +40,25 @@ class BookDetail extends React.Component {
     let cards = []
     let verifyCount = 0
 
-    db.collection("books")
-      .doc(bookID)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          this.setState({ allCards: doc.data().cards })
-          this.setState({ bookOwner: doc.data().created })
-        } else {
-          console.log("No such document!");
-        }
+    if (bookID.length > 0) {
+      db.collection("books")
+        .doc(bookID)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            this.setState({ allCards: doc.data().cards })
+            this.setState({ bookOwner: doc.data().created })
+          } else {
+            console.log("No such document!");
+          }
         })
-      .then(() => {
-        if (this.state.allCards.length > 0) {
+        .then(() => {
+          if (this.state.allCards.length > 0) {
             //get page number
-          if (this.state.allCards.length % 8 === 0) {
-            this.setState({ page: Math.floor(this.state.allCards.length / 8) })
+            if (this.state.allCards.length % 8 === 0) {
+              this.setState({ page: Math.floor(this.state.allCards.length / 8) })
             } else {
-            this.setState({ page: Math.floor(this.state.allCards.length / 8) + 1 })
+              this.setState({ page: Math.floor(this.state.allCards.length / 8) + 1 })
             }
             //get first page words
             let lastNum
@@ -65,20 +67,21 @@ class BookDetail extends React.Component {
             } else {
               lastNum = 8
             }
-          for (let i = 0; i < lastNum; i++) {
+            for (let i = 0; i < lastNum; i++) {
               cards.push(this.renderCards(this.state.allCards[i], i))
               verifyCount++
             }
-          if (verifyCount = this.state.allCards.length) {
+            if (verifyCount = this.state.allCards.length) {
               this.setState({ cards: cards })
             }
-        } else {
+          } else {
             console.log("No cards :(")
           }
         })
         .catch((error) => {
-        console.log("Error getting document:", error);
-      })
+          console.log("Error getting document:", error);
+        })
+    }
   }
 
   componentDidUpdate() {
@@ -167,7 +170,7 @@ class BookDetail extends React.Component {
     )
   }
 
-  convertWordString(str) {
+  convertWordString = (str) => {
     let result = ""
     if (typeof (str) === "object") {
       for (let i = 0; i < str.length; i++) {
@@ -211,7 +214,6 @@ class BookDetail extends React.Component {
       }
     }
     this.renewWordList(all)
-    
   }
 
   renewWordList(data) {

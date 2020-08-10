@@ -533,9 +533,7 @@ const Svg = (props) => {
       </div>
     </div>
   )
-
 }
-
 
 
 export default Dashboards
