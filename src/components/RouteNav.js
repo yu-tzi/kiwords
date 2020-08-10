@@ -16,6 +16,7 @@ import LogPage from "./LogPage"
 import BookDetailRouter from "./BookDetailRouter"
 import Quiz from "./Quiz"
 import '../style/RouteNav.scss';
+import Loading from './Loading.js';
 
 import { db, firebase } from "../utility/firebaseConfig"
 
@@ -46,14 +47,14 @@ class RoutePage extends React.Component{
 
           <Switch>
             <Route exact path="/">
-              {/* <Home logIn={this.props.logIn} /> */}
+              <Home logIn={this.props.logIn} />
               {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
               {/* <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent}/> */}
               {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} memberData={this.props.memberData} storeBookData={this.props.storeBookData} addBookPop={this.props.addBookPop} addBookSucceed={this.props.addBookSucceed} popAddBook={this.props.popAddBook} closeAddBook={this.props.closeAddBook}/> */}
               {/* <AddWords showBook={this.props.showBook} /> */}
               
               {/* <BookDetail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
-              <Quiz showBook={this.props.showBook} userData={this.props.userData}/>
+              {/* <Quiz showBook={this.props.showBook} userData={this.props.userData}/> */}
               {/* <Statistics userData={this.props.userData}/> */}
             </Route>
             <Route path="/login">
@@ -98,7 +99,6 @@ class MemberPop extends React.Component {
       <span className="trianglePop"></span>
       <div className="memPop">
           <a href={rootURL+"/dashboard"}>Profile</a>
-          {/* <a href={rootURL+"/statistics"}>學習統計</a> */}
         <div className="signOut"
           onClick={() => {
             firebase.auth().signOut().then(() => {
@@ -121,7 +121,6 @@ class MenuPop extends React.Component {
     <div>
       <span className="trianglePopMenu"></span>
       <div className="menuPop">
-          {/* <a href={rootURL + "/addWords"}>Add Words</a> */}
           <a href={rootURL +"/wordBooks"}>Wordbook</a>
           <a href={rootURL +"/quiz"}>Quiz</a>
       </div>
@@ -139,12 +138,12 @@ class RouteNav extends React.Component{
     super(props);
     this.state = {
       menuPop: false,
-      memberPop: false,
+      memberPop: false
     }
     this.convertName = this.convertName.bind(this)
     this.convertImg = this.convertImg.bind(this)
   }
-  
+
   convertName() {
     if (this.props.memberData.name?.length < 19) {
       name = this.props.memberData.name
@@ -170,7 +169,6 @@ class RouteNav extends React.Component{
       )
     }
     
-    
   }
 
 
@@ -179,8 +177,19 @@ class RouteNav extends React.Component{
       return (
       <div className="memberFrame">
           <div className="memberImgFrame" onClick={this.toggleMemberPop.bind(this)}>
-            {this.convertName()}
-            {this.convertImg()}
+            {this.props.memberData.length !== 0 && this.props.memberData.email.length > 0 ? 
+              <div className="memberImgFrame">
+                {this.convertName()}
+                {this.convertImg()}
+              </div>
+              :
+              <div className="memberImgFrame">
+                <div className="memberImgWord">
+                  <Loading loadingMini={true}/>
+                </div>
+                <div className="memberImg" style={{ backgroundColor: "white" }}></div>
+              </div>
+            }
           </div>
           <div className="triangle" onClick={this.toggleMemberPop.bind(this)}></div>
           {this.state.memberPop ? <MemberPop /> : null}

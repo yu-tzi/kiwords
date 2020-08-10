@@ -132,6 +132,7 @@ const QuizContainer = (props) => {
     defalutValue = target[0]
     defalutBook = decodeURI(target[1])
     hasDefaultOption = true
+    
   }
 
   const [bookIDpop, setBookIDpop] = useState(true)
@@ -148,6 +149,7 @@ const QuizContainer = (props) => {
   const [answer, setAnswer] = useState([""])
   const [topicCount, setTopicCount] = useState([""])
   const [mouseHover, setMouseHover] = useState(false)
+
 
   const [validWords, setvalidWords] = useState(0)
   useEffect(() => {
@@ -299,7 +301,6 @@ const QuizContainer = (props) => {
           setChecked(false)
           chooseAns = -1
           setScore(score + 1)
-          setTopicCount(topicCount + 1)
         } else {
           chooseAns = optionList[i].id
           setChecked(false)
@@ -312,6 +313,7 @@ const QuizContainer = (props) => {
         alert('Please drag the block below and drop in the question-blank.')
       } else {
         SendItem(chooseAns)
+        setTopicCount(topicCount + 1)
       }
     }
   }
@@ -403,13 +405,14 @@ const QuizContainer = (props) => {
   }
 
   const renderBookSelecter = () => {
-    if (props.showBook.length > 0) {
+    if (props.showBook.length >= 0) {
       let all = []
       let count = 0
       for (let i = 0; i < props.showBook.length; i++) {
         all.push(showBookID(props.showBook[i], i))
         count++
       }
+
       if (count == props.showBook.length) {
         return (
 
@@ -419,7 +422,7 @@ const QuizContainer = (props) => {
             </div>
             <div className="bookIDpopSubtitle" >Select WordBook As Quiz Resources
             </div>
-            <select className="bookSelect" defaultValue={defalutValue}
+            <select className="bookSelect" value={bookID}
               onChange={(e) => {
                 getBookID(e)
               }}>
@@ -482,7 +485,7 @@ const QuizContainer = (props) => {
 
               <div className="usableWordsCreate"
                 onClick={() => {
-                  window.location.href = ("https://kiwords-c058b.web.app/addwords?" + defalutValue + " & " + defalutBook)
+                  window.location.href = ("https://kiwords-c058b.web.app/addwords?" + bookID + " & " + bookName )
                 }}
                 style={{
                   display: validWords.length > 0 ? "none" : "block"

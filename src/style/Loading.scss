@@ -1,0 +1,39 @@
+.loadingAnimate >li{
+  background-color: #657197;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  margin: 0 3px;
+  animation: LOADING 1.5s infinite;
+}
+
+.loadingAnimate{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 70px;
+  height: 31px;
+  margin-left: 15px;
+}
+
+@keyframes LOADING {
+  0%   { 
+    transform: scale(0.5);
+  }
+  50%   { 
+    transform: scale(1);
+  }
+  100% { 
+    transform: scale(0.5);
+  }
+}
+
+.loadingAnimate >li:nth-child(1) {
+  animation-delay: 0s;
+}
+.loadingAnimate >li:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loadingAnimate >li:nth-child(3) {
+  animation-delay: 0.5s;
+}
