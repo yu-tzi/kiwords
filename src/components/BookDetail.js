@@ -139,7 +139,7 @@ class BookDetail extends React.Component {
           }} className={i}>
           <div className={i}>{data.word}
           </div>
-          <img src="https://i.imgur.com/OT847Iy.png" id="trashCan" className={i}
+          <img src="images/trash.png" id="trashCan" className={i}
             onClick={(e) => {
               this.deleteWord(e)
             }}>

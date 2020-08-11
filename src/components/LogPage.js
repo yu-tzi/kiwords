@@ -116,11 +116,11 @@ class LogPage extends React.Component {
               onSubmit={
                 this.props.handleSignIn
             }>
-              <input type="text" placeholder="EMAIL"
+              <input type="text" placeholder="EMAIL" value={this.props.email}
                 onChange={
                   this.props.passingEmail
                 } />
-              <input type="text" type="password" placeholder="PASSWORD"
+              <input type="text" type="password" placeholder="PASSWORD" value={this.props.password}
                 onChange={
                   this.props.passingPassword
                 } />

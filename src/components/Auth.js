@@ -10,8 +10,8 @@ class Auth extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "", 
-      password: "",
+      email: "testuser@gmail.com", 
+      password: "testuser",
       name: "",
       logIn: false,
       userData: [],
@@ -292,7 +292,9 @@ class Auth extends React.Component {
           passingPassword={this.passingPassword}
           logIn={this.state.logIn}
           manageUserData={this.manageUserData}
-          //all pages
+          email={this.state.email}
+          password={this.state.password}
+        //all pages
           userData={this.state.userData}
           showBook={this.state.showBook}
           memberData={this.state.memberData}

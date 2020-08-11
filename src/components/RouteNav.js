@@ -48,7 +48,7 @@ class RoutePage extends React.Component{
           <Switch>
             <Route exact path="/">
               <Home logIn={this.props.logIn} />
-              {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} /> */}
+              {/* <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} email={this.props.email} password={this.props.password}/> */}
               {/* <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent}/> */}
               {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} memberData={this.props.memberData} storeBookData={this.props.storeBookData} addBookPop={this.props.addBookPop} addBookSucceed={this.props.addBookSucceed} popAddBook={this.props.popAddBook} closeAddBook={this.props.closeAddBook}/> */}
               {/* <AddWords showBook={this.props.showBook} /> */}
@@ -59,7 +59,7 @@ class RoutePage extends React.Component{
             </Route>
             <Route path="/login">
               <Home logIn={this.props.logIn}/>
-              <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} />
+              <LogPage handleSignUp={this.props.handleSignUp} handleSignIn={this.props.handleSignIn} storeToUser={this.props.storeToUser} passingName={this.props.passingName} passingEmail={this.props.passingEmail} passingPassword={this.props.passingPassword} logIn={this.props.logIn} manageUserData={this.props.manageUserData} email={this.props.email} password={this.props.password}/>
             </Route>
             <Route path="/dashboard">
               <Dashboards userData={this.props.userData} memberData={this.props.memberData} uploadImg={this.props.uploadImg} popImageUpload={this.props.popImageUpload} closeImageUpload={this.props.closeImageUpload} imgUploadPop={this.props.imgUploadPop} popTitleUpload={this.props.popTitleUpload} closeTitleUpload={this.props.closeTitleUpload} uploadName={this.props.uploadName} changeName={this.props.changeName} titleUploadPop={this.props.titleUploadPop} titleContent={this.props.titleContent} />
@@ -199,7 +199,7 @@ class RouteNav extends React.Component{
       return (
         <div className="memLoginFrame">
           <a href={rootURL +"/login"} >
-            <img src="https://i.imgur.com/zGQkuFg.png" alt="" className="memberLogImg"></img>
+            <img src="images/head.png" alt="" className="memberLogImg"></img>
           </a>
           <a href={rootURL +"/login"} >
             <div className="triangle"></div>
@@ -240,7 +240,7 @@ class RouteNav extends React.Component{
       <div className="navBox">
         <nav className="nav">
           <ul className="menu">
-                <img src="https://i.imgur.com/R3BZzK9.png" alt="" className="menuHam"
+                <img src="images/menu.png" alt="" className="menuHam"
                   onClick={logIn ? this.toggleMenuPop.bind(this) : this.redirectToLogin.bind(this)}></img>
             {this.state.menuPop ? <MenuPop /> : null}  
                 {/* <a href={logIn ? rootURL + "/addwords" : rootURL + "/login"} className="menuItem">Add Words<div className="decoline"></div></a> */}
@@ -271,6 +271,8 @@ class RouteNav extends React.Component{
             passingPassword={this.props.passingPassword}
             logIn={this.props.logIn}
             manageUserData={this.props.manageUserData}
+            email={this.props.email}
+            password={this.props.password}
 
             userData={this.props.userData}
             showBook={this.props.showBook}

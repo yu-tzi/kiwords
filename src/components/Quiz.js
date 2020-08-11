@@ -464,7 +464,7 @@ const QuizContainer = (props) => {
               }}>
               <div className="usableWords" >{"Useable wordcards in this book : " + validWords.length}
               </div>
-              <img src="https://i.imgur.com/hMFZm19.png" className="infoIcon"
+              <img src="images/moreInfo.png" className="infoIcon"
                 style={{
                   display: validWords.length > 0 ? "block" : "none"
                 }}
@@ -518,7 +518,7 @@ const QuizContainer = (props) => {
             </div>
             <div className="tutorPopSubtitle">Quick Tutorial
             </div> 
-            <img src="https://i.imgur.com/npqeJsW.gif" >
+            <img src="images/tutor.gif" >
             </img>
             <div className="tutorPopBtn" onClick={() => { 
               setTutorPop(false)
