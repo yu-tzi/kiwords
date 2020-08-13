@@ -35,7 +35,7 @@ class Head extends React.Component {
         <div className="head">
           <div className="logoH">KiWords
           </div>
-          <div className="subtitle">KiWords makes simple learning tools that let you study English. Start learning today with flashcards & quizes !
+          <div className="subtitle">KiWords is a simple learning tool that help you study English. Start learning today with flashcards & quizes !
           </div>
           <a href={this.props.logIn ? rootURL + "/wordbooks" : rootURL + "/login"} >
             <div className="start">START

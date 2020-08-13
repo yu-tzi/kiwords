@@ -1,6 +1,7 @@
 import React from "react";
 import { db } from "../utility/firebaseConfig"
 import '../style/BookDetail.scss';
+import Loading from './Loading.js';
 
 
 class BookDetail extends React.Component {
@@ -9,7 +10,7 @@ class BookDetail extends React.Component {
     super(props);
     this.state = {
       allCards:[],
-      cards: [],
+      cards: "",
       wordDetail: false,
       nowWord: "",
       wordRenew: false,
@@ -75,6 +76,7 @@ class BookDetail extends React.Component {
               this.setState({ cards: cards })
             }
           } else {
+            this.setState({ cards: [] })
             console.log("No cards :(")
           }
         })
@@ -291,7 +293,9 @@ class BookDetail extends React.Component {
       <div className="bookDetailBody">
         
         <div className="upperPart">
-          <div className="bookDetailTitle">{bookName}</div>
+          <div className="bookDetailTitle">
+            {bookName}
+          </div>
           <div className="upperbtn">
             <div className="viewAllBookBtn"
               onClick={() => {
@@ -313,22 +317,31 @@ class BookDetail extends React.Component {
           }}>Words in this book
         </div>
 
-        {this.state.cards.length > 0 ?
-          //this.renderWords()
+        {
+          this.state.cards.length > 0 ?
           <div className="wordCardBox">
-            {this.state.cards}
+              {this.state.cards}
           </div>
-          :
-          <div className="noWordsBlock">
-            <div className="noWordsTitle">There's no words in this wordbook
-            </div>
-            <div className="noWordSubTitle">Try adding some words ! Add words with more then 2 synonyms and antonyms to unlock quiz function.
-            </div>
-            <div className="noWordBtn"
-              onClick={() => {
-              window.location.href = ('https://kiwords-c058b.web.app/addwords?' + bookID + "&" + bookName)
-              }}>Add words
-            </div>
+           : 
+          <div>
+              {
+                typeof (this.state.cards) === "object" ? 
+                  <div className="noWordsBlock">
+                    <div className="noWordsTitle">There's no words in this wordbook
+                    </div>
+                    <div className="noWordSubTitle">Try adding some words ! Add words with more then 2 synonyms and antonyms to unlock quiz function.
+                    </div>
+                    <div className="noWordBtn"
+                      onClick={() => {
+                        window.location.href = ('https://kiwords-c058b.web.app/addwords?' + bookID + "&" + bookName)
+                      }}>Add words
+                    </div>
+                  </div>
+                  :
+                  <div className="noWordsBlock">
+                    <Loading loadingMini={false} />
+                  </div>
+              }
           </div>
         }
 

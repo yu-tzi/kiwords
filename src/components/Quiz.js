@@ -5,6 +5,7 @@ import { firebase , db } from "../utility/firebaseConfig"
 import MultiBackend from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import '../style/Quiz.scss';
+import Loading from './Loading.js';
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -149,7 +150,7 @@ const QuizContainer = (props) => {
   const [answer, setAnswer] = useState([""])
   const [topicCount, setTopicCount] = useState([""])
   const [mouseHover, setMouseHover] = useState(false)
-
+  const [loadingAnimate, setloadingAnimate] = useState(false)
 
   const [validWords, setvalidWords] = useState(0)
   useEffect(() => {
@@ -195,6 +196,7 @@ const QuizContainer = (props) => {
           }
         }
           setvalidWords(validWords)
+          setloadingAnimate(false)
         }
       )          
       .catch((error) => {
@@ -394,6 +396,7 @@ const QuizContainer = (props) => {
       setStart(true)
       setHasOption(false)
       setvalidWords("")
+      setloadingAnimate(false)
     }
   }
 
@@ -424,75 +427,87 @@ const QuizContainer = (props) => {
             </div>
             <select className="bookSelect" value={bookID}
               onChange={(e) => {
+                setloadingAnimate(true),
                 getBookID(e)
               }}>
               <option key={props.showBook.length + 1} value=" " >———— Please choose one wordbook ————
               </option>
               {all}
             </select>
-            <div className="bookPopSend"
-              onClick={() => {
-                if (bookName === "" || bookID === " ") {
-                  alert('Please Select one book :)')
-                } else {
-                  setBookIDpop(false), setTutorPop(true)
-                }
-              }}
-              style={{
-                display: validWords.length > 0 || !hasOption ? "block" : "none"
-              }}>Next
-            </div>
 
-            <div className="bookPopCreateWording"
+            <div className="loadingBlock"
               style={{
-                display: hasOption ? "none" : "block"
-              }}>No option ? Try :
-            </div>
-
-            <div className="bookPopCreate"
-              onClick={() => {
-                window.location.href = ("https://kiwords-c058b.web.app/wordbooks")
-              }}
-              style={{
-                display: hasOption ? "none" : "block"
-              }}>Create wordbook
-            </div>
-
-            <div className="validWords"
-              style={{
-                display: hasOption ? "block" : "none"
+                display: loadingAnimate ? "block" : "none"
               }}>
-              <div className="usableWords" >{"Useable wordcards in this book : " + validWords.length}
-              </div>
-              <img src="images/moreInfo.png" className="infoIcon"
-                style={{
-                  display: validWords.length > 0 ? "block" : "none"
-                }}
-                onMouseEnter={() => {
-                  setMouseHover(true)
-                }}
-                onMouseLeave={() => {
-                  setMouseHover(false)
-                }}>
-              </img>
-              <div className="infobox" style={{ display: mouseHover ? "block" : "none" }}>Only word cards with more then 2 synonyms and antonyms can be used to generate quiz content.
-              </div>
-              <div className="usableWordsWording"
-                style={{
-                  display: validWords.length > 0 ? "none" : "block"
-                }}>Add words with more then 2 synonyms and antonyms !
-              </div>
-
-              <div className="usableWordsCreate"
-                onClick={() => {
-                  window.location.href = ("https://kiwords-c058b.web.app/addwords?" + bookID + " & " + bookName )
-                }}
-                style={{
-                  display: validWords.length > 0 ? "none" : "block"
-                }}>Add Words
-              </div>
+              <Loading loadingMini={false} />
             </div>
 
+            <div className="bookPopContainer"
+              style={{
+                display: loadingAnimate ? "none" : "flex"
+              }}>
+              <div className="bookPopSend"
+                onClick={() => {
+                  if (bookName === "" || bookID === " ") {
+                    alert('Please Select one book :)')
+                  } else {
+                    setBookIDpop(false), setTutorPop(true)
+                  }
+                }}
+                style={{
+                  display: validWords.length > 0 || !hasOption ? "block" : "none"
+                }}>Next
+              </div>
+              <div className="bookPopCreateWording"
+                style={{
+                  display: hasOption ? "none" : "block"
+                }}>No option ? Try :
+              </div>
+
+              <div className="bookPopCreate"
+                onClick={() => {
+                  window.location.href = ("https://kiwords-c058b.web.app/wordbooks")
+                }}
+                style={{
+                  display: hasOption ? "none" : "block"
+                }}>Create wordbook
+              </div>
+              <div className="validWords"
+                style={{
+                  display: hasOption ? "block" : "none"
+                }}>
+                <div className="usableWords" >{"Useable wordcards in this book : " + validWords.length}
+                </div>
+                <img src="images/moreInfo.png" className="infoIcon"
+                  style={{
+                    display: validWords.length > 0 ? "block" : "none"
+                  }}
+                  onMouseEnter={() => {
+                    setMouseHover(true)
+                  }}
+                  onMouseLeave={() => {
+                    setMouseHover(false)
+                  }}>
+                </img>
+                <div className="infobox" style={{ display: mouseHover ? "block" : "none" }}>Only word cards with more then 2 synonyms and antonyms can be used to generate quiz content.
+                </div>
+                <div className="usableWordsWording"
+                  style={{
+                    display: validWords.length > 0 ? "none" : "block"
+                  }}>Add words with more then 2 synonyms and antonyms !
+                </div>
+
+                <div className="usableWordsCreate"
+                  onClick={() => {
+                    window.location.href = ("https://kiwords-c058b.web.app/addwords?" + bookID + " & " + bookName )
+                  }}
+                  style={{
+                    display: validWords.length > 0 ? "none" : "block"
+                  }}>Add Words
+                </div>
+
+              </div>
+            </div>
           </div>
         )
       }

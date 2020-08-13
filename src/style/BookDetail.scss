@@ -10,6 +10,7 @@
 #wordBlock{
   display:flex;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .bookDetailTitle{
@@ -44,7 +45,8 @@
     width: 100px;
     margin-top: 15px;
     transition: 0.5s;
-    cursor: pointer;
+        cursor: pointer;
+    
       }
 
 .noWordsBlock{
@@ -106,6 +108,7 @@
     margin-bottom: 0px;
     margin-left: 20px;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 .upperbtn{
@@ -123,6 +126,7 @@
     margin-bottom: 0px;
     margin-left: 20px;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 
@@ -172,6 +176,7 @@
   text-align: center;
   margin: 0px 10px;
   transition: 0.5s;
+  cursor: pointer;
 }
 
 .page:hover{
@@ -219,6 +224,7 @@
 .addWordsBtn:hover,.viewAllBookBtn:hover,.takeQuizBtn:hover{
   background-color: #303545;
   color: orange ;
+
 }
 
 
@@ -239,6 +245,7 @@
 .viewAllBookBtn,.addWordsBtn{
   margin: 10px auto;
   width: 70%;
+  
 }
 
 }

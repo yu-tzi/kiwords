@@ -1,5 +1,6 @@
 import React from "react";
 import '../style/WordBook.scss';
+import Loading from './Loading.js';
 
 class WordBook extends React.Component {
 
@@ -47,19 +48,29 @@ class WordBook extends React.Component {
   render() {
     return (
       <div>
-        <div className="addbookTopArea">
-          {this.convertImg()}
-          {this.convertName()}
-        </div>
-        <MyBook
-          userData={this.props.userData}
-          showBook={this.props.showBook}
-          storeBookData={this.props.storeBookData}
-          addBookPop={this.props.addBookPop}
-          addBookSucceed={this.props.addBookSucceed}
-          popAddBook={this.props.popAddBook}
-          closeAddBook={this.props.closeAddBook}
-          />
+        {
+          this.props.memberData.name?.length > 0 ? 
+            <div>
+              <div className="addbookTopArea">
+                {this.convertImg()}
+                {this.convertName()}
+              </div>
+              <MyBook
+                userData={this.props.userData}
+                showBook={this.props.showBook}
+                storeBookData={this.props.storeBookData}
+                addBookPop={this.props.addBookPop}
+                addBookSucceed={this.props.addBookSucceed}
+                popAddBook={this.props.popAddBook}
+                closeAddBook={this.props.closeAddBook}
+              />
+            </div>
+            :
+            <div className="addbookTopArea">
+              <div className="addbookblank"></div>
+              <Loading loadingMini={false} />
+            </div>
+        }
       </div>
     )
   }

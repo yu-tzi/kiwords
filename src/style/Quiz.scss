@@ -46,6 +46,15 @@
 
 }
 
+.loadingBlock{
+  margin-top: 80px;
+}
+
+.bookPopContainer{
+      display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 
 .answerDrop{
@@ -87,6 +96,7 @@
     width: 400px;
     font-size: 18px;
     margin-top: 80px;
+    cursor: pointer;
 }
 
 .bookIDpopBox{
@@ -115,6 +125,7 @@
     margin-top: 100px;
     width: 160px;
     text-align: center;
+    cursor: pointer;
 }
 
 .bookPopCreateWording{
@@ -167,6 +178,7 @@
     font-size: 20px;
     width: 160px;
     text-align: center;
+    cursor: pointer;
 }
 
 .bookPopCreate{
@@ -175,6 +187,7 @@
     font-size: 18px;
     text-decoration: underline;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .bookSelect{
@@ -217,6 +230,7 @@
     margin: 20px auto;
     width: 100px;
     text-align: center;
+    cursor: pointer;
     
 }
 
@@ -325,6 +339,7 @@
     margin-left: 20px;
     transition: 0.5s;
     width: 150px;
+    cursor: pointer;
 }
 
 .end-quiz{
@@ -391,12 +406,15 @@
     transition: 0.5s;
     display: flex;
     margin: 10px;
+    cursor: pointer;
 }
 
-.yourScorebtn:hover{
+.yourScorebtn:hover, .yourScorebtnCheck:hover{
 background-color: #303545;
 color: orange;
 }
+
+
 
 .endQuizRender{
   display: flex;
@@ -411,7 +429,7 @@ color: orange;
     margin-bottom: 100px;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
 
   .endQuiz{
     width: 80%;
@@ -420,6 +438,10 @@ color: orange;
   .yourScorebtnblock{
       flex-direction: column;
   }
+
+  .yourScorebtnCheck{
+  display: none;
+}
 
 
   .bookIDpop{
@@ -458,6 +480,7 @@ color: orange;
     font-size: 18px;
     width: 100px;
     margin-top: 10px;
+    
   }
 
 

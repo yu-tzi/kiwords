@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { select } from "d3";
 import moment from 'moment';
+import Loading from './Loading.js';
 
 
 class Dashboards extends React.Component {
@@ -54,17 +55,23 @@ class Dashboards extends React.Component {
     return (
       <div className="dashContainer"> 
         
-        <div className="profileBox">
-          <div className="profileImgBox">
-            {this.renderConvertedImg()}
-          </div>
-          <div className="profileInforBox">
-            {this.renderConvertedName()}
-            <div className="profileInfor">
+        {this.props.memberData.name?.length > 0 ? 
+          <div className="profileBox">
+            <div className="profileImgBox">
+              {this.renderConvertedImg()}
+            </div>
+            <div className="profileInforBox">
+              {this.renderConvertedName()}
+              <div className="profileInfor">
               {this.props.memberData.email}
+              </div>
             </div>
           </div>
-        </div>{/* end of profileBox */}
+            :
+          <div className="profileBox">
+            <Loading loadingMini={false} />
+          </div>
+          }
 
         <div className="uploadBtnBox">
           <div
@@ -207,6 +214,9 @@ const Statistics = (props) => {
     setLoad(false)
   }
 
+  let sunday = moment(nowDate).weekday(0).startOf('day').format("MMMM Do YYYY").toString()
+  let sataurday = moment(nowDate).weekday(6).endOf('day').format("MMMM Do YYYY").toString()
+  //sataurday === "Invalid date" ? "true" : sunday
   return (
     <div className="statistics">
       <div className="timeSelector">
@@ -215,14 +225,26 @@ const Statistics = (props) => {
             setNowDate(moment(nowDate).subtract(7, 'days'))
           }}>◀︎
         </div>
-        <div className="timeBlock">
-          <div>{moment(nowDate).weekday(0).startOf('day').format("MMMM Do YYYY").toString()}
-          </div>
-          <div>～
-          </div>
-          <div>{moment(nowDate).weekday(6).endOf('day').format("MMMM Do YYYY").toString()}
-          </div>
-        </div>
+
+        {
+          sunday === "Invalid date" || sataurday === "Invalid date" ?
+            <div className="timeBlock">
+              <Loading loadingMini={true}/>
+            </div>
+            :
+            <div className="timeBlock">
+              <div>
+                {sunday}
+              </div>
+              <div>
+                ～
+              </div>
+              <div>
+                {sataurday}
+              </div>
+            </div>
+        }
+
         <div className="plus"
           onClick={() => {
             setNowDate(moment(nowDate).add(7, 'days'))
@@ -262,178 +284,15 @@ const Statistics = (props) => {
 
 
 const Svg = (props) => {
-  
-  let firstData = [
-    { day: 1, hour: 1, count: 0 },
-    { day: 2, hour: 1, count: 0 },
-    { day: 3, hour: 1, count: 0 },
-    { day: 4, hour: 1, count: 0 },
-    { day: 5, hour: 1, count: 0 },
-    { day: 6, hour: 1, count: 0 },
-    { day: 7, hour: 1, count: 0 },
-    { day: 1, hour: 2, count: 0 },
-    { day: 2, hour: 2, count: 0 },
-    { day: 3, hour: 2, count: 0 },
-    { day: 4, hour: 2, count: 0 },
-    { day: 5, hour: 2, count: 0 },
-    { day: 6, hour: 2, count: 0 },
-    { day: 7, hour: 2, count: 0 },
-    { day: 1, hour: 3, count: 0 },
-    { day: 2, hour: 3, count: 0 },
-    { day: 3, hour: 3, count: 0 },
-    { day: 4, hour: 3, count: 0 },
-    { day: 5, hour: 3, count: 0 },
-    { day: 6, hour: 3, count: 0 },
-    { day: 7, hour: 3, count: 0 },
-    { day: 1, hour: 4, count: 0 },
-    { day: 2, hour: 4, count: 0 },
-    { day: 3, hour: 4, count: 0 },
-    { day: 4, hour: 4, count: 0 },
-    { day: 5, hour: 4, count: 0 },
-    { day: 6, hour: 4, count: 0 },
-    { day: 7, hour: 4, count: 0 },
-    { day: 1, hour: 5, count: 0 },
-    { day: 2, hour: 5, count: 0 },
-    { day: 3, hour: 5, count: 0 },
-    { day: 4, hour: 5, count: 0 },
-    { day: 5, hour: 5, count: 0 },
-    { day: 6, hour: 5, count: 0 },
-    { day: 7, hour: 5, count: 0 },
-    { day: 1, hour: 6, count: 0 },
-    { day: 2, hour: 6, count: 0 },
-    { day: 3, hour: 6, count: 0 },
-    { day: 4, hour: 6, count: 0 },
-    { day: 5, hour: 6, count: 0 },
-    { day: 6, hour: 6, count: 0 },
-    { day: 7, hour: 6, count: 0 },
-    { day: 1, hour: 7, count: 0 },
-    { day: 2, hour: 7, count: 0 },
-    { day: 3, hour: 7, count: 0 },
-    { day: 4, hour: 7, count: 0 },
-    { day: 5, hour: 7, count: 0 },
-    { day: 6, hour: 7, count: 0 },
-    { day: 7, hour: 7, count: 0 },
-    { day: 1, hour: 8, count: 0 },
-    { day: 2, hour: 8, count: 0 },
-    { day: 3, hour: 8, count: 0 },
-    { day: 4, hour: 8, count: 0 },
-    { day: 5, hour: 8, count: 0 },
-    { day: 6, hour: 8, count: 0 },
-    { day: 7, hour: 8, count: 0 },
-    { day: 1, hour: 9, count: 0 },
-    { day: 2, hour: 9, count: 0 },
-    { day: 3, hour: 9, count: 0 },
-    { day: 4, hour: 9, count: 0 },
-    { day: 5, hour: 9, count: 0 },
-    { day: 6, hour: 9, count: 0 },
-    { day: 7, hour: 9, count: 0 },
-    { day: 1, hour: 10, count: 0 },
-    { day: 2, hour: 10, count: 0 },
-    { day: 3, hour: 10, count: 0 },
-    { day: 4, hour: 10, count: 0 },
-    { day: 5, hour: 10, count: 0 },
-    { day: 6, hour: 10, count: 0 },
-    { day: 7, hour: 10, count: 0 },
-    { day: 1, hour: 11, count: 0 },
-    { day: 2, hour: 11, count: 0 },
-    { day: 3, hour: 11, count: 0 },
-    { day: 4, hour: 11, count: 0 },
-    { day: 5, hour: 11, count: 0 },
-    { day: 6, hour: 11, count: 0 },
-    { day: 7, hour: 11, count: 0 },
-    { day: 1, hour: 12, count: 0 },
-    { day: 2, hour: 12, count: 0 },
-    { day: 3, hour: 12, count: 0 },
-    { day: 4, hour: 12, count: 0 },
-    { day: 5, hour: 12, count: 0 },
-    { day: 6, hour: 12, count: 0 },
-    { day: 7, hour: 12, count: 0 },
-    { day: 1, hour: 13, count: 0 },
-    { day: 2, hour: 13, count: 0 },
-    { day: 3, hour: 13, count: 0 },
-    { day: 4, hour: 13, count: 0 },
-    { day: 5, hour: 13, count: 0 },
-    { day: 6, hour: 13, count: 0 },
-    { day: 7, hour: 13, count: 0 },
-    { day: 1, hour: 14, count: 0 },
-    { day: 2, hour: 14, count: 0 },
-    { day: 3, hour: 14, count: 0 },
-    { day: 4, hour: 14, count: 0 },
-    { day: 5, hour: 14, count: 0 },
-    { day: 6, hour: 14, count: 0 },
-    { day: 7, hour: 14, count: 0 },
-    { day: 1, hour: 15, count: 0 },
-    { day: 2, hour: 15, count: 0 },
-    { day: 3, hour: 15, count: 0 },
-    { day: 4, hour: 15, count: 0 },
-    { day: 5, hour: 15, count: 0 },
-    { day: 6, hour: 15, count: 0 },
-    { day: 7, hour: 15, count: 0 },
-    { day: 1, hour: 16, count: 0 },
-    { day: 2, hour: 16, count: 0 },
-    { day: 3, hour: 16, count: 0 },
-    { day: 4, hour: 16, count: 0 },
-    { day: 5, hour: 16, count: 0 },
-    { day: 6, hour: 16, count: 0 },
-    { day: 7, hour: 16, count: 0 },
-    { day: 1, hour: 17, count: 0 },
-    { day: 2, hour: 17, count: 0 },
-    { day: 3, hour: 17, count: 0 },
-    { day: 4, hour: 17, count: 0 },
-    { day: 5, hour: 17, count: 0 },
-    { day: 6, hour: 17, count: 0 },
-    { day: 7, hour: 17, count: 0 },
-    { day: 1, hour: 18, count: 0 },
-    { day: 2, hour: 18, count: 0 },
-    { day: 3, hour: 18, count: 0 },
-    { day: 4, hour: 18, count: 0 },
-    { day: 5, hour: 18, count: 0 },
-    { day: 6, hour: 18, count: 0 },
-    { day: 7, hour: 18, count: 0 },
-    { day: 1, hour: 19, count: 0 },
-    { day: 2, hour: 19, count: 0 },
-    { day: 3, hour: 19, count: 0 },
-    { day: 4, hour: 19, count: 0 },
-    { day: 5, hour: 19, count: 0 },
-    { day: 6, hour: 19, count: 0 },
-    { day: 7, hour: 19, count: 0 },
-    { day: 1, hour: 20, count: 0 },
-    { day: 2, hour: 20, count: 0 },
-    { day: 3, hour: 20, count: 0 },
-    { day: 4, hour: 20, count: 0 },
-    { day: 5, hour: 20, count: 0 },
-    { day: 6, hour: 20, count: 0 },
-    { day: 7, hour: 20, count: 0 },
-    { day: 1, hour: 21, count: 0 },
-    { day: 2, hour: 21, count: 0 },
-    { day: 3, hour: 21, count: 0 },
-    { day: 4, hour: 21, count: 0 },
-    { day: 5, hour: 21, count: 0 },
-    { day: 6, hour: 21, count: 0 },
-    { day: 7, hour: 21, count: 0 },
-    { day: 1, hour: 22, count: 0 },
-    { day: 2, hour: 22, count: 0 },
-    { day: 3, hour: 22, count: 0 },
-    { day: 4, hour: 22, count: 0 },
-    { day: 5, hour: 22, count: 0 },
-    { day: 6, hour: 22, count: 0 },
-    { day: 7, hour: 22, count: 0 },
-    { day: 1, hour: 23, count: 0 },
-    { day: 2, hour: 23, count: 0 },
-    { day: 3, hour: 23, count: 0 },
-    { day: 4, hour: 23, count: 0 },
-    { day: 5, hour: 23, count: 0 },
-    { day: 6, hour: 23, count: 0 },
-    { day: 7, hour: 23, count: 0 },
-    { day: 1, hour: 0, count: 0 },
-    { day: 2, hour: 0, count: 0 },
-    { day: 3, hour: 0, count: 0 },
-    { day: 4, hour: 0, count: 0 },
-    { day: 5, hour: 0, count: 0 },
-    { day: 6, hour: 0, count: 0 },
-    { day: 7, hour: 0, count: 0 },
-  ]
 
+  let firstData = []
+
+  for (let i=1; i<8; i++){
+    for (let j = 1; j < 24; j++){
+      firstData.push({ day: i, hour: j, count: 0 })
+    }
+  }
+  
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const hours = d3.range(24)
   const marginTop = 35
@@ -529,9 +388,18 @@ const Svg = (props) => {
 
   return (
     <div className="svgContainer">
-      <div ref={svgRef}>
+      <div ref={svgRef}
+        style={{
+          display: JSON.stringify(firstData) !== JSON.stringify(data) ? "flex" : "none"
+        }}>
       </div>
-    </div>
+      <div className="dashboardLoadContainer"
+        style={{
+          display: JSON.stringify(firstData) !== JSON.stringify(data) ? "none" : "flex"
+        }}>
+        <Loading loadingMini={false} />
+      </div>
+    </div> 
   )
 }
 

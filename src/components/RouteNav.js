@@ -18,7 +18,7 @@ import Quiz from "./Quiz"
 import '../style/RouteNav.scss';
 import Loading from './Loading.js';
 
-import { db, firebase } from "../utility/firebaseConfig"
+import { firebase } from "../utility/firebaseConfig"
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -53,7 +53,7 @@ class RoutePage extends React.Component{
               {/* <WordBook userData={this.props.userData} showBook={this.props.showBook} memberData={this.props.memberData} storeBookData={this.props.storeBookData} addBookPop={this.props.addBookPop} addBookSucceed={this.props.addBookSucceed} popAddBook={this.props.popAddBook} closeAddBook={this.props.closeAddBook}/> */}
               {/* <AddWords showBook={this.props.showBook} /> */}
               
-              {/* <BookDetail showBook={this.props.showBook} popularBook={this.props.popularBook} saveBook={this.props.saveBook} userData={this.props.userData}/> */}
+              {/* <BookDetail showBook={this.props.showBook} userData={this.props.userData}/> */}
               {/* <Quiz showBook={this.props.showBook} userData={this.props.userData}/> */}
               {/* <Statistics userData={this.props.userData}/> */}
             </Route>
