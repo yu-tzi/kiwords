@@ -3,15 +3,11 @@ import '../style/Home.scss';
 import P5Wrapper from 'react-p5-wrapper';
 import Sketch from './Sketch.js';
 
-
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      
-    };
   }
 
   render() {
@@ -35,7 +31,7 @@ class Head extends React.Component {
         <div className="head">
           <div className="logoH">KiWords
           </div>
-          <div className="subtitle">KiWords is a simple learning tool that help you study English. Start learning today with flashcards & quizes !
+          <div className="subtitle">KiWords is a simple learning tool that help you study English. Start learning today with flashcards & quizzes !
           </div>
           <a href={this.props.logIn ? rootURL + "/wordbooks" : rootURL + "/login"} >
             <div className="start">START

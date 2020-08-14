@@ -109,6 +109,9 @@
     margin-left: 20px;
     transition: 0.5s;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .upperbtn{
@@ -127,6 +130,9 @@
     margin-left: 20px;
     transition: 0.5s;
     cursor: pointer;
+        display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -227,6 +233,29 @@
 
 }
 
+@media (max-width: 800px){
+
+  .viewAllBookBtn,.addWordsBtn{
+  margin: 10px auto;
+  width: 70%;
+  
+}
+
+.bottomPart{
+  width: 80% !important;
+}
+
+
+
+.upperbtn{
+  flex-direction: column;
+}
+
+.upperPart{
+  flex-direction: column;
+}
+}
+
 
 @media (max-width: 450px) {
 
@@ -242,10 +271,6 @@
   display: block;
 }
 
-.viewAllBookBtn,.addWordsBtn{
-  margin: 10px auto;
-  width: 70%;
-  
-}
+
 
 }

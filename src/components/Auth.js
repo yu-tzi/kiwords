@@ -22,7 +22,8 @@ class Auth extends React.Component {
       titleUploadPop: false,
       titleContent: "",
       addBookPop: false,
-      addBookSucceed: false
+      addBookSucceed: false,
+      isLoading: false
     }
     this.passingEmail = this.passingEmail.bind(this)
     this.passingPassword = this.passingPassword.bind(this)
@@ -173,6 +174,7 @@ class Auth extends React.Component {
   }
 
   uploadImg(e) {
+    this.setState({ isLoading: true })
     const storageRef = storage.ref()
     let name = e.target.files[0].name
     let memeberRef = storageRef.child(name)
@@ -195,6 +197,9 @@ class Auth extends React.Component {
           newMemData.image = res
           this.setState({ memberData: newMemData })
           this.setState({ imgUploadPop: false })
+        })
+        .then(() => { 
+          this.setState({ isLoading: false })
         })
         .catch(function (error) {
           alert("Error getting documents: ", error)
@@ -294,7 +299,7 @@ class Auth extends React.Component {
           manageUserData={this.manageUserData}
           email={this.state.email}
           password={this.state.password}
-        //all pages
+          //all pages
           userData={this.state.userData}
           showBook={this.state.showBook}
           memberData={this.state.memberData}
@@ -309,6 +314,7 @@ class Auth extends React.Component {
           changeName={this.changeName}
           titleUploadPop={this.state.titleUploadPop}
           titleContent={this.state.titleContent}
+          isLoading={this.state.isLoading}
           //wordbook
           storeBookData={this.storeBookData}
           addBookPop={this.state.addBookPop}

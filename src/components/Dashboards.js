@@ -11,8 +11,6 @@ class Dashboards extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-    }
     this.renderConvertedName = this.renderConvertedName.bind(this)
     this.renderConvertedImg = this.renderConvertedImg.bind(this)
   }
@@ -93,8 +91,11 @@ class Dashboards extends React.Component {
               ✕
             </div>
             <input type="file" lang="en" name="file" className="uploadPicture" placeholder="Upload file and wait for a sec" accept="image/*"
-            onChange={this.props.uploadImg} >
+            onChange={this.props.uploadImg} style={{ display: this.props.isLoading ? "none" : "block" }}>
             </input>
+            <div className="uploadPictureLoad" style={{ display: this.props.isLoading ? "flex" : "none" }}>
+              <Loading loadingMini={true} />
+            </div>
           </div>
         </div>{/* end of imageUploadPop */}
             
