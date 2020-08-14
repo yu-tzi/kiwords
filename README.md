@@ -65,6 +65,7 @@ KiWords is a language learning tools.
 - Improve compatibility for different browser and device.
 - Manage day changing function in chart area in Dashboard page myself without any help from library.
 - Allow users to edit their flashcards in Word Detail page.
+- Implement Sass.
 
 ### Contact
 E-mail : kikilo20041212@gmail.com 
