@@ -16,6 +16,7 @@ import Quiz from "./Quiz"
 import '../style/RouteNav.scss';
 import Loading from './Loading.js';
 import { firebase } from "../utility/firebaseConfig"
+import { RippleButton } from './Effect.js'
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -116,24 +117,38 @@ class RoutePage extends React.Component{
 
 
 class MemberPop extends React.Component { 
-  
+  /* 
+  onClick=
+            {() => {
+              setTimeout((() => { window.location.href = rootURL + "/dashboard" }), 600)
+            }}
+
+            onClick={() => {
+                setTimeout((() => {
+                  firebase.auth().signOut()
+                  .then(() => {
+                    window.location.href = rootURL
+                })}), 600)
+              }}
+
+   */
   render() {
     return (
       <div> 
         <span className="trianglePop">
         </span>
-          <div className="memPop">
-            <a href={rootURL+"/dashboard"}>Profile</a>
-            <div className="signOut"
-              onClick={() => {
-                firebase.auth().signOut()
-                  .then(() => {
-                  window.location.href = rootURL
-                })
-              }}>Log Out
+        <div className="memPop">
+          <RippleButton effectClass={"homeMemLogRippleBtnContainer"}>
+            <div>Profile
             </div>
-          </div>
+          </RippleButton>
+          <RippleButton effectClass={"homeMemLogRippleBtnContainer"}>
+            <div className="signOut"
+              >Log Out
+            </div>
+          </RippleButton>
         </div>
+      </div>
     )
   }
 
@@ -146,12 +161,24 @@ class MenuPop extends React.Component {
       <div>
         <span className="trianglePopMenu">
         </span>
-          <div className="menuPop">
-            <a href={rootURL + "/wordBooks"}>Wordbook
-            </a>
-            <a href={rootURL + "/quiz"}>Quiz
-            </a>
-          </div>
+        <div className="menuPop">
+          <RippleButton effectClass={"menuPopFirstRippleBtnContainer"}>
+            <div
+            onClick=
+            {() => {
+                setTimeout((() => { window.location.href = rootURL + "/wordbooks" }), 600)
+            }}>Wordbook
+            </div>
+          </RippleButton>
+          <RippleButton effectClass={"menuPopSecondRippleBtnContainer"}>
+            <div
+              onClick=
+              {() => {
+                setTimeout((() => { window.location.href = rootURL + "/quiz" }), 600)
+              }}>Quiz
+            </div>
+          </RippleButton>
+        </div>
       </div>
     )
   }
@@ -203,8 +230,8 @@ class RouteNav extends React.Component{
   memberSwitch() {
     if (this.props.logIn) {
       return (
-        <div className="memberFrame">
-            <div className="memberImgFrame" onClick={this.toggleMemberPop.bind(this)}>
+        <div className="memberFrame" onClick={this.toggleMemberPop.bind(this)}>
+            <div className="memberImgFrame" >
               {this.props.memberData.length !== 0 && this.props.memberData.email.length > 0 ? 
                 <div className="memberImgFrame">
                   {this.convertName()}
@@ -219,9 +246,11 @@ class RouteNav extends React.Component{
                 </div>
               }
             </div>
-            <div className="triangle" onClick={this.toggleMemberPop.bind(this)}></div>
-            {this.state.memberPop ? <MemberPop /> : null}
+          <div className="triangle" onClick={this.toggleMemberPop.bind(this)}>
+          </div>
+          {this.state.memberPop ? <MemberPop /> : null}
         </div>
+
       )
     } else {
       return (
@@ -278,27 +307,29 @@ class RouteNav extends React.Component{
                       :
                       this.redirectToLogin.bind(this)}>
                 </img>
-                {this.state.menuPop ? <MenuPop /> : null}  
-                <a className="menuItem"
-                  href={
-                    logIn ?
-                      rootURL + "/wordbooks"
-                      :
-                      rootURL + "/login"
-                  }>Wordbook
-                  <div className="decoline">
+                {this.state.menuPop ? <MenuPop /> : null}
+                <RippleButton effectClass={"navRippleBtnContainer"}>
+                  <div className="menuItem"
+                    onClick=
+                    {() => {
+                      logIn ?
+                        setTimeout((() => { window.location.href = rootURL + "/wordbooks" }), 600)
+                        :
+                        setTimeout((() => { window.location.href = rootURL + "/login" }), 600)
+                    }}>Wordbook
                   </div>
-                </a>
-                <a className="menuItem"
-                  href={
+                </RippleButton>
+                <RippleButton effectClass={"navRippleBtnContainer"}>
+                <div className="menuItem"
+                  onClick=
+                  {() => {
                     logIn ?
-                      rootURL + "/quiz"
+                      setTimeout((() => { window.location.href = rootURL + "/quiz" }), 600)
                       :
-                      rootURL + "/login"
-                  }>Quiz
-                  <div className="decoline">
-                  </div>
-                </a>
+                      setTimeout((() => { window.location.href = rootURL + "/login" }), 600)
+                  }}>Quiz
+                </div>
+                </RippleButton>
               </ul>
               <a href={rootURL} className="logo">KiWords
               </a>

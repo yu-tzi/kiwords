@@ -1,4 +1,3 @@
-
 .addCardBox{
   color:white;
   display: flex;
@@ -10,7 +9,7 @@
 
 .popMenuX{
   position: relative;
-    right: -60px;
+  right: -60px;
 }
 
 .addBookSubTitle{
@@ -21,30 +20,29 @@
 
 .nowBookBlock{
  background-color: #24293c;
-    width: 100%;
-    height: 80px;
-    border-radius: 5px;
-    text-align: center;
-    /* line-height: 20px; */
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-        cursor: pointer;
+  width: 100%;
+  height: 80px;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .selectBlock{
-    background-color: #24293c;
-    width: 40%;
-    height: 60px;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 80px;
-    margin-top: 20px;
-    position: absolute;
-    top: 140px;
-    display: block;
-    left: 30%;
+  background-color: #24293c;
+  width: 40%;
+  height: 60px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 80px;
+  margin-top: 20px;
+  position: absolute;
+  top: 140px;
+  display: block;
+  left: 30%;
 }
 
 .selectBlockX,.bookSelectOpt,.selectBlockSend{
@@ -62,25 +60,25 @@
 }
 
 .selectBlockSend{
-    border-style: solid;
-    top: 19px;
-    left: 450px;
-    width: 50px;
-    border-width: 1px;
-    line-height: 19px;
+  border-style: solid;
+  top: 19px;
+  left: 450px;
+  width: 50px;
+  border-width: 1px;
+  line-height: 19px;
 }
 
 .addWordBlocks{
-    background-color: #24293c;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 80px;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    height: 190px;
-    display: flex;
-    padding: 15px 5px 0px 20px;
+  background-color: #24293c;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 80px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 190px;
+  display: flex;
+  padding: 15px 5px 0px 20px;
 }
 
 
@@ -103,12 +101,11 @@
 .word>div,.meaning>div,.synonyms>div,.antonym>div{
   line-height: 20px;
   font-weight: 100;
-    font-size: 14px;
+  font-size: 14px;
 
 }
 
 .addWordBlocks{
-
   display: flex;
   padding-top: 15px;
 }
@@ -125,7 +122,6 @@
   color: white;
   padding: 5px;
   font-size: 16px;
-  
 }
 
 .meaning>textarea,.synonyms>textarea,.antonym>textarea{
@@ -150,14 +146,13 @@
 
 .searchPopMenu{
   display: flex;
-    flex-direction: column;
-    position: absolute;
-    background-color: #24293c;
-    width: 150px;
-    box-shadow: 0px 0px 5px orange;
-    /* position: relative; */
-    top: 65px;
-    left: 2.5%;
+  flex-direction: column;
+  position: absolute;
+  background-color: #24293c;
+  width: 150px;
+  box-shadow: 0px 0px 5px orange;
+  top: 65px;
+  left: 2.5%;
 }
 
 .addWordBlocks{
@@ -173,29 +168,29 @@
 
 .viewCard{
   width: 100%;
-    margin-top: 20px;
-    height: 60px;
-    border-radius: 5px;
-    background-color: #77dddd;
-    text-align: center;
-    line-height: 60px;
-    cursor: pointer;
+  margin-top: 20px;
+  height: 60px;
+  border-radius: 5px;
+  background-color: #77dddd;
+  text-align: center;
+  line-height: 60px;
+  cursor: pointer;
 }
 
 .sendCard{
   background-color: rgb(0,0,0,0);
-    border-style: none;
-    width: 100%;
-    font-size: 18px;
-    color: white;
-    line-height: 60px;
-        cursor: pointer;
+  border-style: none;
+  width: 100%;
+  font-size: 18px;
+  color: white;
+  line-height: 60px;
+  cursor: pointer;
 }
 
 .cited{
-      padding: 20px 0px 50px;
-    margin: auto;
-    color: grey;
+  padding: 20px 0px 50px;
+  margin: auto;
+  color: grey;
 }
 
 
@@ -206,7 +201,6 @@
 .searchPopMenu>li:not(:first-child):hover{
   background-color:orange;
 }
-
 
 .moreWordsBlock{
   background-color: #24293c;
@@ -235,7 +229,6 @@
 
 }
 
-
 @media (max-width: 760px) {
 
 .upper, .mid{
@@ -252,15 +245,13 @@
 }
 
 .word, .meaning, .synonyms, .antonym{
-      width: 80%;
+  width: 80%;
 }
 
 .addWordBlocks{
   padding: 0px;
   height: 440px;
 }
-
-
 
 .searchPopMenu{
   top: 55px;
@@ -286,9 +277,8 @@
 
 .selectBlockSend{
   top: 35px;
-    left: 100px;
-    width: 50px;
+  left: 100px;
+  width: 50px;
 }
-
 
 }

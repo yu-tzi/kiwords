@@ -15,7 +15,18 @@
   background-color: #fafafa;
 }
 
+.logClose,.signInComtainer form>div>span>input:last-child, .signInSend, .signUpBtn, .signInComtainer>button, .signInBtn, .loginRippleBtnContainer{
+  transition:0.3s;
+}
 
+.signInComtainer form>div>span>input:last-child:hover, .signInSend:hover, .signUpBtn:hover, .signInComtainer>button:hover, .signInBtn:hover, .loginRippleBtnContainer:hover{
+  transform: scale(1.02);
+}
+
+.logClose:hover{
+  transform: scale(1.2);
+  transform:rotate(90deg)
+}
 
 .logBackground{
   width: 100%;
@@ -44,31 +55,78 @@
   flex-direction: column;
   width: 80%;
   margin: auto;
+  align-items: center;
+}
+
+.loginRippleBtnContainer{
+  overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 216px;
+    color: white;
+    font-size: 16px;
+    border-style: none;
+    cursor: pointer;
+    padding: 5px 0;
+    background-color: #3a3a3a;
+    border-radius: 7px;
+    width: 90%;
+    margin: 20px auto;
+    color: white;
+    font-size: 16px;
+    border-style: none;
+    cursor: pointer;
+    text-align: center;
 }
 
 .signInComtainer form>input{
   margin: 10px 0;
   border-width: 0px;
   padding: 10px;
+  width:216px;
 }
 
-.signInComtainer form>input:last-child,.signInSend{
-  padding: 5px 0;
-  background-color: rgb(58, 58, 58);
-  border-radius: 7px;
-  width: 90%;
-  margin: 20px auto;
-  color:white;
-  font-size: 16px;
-  border-style: none;
-  cursor: pointer;
+.signInComtainer form>input:focus,.signInComtainer form > input:focus, .signInInput:focus{
+  border-color: orange;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.signInComtainer form>div>span>input:last-child,.signInSend{
+  background-color: #3a3a3a;
+    color: white;
+    font-size: 16px;
+    border-style: none;
+    text-align: center;
 }
 
 .signInInput{
   margin: 10px 0;
   border-width: 0px;
   padding: 5px;
+  width:216px;
 }
+
+.thirdPartRippleBtnContainer{
+  display: block;
+    background-color: #c54138;
+    border-style: none;
+    border-radius: 7px;
+    width: 216px;
+    margin: 10px auto;
+    color: white;
+    font-size: 16px;
+    height: 32px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
 
 
 
@@ -93,28 +151,27 @@
 }
 
 .signInComtainer button{
-  display: block;
-  background-color: rgb(197, 65, 56);
+  background-color: #2a2f7200;
   border-style: none;
-  border-radius: 7px;
   width: 216px;
-  margin: 10px auto;
   color:white;
   font-size: 16px;
   height: 32px;
-  cursor: pointer;
 }
 
 .signInComtainer button:last-child{
-  background-color: rgb(42, 47, 114);
+  background-color: #2a2f7200;
 }
 
 .logClose{
   position: absolute;
-  right: 8px;
-  font-size: 30px;
-  cursor: pointer;
+    right: 12px;
+    font-size: 26px;
+    top: 8px;
+    cursor: pointer;
 }
 
-
+.thirdPartRippleBtnContainer:last-child{
+  background-color: #1c4282;
+}
 

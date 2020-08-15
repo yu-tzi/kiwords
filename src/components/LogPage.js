@@ -1,6 +1,7 @@
 import React from "react";
 import '../style/LogPage.scss';
 import { firebase } from "../utility/firebaseConfig"
+import { RippleButton } from './Effect.js'
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -84,9 +85,11 @@ class LogPage extends React.Component {
               display: signUpBtn ? "block" : "none"
             }}>
             <form className="signUpForm"
-              onSubmit={
-                this.props.handleSignUp
-              }>
+              onSubmit=
+              {() => {
+                setTimeout((() => { this.props.handleSignUp }), 600)
+              }}
+            >
               <input className="signInInput" placeholder="EMAIL" type="text"
                 onChange={
                   this.props.passingEmail
@@ -99,7 +102,9 @@ class LogPage extends React.Component {
                 onChange={
                   this.props.passingName
                 } />
-              <input type="submit" className="signInSend" value="SIGN UP" />
+              <RippleButton effectClass={"loginRippleBtnContainer"}>
+                <input type="submit" className="signInSend" value="SIGN UP" />
+              </RippleButton>
               <div className="signInBtn"
                 onClick={
                   this.switchLogIn
@@ -112,10 +117,12 @@ class LogPage extends React.Component {
             style={{
               display: signUpBtn ? "none" : "block"
             }}>
-            <form
-              onSubmit={
-                this.props.handleSignIn
-            }>
+            <form 
+              onSubmit=
+              {() => {
+                setTimeout((() => { this.props.handleSignIn }), 600)
+              }}
+            >
               <input type="text" placeholder="EMAIL" value={this.props.email}
                 onChange={
                   this.props.passingEmail
@@ -124,7 +131,9 @@ class LogPage extends React.Component {
                 onChange={
                   this.props.passingPassword
                 } />
-              <input type="submit" value="LOG IN" />
+              <RippleButton effectClass={"loginRippleBtnContainer"}>
+                <input type="submit" value="LOG IN" />
+              </RippleButton>
             </form>
             <div className="signUpBtn"
               onClick={
@@ -133,16 +142,20 @@ class LogPage extends React.Component {
             </div>
             <div className="signUpBtn normal" >or ...
             </div>
-            <button
+            <RippleButton effectClass={"thirdPartRippleBtnContainer"}>
+              <button
               onClick={() => {
-                this.googleLogin()
-              }}>I have Google account
+              this.googleLogin()
+            }}>I have Google account
+              </button>
+            </RippleButton>
+            <RippleButton effectClass={"thirdPartRippleBtnContainer"}>
+              <button
+                onClick={() => {
+                  this.facebookLogin()
+                }}>I have Facebook account
             </button>
-            <button
-              onClick={() => {
-                this.facebookLogin()
-              }}>I have Facebook account
-            </button>
+            </RippleButton>
           </div>{/* end of signInComtainer */}
           
         </div>{/* end of logContainer */}

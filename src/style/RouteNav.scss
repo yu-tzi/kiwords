@@ -20,6 +20,17 @@ html, body {
   margin: 0;
 }
 
+.menuBtn{
+  color: white;
+  margin: 0 13px;
+  cursor: pointer;
+}
+
+.menuItem{
+  margin-right:20px;
+}
+
+
 .content{
   min-height: 100vh;
   margin: 0 auto -10px;
@@ -27,10 +38,59 @@ html, body {
   padding: 0px;
 }
 
-/* .footer{
-  height: 200px;
-  background-color: #0d0e13;
-} */
+.navRippleBtnContainer{
+  width: 100px;
+  height: 30px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  border-bottom-width: 5px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 18px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: 1s;
+} 
+
+.menuPopFirstRippleBtnContainer, .menuPopSecondRippleBtnContainer{
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.menuPopFirstRippleBtnContainer:hover, .menuPopSecondRippleBtnContainer:hover, .memPop>div:hover{
+  font-weight: 500;
+}
+
+.memberImgFrame{
+  transition:0.3s;
+}
+
+.memberImgFrame:hover{
+  transform: scale(1.05)
+}
+
+.navRippleBtnContainer:hover{
+  animation: type 0.2s steps(10) forwards;
+}
+
+.decolineLog:hover{
+  white-space: nowrap;
+  overflow: hidden;
+  animation: type 0.2s steps(10) forwards;
+  -moz-animation:type 0.2s steps(10) forwards;  
+  -webkit-animation:type 0.2s steps(10) forwards;
+}
+
+@keyframes type
+{
+  0%{ border-bottom-color:black;}
+	100%{ border-bottom-color:orange;}
+}
+
 
 
 .navBox{
@@ -56,31 +116,22 @@ html, body {
   width: 40%;
 }
 
-.menu>a{
-  color: white;
-  margin: 0 13px;
-  cursor: pointer;
-}
-
-
-.decoline{
-  height: 32px;
-  width: 85px;
-  position: absolute;
-  top: 20px;
-  border-bottom-style: solid;
-  border-bottom-color: orange;
-  border-bottom-width:0px;
-  
-}
-
-.decoline:hover{
-  white-space: nowrap;
+.rippleBtnContainer{
+  border-radius: 50px;
+  background: orange;
   overflow: hidden;
-  animation: type 0.2s steps(10) forwards;
-  -moz-animation:type 0.2s steps(10) forwards;  
-  -webkit-animation:type 0.2s steps(10) forwards;
+  position: relative;
+  cursor: pointer;
+  font-size: 18px;
+  width: 210px;
+  height: 30px;
+  line-height: 31px;
+  text-align: center;
+  color: black;
+  letter-spacing: 1px;
+  transition: 1s;
 }
+
 
 .decolineLog{
   height: 32px;
@@ -97,25 +148,8 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   animation: type 0.2s steps(10) forwards;
-  -moz-animation:type 0.2s steps(10) forwards;  
-  -webkit-animation:type 0.2s steps(10) forwards;
 }
 
-@keyframes type
-{
-  0%{ border-bottom-width:0px;}
-	100%{ border-bottom-width:5px;}
-}
-@-moz-keyframes type
-{
-  0%{ border-bottom-width:0px;}
-	100%{ border-bottom-width:5px;}
-}
-@-webkit-keyframes type
-{
-  0%{ border-bottom-width:0px;}
-	100%{ border-bottom-width:5px;}
-}
 
 
 .memberImgFrame{
@@ -125,10 +159,6 @@ html, body {
   cursor: pointer;
 }
 
-.memberImgFrame:hover{
-  transition: 0.5s;
-  background-color: rgb(187, 186, 186);
-}
 
 .memberImg{
   height: 25px;
@@ -141,12 +171,14 @@ html, body {
   background: #19295e;
   text-align: center;
   line-height: 25px;
+  position: relative;
 }
 
 .memberImgWord{
   color: rgb(40, 40, 40);
   margin: 0 3px 0 10px;
   line-height: 30px;
+  position: relative;
 }
 
 .memberImgWord:hover{
@@ -202,7 +234,6 @@ html, body {
   right: 10vw;
   top:80px;
   background-color: #e4e4e4;
-  /* box-shadow: 2px 2px 5px rgb(213, 213, 213); */
   z-index: 10; 
   border-radius: 10px;
   padding: 10px 0;
@@ -248,12 +279,16 @@ html, body {
   z-index: 15;
 }
 
-.memPop a, .signOut, .menuPop a{
+.memPop div, .signOut, .menuPop>div{
   color: rgb(43, 43, 43);
-  padding: 10px 40px;
   text-align: center;
   border-radius: 10px;
+  height: 40px;
+  width: 150px;
+  line-height: 40px;
 }
+
+
 
 .memPop a:hover, .signOut:hover, .menuPop a:hover{
   color: rgb(72, 72, 72);
@@ -283,6 +318,10 @@ bottom: 0px;
 .menuHam{
   display: block;
   height: 20px;
+}
+
+.navRippleBtnContainer{
+  display:none;
 }
 
 .menuItem{

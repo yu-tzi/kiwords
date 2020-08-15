@@ -1,0 +1,31 @@
+
+
+.rippleCir{
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  background: #ffffff;
+  display: block;
+  border-radius: 50px;
+  opacity: 1;
+  animation: 1.2s ease 1 forwards ripple-effect;
+}
+
+@keyframes ripple-effect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  10% {
+    transform: scale(10);
+    opacity: 0.5;
+  }
+  30% {
+    transform: scale(30);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(60);
+    opacity: 0;
+  }
+}

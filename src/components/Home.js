@@ -2,6 +2,7 @@ import React from "react";
 import '../style/Home.scss';
 import P5Wrapper from 'react-p5-wrapper';
 import Sketch from './Sketch.js';
+import { RippleButton } from './Effect.js'
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -33,10 +34,20 @@ class Head extends React.Component {
           </div>
           <div className="subtitle">KiWords is a simple learning tool that help you study English. Start learning today with flashcards & quizzes !
           </div>
-          <a href={this.props.logIn ? rootURL + "/wordbooks" : rootURL + "/login"} >
-            <div className="start">START
+          
+          <RippleButton effectClass={"homeRippleBtnContainer"}>
+            <div onClick=
+              {() => {
+              this.props.logIn ?
+                setTimeout((() => { window.location.href = rootURL + "/wordbooks" }), 600)
+                :
+                setTimeout((() => { window.location.href = rootURL + "/login" }), 600)
+              }}>
+              <div className="start">START
+              </div>
             </div>
-          </a>
+          </RippleButton>
+
         </div>
 
       </div>

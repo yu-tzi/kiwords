@@ -31,11 +31,73 @@ $darkblue: #131a32;
   max-width: 1200px;
 }
 
+.homeRippleBtnContainer{
+  border-radius: 50px;
+  background: orange;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  font-size: 18px;
+  width: 210px;
+  height: 30px;
+  line-height: 29px;
+  text-align: center;
+  color: black;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.homeRippleBtnContainer:hover{
+  transform: scale(1.05)
+}
+
+
+.rippleCir{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: #ffffff;
+  display: block;
+  border-radius: 50px;
+  opacity: 1;
+  animation: 1.2s ease 1 forwards ripple-effect;
+}
+
+.start{
+
+  position: relative;
+  color:black;
+}
+
+@keyframes ripple-effect {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  10% {
+    transform: scale(10);
+    opacity: 0.5;
+  }
+  30% {
+    transform: scale(40);
+    opacity: 0.1;
+  }
+  100% {
+    transform: scale(60);
+    opacity: 0;
+  }
+}
+
 .head{
   position: absolute;
   top: 120px;
   left: 5%;
 }
+
+
+
+
+
 
 
 
@@ -48,33 +110,6 @@ $darkblue: #131a32;
   width: 70%;
 }
 
-.start{
-  width: 200px;
-  background-color:rgb(255, 204, 0);
-  letter-spacing: 1px;
-  text-align: center;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 20px;
-  margin-top: 20px;
-  transition: 0.5s;
-  cursor: pointer;
-
-}
-
-.start:hover{
-  color:black;
-  background-color: orange;
-}
-
-.start:visited{
-  color:black;
-}
-
-
-.start:active{
-  color:black;
-}
 
 
 .logoH{
@@ -244,11 +279,11 @@ $darkblue: #131a32;
     top: 150px;
   }
 
-  .start{
+ /*  .start{
     margin: 0;
     color: black;
     transition: 0.5s;
-}
+} */
 
  /* .mktArea{
   height: 450px;

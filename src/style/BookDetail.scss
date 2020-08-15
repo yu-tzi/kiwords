@@ -99,19 +99,19 @@
 
 .addWordsBtn{
   font-size: 16px;
-    background-color: orange;
-    border-radius: 3px;
-    padding: 8px 10px;
-    color: #303545;
-    text-align: center;
-    line-height: 22px;
-    margin-bottom: 0px;
-    margin-left: 20px;
-    transition: 0.5s;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: orange;
+  border-radius: 3px;
+  padding: 8px 10px;
+  color: #303545;
+  text-align: center;
+  line-height: 22px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  transition: 0.5s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .upperbtn{
@@ -119,22 +119,21 @@
 }
 
 .viewAllBookBtn{
-      font-size: 16px;
-    background-color: orange;
-    border-radius: 3px;
-    padding: 8px 10px;
-    color: #303545;
-    text-align: center;
-    line-height: 22px;
-    margin-bottom: 0px;
-    margin-left: 20px;
-    transition: 0.5s;
-    cursor: pointer;
-        display: flex;
-    justify-content: center;
-    align-items: center;
+  font-size: 16px;
+  background-color: orange;
+  border-radius: 3px;
+  padding: 8px 10px;
+  color: #303545;
+  text-align: center;
+  line-height: 22px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  transition: 0.5s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 
 .wordSub{
   color: #3ccfcf;
@@ -223,29 +222,23 @@
 
 .takeQuizTitle{
   font-size: 22px;
-  
-
 }
 
 .addWordsBtn:hover,.viewAllBookBtn:hover,.takeQuizBtn:hover{
   background-color: #303545;
   color: orange ;
-
 }
 
 @media (max-width: 800px){
 
-  .viewAllBookBtn,.addWordsBtn{
+.viewAllBookBtn,.addWordsBtn{
   margin: 10px auto;
   width: 70%;
-  
 }
 
 .bottomPart{
   width: 80% !important;
 }
-
-
 
 .upperbtn{
   flex-direction: column;
@@ -254,8 +247,8 @@
 .upperPart{
   flex-direction: column;
 }
-}
 
+}
 
 @media (max-width: 450px) {
 
@@ -270,7 +263,5 @@
 .upperbtn{
   display: block;
 }
-
-
 
 }
