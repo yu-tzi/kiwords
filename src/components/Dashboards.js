@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import { select } from "d3";
 import moment from 'moment';
 import Loading from './Loading.js';
+import { RippleButton } from './Effect.js'
 
 
 class Dashboards extends React.Component {
@@ -72,15 +73,23 @@ class Dashboards extends React.Component {
           }
 
         <div className="uploadBtnBox">
-          <div
-            className="editTitleBox"
-            onClick={(e) => { this.props.popTitleUpload(e) }}>
-            Change Your Name
-          </div>
-          <div className="editImgBox"
-            onClick={this.props.popImageUpload}>
-            Upload New Photo
-          </div>
+          <RippleButton effectClass={"editTitleRippleBtnContainer"}>
+            <div
+              className="editTitleBox"
+              onClick={(e) => {
+                setTimeout((() => { this.props.popTitleUpload(e) }), 300)
+              }}>
+              Change Your Name
+            </div>
+          </RippleButton>
+          <RippleButton effectClass={"editTitleRippleBtnContainer"}>
+            <div className="editImgBox"
+              onClick={(e) => {
+                setTimeout((() => { this.props.popImageUpload(e) }), 300)
+              }}>
+              Upload New Photo
+            </div>
+          </RippleButton>
         </div>{/* end of uploadBtnBox */}
                 
         <div className="imageUploadPop"
@@ -217,15 +226,16 @@ const Statistics = (props) => {
 
   let sunday = moment(nowDate).weekday(0).startOf('day').format("MMMM Do YYYY").toString()
   let sataurday = moment(nowDate).weekday(6).endOf('day').format("MMMM Do YYYY").toString()
-  //sataurday === "Invalid date" ? "true" : sunday
   return (
     <div className="statistics">
       <div className="timeSelector">
-        <div className="minus"
-          onClick={() => {
-            setNowDate(moment(nowDate).subtract(7, 'days'))
-          }}>◀︎
-        </div>
+        <RippleButton effectClass={"homeStaRippleBtnContainer"}>
+          <div className="minus"
+            onClick={() => {
+              setNowDate(moment(nowDate).subtract(7, 'days'))
+            }}>◀︎
+          </div>
+        </RippleButton>
 
         {
           sunday === "Invalid date" || sataurday === "Invalid date" ?
@@ -246,11 +256,13 @@ const Statistics = (props) => {
             </div>
         }
 
-        <div className="plus"
-          onClick={() => {
-            setNowDate(moment(nowDate).add(7, 'days'))
-          }}>▶︎
-        </div>
+        <RippleButton effectClass={"homeStaRippleBtnContainer"}>
+          <div className="plus"
+            onClick={() => {
+              setNowDate(moment(nowDate).add(7, 'days'))
+            }}>▶︎
+          </div>
+        </RippleButton>
       </div>
 
       <div className="statisTitle">You Reviewed {weekWords} Words in This Week
@@ -267,13 +279,17 @@ const Statistics = (props) => {
       </div>
 
       <div className="bottomPart">
-        <div className="takeQuizTitle">Review more words, take quizes !
+        <div className="takeQuizTitle">Review more words, take quizzes !
         </div>
-        <div className="takeQuizBtn"
-          onClick={() => {
-            window.location.href = ('https://kiwords-c058b.web.app/quiz')
-          }}>Take a quiz
-        </div>
+        <RippleButton effectClass={"dashQuizRippleBtnContainer"}>
+          <div className="takeQuizBtn"
+            onClick={() => {
+              setTimeout((() => {
+                window.location.href = ('https://kiwords-c058b.web.app/quiz')
+              }), 500)
+            }}>Take a quiz
+          </div>
+        </RippleButton>
       </div>
       <div className="bottomBlank">
       </div>

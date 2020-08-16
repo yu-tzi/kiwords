@@ -9,6 +9,15 @@
 
 }
 
+.bookIDpop-appear { transform: scale(0.1); }
+.bookIDpop-appear-active { transform: scale(1); transition: transform 1.7s cubic-bezier(0.15, 1, 0.4, 1); }
+
+.bookIDpop-exit-active { transform: rotateY(90deg) rotateX(45deg); transition: transform 0.8s cubic-bezier(0.5, 0, 0.75, 0); }
+
+.tutorPopTran-enter { transform: rotateY(90deg) rotateX(45deg); }
+.tutorPopTran-enter-active { transform: rotateY(0deg) rotateX(0deg); transition: transform 1s cubic-bezier(0.30, 1.55, 0.62, 1); }
+.tutorPopTran-enter-done { transform: rotateY(0deg) rotateX(0deg); }
+
 
 .bookIDpop{
   top: 20%;

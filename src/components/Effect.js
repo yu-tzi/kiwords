@@ -6,7 +6,6 @@ const RippleButton = (props) => {
 
   const [circle, setCircle] = useState({ x: -1, y: -1 })
   useEffect(() => {
-    console.log(circle)
     if (circle.x !== -1 && circle.y !== -1) {
       setRippling(true)
       setTimeout((() => { setRippling(false) }), 1200)

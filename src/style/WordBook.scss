@@ -51,7 +51,7 @@
   width: 120px;
   height: 120px;
   text-align: center;
-  line-height: 120px;
+  line-height: 100px;
   font-size: 100px;
   border-width: 2px;
   border-style: solid;
@@ -497,6 +497,15 @@
  .myBookRender, .saveBookRender{
   grid-template-columns: 50% 50%;
 } 
+
+
+}
+
+@media (max-width: 500px) {
+
+.addbookTopArea{
+  flex-direction: column;
+}
 
 
 }

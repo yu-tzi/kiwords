@@ -6,6 +6,7 @@ import MultiBackend from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import '../style/Quiz.scss';
 import Loading from './Loading.js';
+import { CSSTransition } from 'react-transition-group';
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -123,7 +124,7 @@ const QuizContext = createContext({
 
 const QuizContainer = (props) => {
 
-  let url = window.location.href
+  let url =  window.location.href 
   let defalutValue = ""
   let defalutBook = ""
   let hasDefaultOption = false
@@ -521,26 +522,42 @@ const QuizContainer = (props) => {
           display: bookIDpop || tutorPop ? "block" : "none"
         }}>
 
-        <div className="bookIDpop"
-          style={{
-            display: bookIDpop ? "block" : "none"
-          }}>
-          {renderBookSelecter()}
-        </div>
-        <div className="tutorPop" style={{ display: tutorPop ? "block" : "none" }}>
-          <div className="tutorPopBox">
-            <div className="tutorPopTitle">Step2
-            </div>
-            <div className="tutorPopSubtitle">Quick Tutorial
-            </div> 
-            <img src="images/tutor.gif" >
-            </img>
-            <div className="tutorPopBtn" onClick={() => { 
-              setTutorPop(false)
-            }}>Start
-            </div> 
+        <CSSTransition
+          in={bookIDpop}
+          timeout={{
+            appear: 2000,
+            exit: 800
+          }}
+          classNames="bookIDpop"
+          unmountOnExit={true}
+          appear={true}
+          enter={false}
+          onExited={() => setTutorPop(true) }>
+          <div className="bookIDpop">
+            {renderBookSelecter()}
           </div>
-        </div> 
+        </CSSTransition>
+        
+        <CSSTransition
+          in={tutorPop}
+          timeout={1000}
+          mountOnEnter={true}
+          classNames="tutorPopTran">
+          <div className="tutorPop" >
+            <div className="tutorPopBox">
+              <div className="tutorPopTitle">Step2
+            </div>
+              <div className="tutorPopSubtitle">Quick Tutorial
+            </div>
+              <img src="images/tutor.gif" >
+              </img>
+              <div className="tutorPopBtn" onClick={() => {
+                setTutorPop(false)
+              }}>Start
+            </div>
+            </div>
+          </div> 
+        </CSSTransition>
         
       </div>
     )

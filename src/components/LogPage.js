@@ -2,6 +2,7 @@ import React from "react";
 import '../style/LogPage.scss';
 import { firebase } from "../utility/firebaseConfig"
 import { RippleButton } from './Effect.js'
+import { CSSTransition } from 'react-transition-group';
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -69,97 +70,121 @@ class LogPage extends React.Component {
     return (
       <div className="logBackground">
     
-        <div className="logContainer">
-          
-          <div className="logClose"
-            onClick={() => {
-              window.location.href = rootURL
-            }}>✕
-          </div>
-          <div className="logTitle">
-            {signUpBtn ? "Sign Up" : "Log In"}
-          </div>
+        <CSSTransition
+          in={true}
+          timeout={{
+            appear: 300
+          }}
+          classNames="logblock-"
+          appear={true}
+          enter={false}
+        >
 
-          <div className="signUpComtainer"
-            style={{
-              display: signUpBtn ? "block" : "none"
-            }}>
-            <form className="signUpForm"
-              onSubmit=
-              {() => {
-                setTimeout((() => { this.props.handleSignUp }), 600)
-              }}
-            >
-              <input className="signInInput" placeholder="EMAIL" type="text"
-                onChange={
-                  this.props.passingEmail
-                } />
-              <input className="signInInput" type="password" placeholder="PASSWORD"
-                onChange={
-                  this.props.passingPassword
-                } />
-              <input className="signInInput" placeholder="NAME" type="text"
-                onChange={
-                  this.props.passingName
-                } />
-              <RippleButton effectClass={"loginRippleBtnContainer"}>
-                <input type="submit" className="signInSend" value="SIGN UP" />
-              </RippleButton>
-              <div className="signInBtn"
-                onClick={
-                  this.switchLogIn
-                }>Have an account already ?  Sign in.
-              </div>
-            </form>
-          </div>
-        
-          <div className="signInComtainer"
-            style={{
-              display: signUpBtn ? "none" : "block"
-            }}>
-            <form 
-              onSubmit=
-              {() => {
-                setTimeout((() => { this.props.handleSignIn }), 600)
-              }}
-            >
-              <input type="text" placeholder="EMAIL" value={this.props.email}
-                onChange={
-                  this.props.passingEmail
-                } />
-              <input type="text" type="password" placeholder="PASSWORD" value={this.props.password}
-                onChange={
-                  this.props.passingPassword
-                } />
-              <RippleButton effectClass={"loginRippleBtnContainer"}>
-                <input type="submit" value="LOG IN" />
-              </RippleButton>
-            </form>
-            <div className="signUpBtn"
-              onClick={
-                this.switchSignUp
-              }>Don't have an account ? Join us.
-            </div>
-            <div className="signUpBtn normal" >or ...
-            </div>
-            <RippleButton effectClass={"thirdPartRippleBtnContainer"}>
-              <button
+          <div className="logContainer">
+            
+            <div className="logClose"
               onClick={() => {
-              this.googleLogin()
-            }}>I have Google account
-              </button>
-            </RippleButton>
-            <RippleButton effectClass={"thirdPartRippleBtnContainer"}>
-              <button
-                onClick={() => {
-                  this.facebookLogin()
-                }}>I have Facebook account
-            </button>
-            </RippleButton>
-          </div>{/* end of signInComtainer */}
+                window.location.href = rootURL
+              }}>✕
+            </div>
+            <div className="logTitle">
+              {signUpBtn ? "Sign Up" : "Log In"}
+            </div>
+
+            <div className="signUpComtainer"
+              style={{
+                display: signUpBtn ? "block" : "none"
+              }}>
+              <form className="signUpForm"
+                onSubmit={
+                  (e) => {
+                    e.preventDefault()
+                    setTimeout((() => {
+                      this.props.handleSignUp(e)
+                    }), 600)
+                  }
+                }
+              >
+                <input className="signInInput" placeholder="EMAIL" type="text"
+                  onChange={
+                    this.props.passingEmail
+                  } />
+                <input className="signInInput" type="password" placeholder="PASSWORD"
+                  onChange={
+                    this.props.passingPassword
+                  } />
+                <input className="signInInput" placeholder="NAME" type="text"
+                  onChange={
+                    this.props.passingName
+                  } />
+                <RippleButton effectClass={"loginRippleBtnContainer"}>
+                  <input type="submit" className="signInSend" value="SIGN UP" />
+                </RippleButton>
+                <div className="signInBtn"
+                  onClick={
+                    this.switchLogIn
+                  }>Have an account already ?  Sign in.
+                </div>
+              </form>
+            </div>
           
-        </div>{/* end of logContainer */}
-        
+            <div className="signInComtainer"
+              style={{
+                display: signUpBtn ? "none" : "block"
+              }}>
+              <form 
+                onSubmit={
+                  (e) => {
+                    e.preventDefault()
+                    setTimeout((() => {
+                      this.props.handleSignIn(e)
+                    }), 600)
+                  }
+                }
+              >
+                <input type="text" placeholder="EMAIL" value={this.props.email}
+                  onChange={
+                    this.props.passingEmail
+                  } />
+                <input type="text" type="password" placeholder="PASSWORD" value={this.props.password}
+                  onChange={
+                    this.props.passingPassword
+                  } />
+                <RippleButton effectClass={"loginRippleBtnContainer"}>
+                  <input type="submit" value="LOG IN" />
+                </RippleButton>
+              </form>
+              <div className="signUpBtn"
+                onClick={
+                  this.switchSignUp
+                }>Don't have an account ? Join us.
+              </div>
+              <div className="signUpBtn normal" >or ...
+              </div>
+              <RippleButton effectClass={"thirdPartRippleBtnContainer"}>
+                <button
+                  onClick={() => {
+                    {
+                      setTimeout((() => { this.googleLogin() }), 600)
+                    }
+              }}>I have Google account
+                </button>
+              </RippleButton>
+              <RippleButton effectClass={"thirdPartRippleBtnContainer"}>
+                <button
+                  onClick={() => {
+                    {
+                      setTimeout((() => { this.facebookLogin() }), 600)
+                    }
+                  }}>I have Facebook account
+              </button>
+              </RippleButton>
+            </div>{/* end of signInComtainer */}
+            
+          </div>{/* end of logContainer */}
+    
+        </CSSTransition>
+
       </div>
     )
   }

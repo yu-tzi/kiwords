@@ -4,6 +4,7 @@ import '../style/BookDetail.scss';
 import Loading from './Loading.js';
 
 
+
 class BookDetail extends React.Component {
 
   constructor(props) {
@@ -319,7 +320,7 @@ class BookDetail extends React.Component {
 
         {
           this.state.cards.length > 0 ?
-          <div className="wordCardBox">
+          <div className="wordCardBox"> 
               {this.state.cards}
           </div>
            : 

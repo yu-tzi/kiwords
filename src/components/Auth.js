@@ -100,7 +100,7 @@ class Auth extends React.Component {
   }
 
   handleSignUp(e) {
-    e.preventDefault();
+    //e.preventDefault();
     if (this.state.logIn) {
       alert('You have already signin in!')
     } else {
@@ -118,7 +118,7 @@ class Auth extends React.Component {
   }
 
   handleSignIn(e) {
-    e.preventDefault();
+    //e.preventDefault();
     if (this.state.logIn) {
       alert('you have already signin in!')
     } else {
@@ -206,7 +206,7 @@ class Auth extends React.Component {
         });
   }
 
-  popImageUpload() {
+  popImageUpload(e) {
     this.setState({ imgUploadPop: true })
   }
 
@@ -216,7 +216,6 @@ class Auth extends React.Component {
   }
 
   popTitleUpload(e) {
-    e.stopPropagation()
     this.setState({ titleUploadPop: true })
   }
 

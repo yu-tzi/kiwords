@@ -87,6 +87,12 @@
   background-color: #e8e8e8;
   border-style: none;
 }
+.uploadTitleForm > input:first-child:focus{
+border-color: orange;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
 
 .uploadTitleForm > input:last-child{
   border-style: none;
@@ -98,6 +104,7 @@
   width: 100px;
   text-align: center;
   margin-top: 15px;
+  cursor:pointer;
 }
 
 .titleUploadPop{
@@ -137,18 +144,30 @@
 
 .editImgBox,.editTitleBox{
   font-size: 16px;
+  background-color: rgb(0,0,0,0);
+  width: 200px;
+  text-align: center;
+  margin: 0px 5px;
+  height: 35px;
+  line-height: 35px; 
+}
+
+.editTitleRippleBtnContainer{
+  font-size: 16px;
   background-color: orange;
-  width: 150px;
+  /* width: 150px; */
   border-radius: 3px;
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
   color: #303545;
   text-align: center;
   cursor: pointer;
   margin: 0px 5px;
-  transition: 0.5s;  
+  transition: 0.5s;
+  overflow: hidden;
+  position: relative;
 }
 
-.editImgBox:hover,.editTitleBox:hover{
+.editTitleRippleBtnContainer:hover{
   color: orange;
   background-color: #303545;
 }
@@ -179,6 +198,13 @@
   width: 20px;
   position: absolute;
   top: 10px;
+  color: white;
+  transition:0.3s;
+}
+
+.imageUploadclose:hover, .titleUploadclose:hover{
+  transform: scale(1.2);
+  transform:rotate(90deg)
 }
 
 .imageUploadPopbox>input{
@@ -186,6 +212,8 @@
   top: 80px;
   left: 70px;
   width: 200px;
+  cursor: pointer;
+  color: white;
 }
 
 .uploadTitleForm{
@@ -211,8 +239,13 @@
     padding-top: 20px;
 }
 
+.profileTitle, .profileInfor, .timeBlock, .statisTitle, .takeQuizTitle{
+  cursor: default;
+}
 
-
+.takeQuizBtn{
+      margin-top: 0px !important;
+}
 
 /* @media (max-width: 1000px) { */
 @media (max-width: 700px) {
@@ -222,7 +255,7 @@
     width: 100px;
     height: 100px;
     font-size: 70px;
-    
+    line-height: 100px;
   }
 
   .profileBox{
@@ -246,7 +279,7 @@
     align-items: center;
   }
 
-  .editTitleBox{
+  .editTitleRippleBtnContainer{
     margin-bottom: 10px;
   }
 
@@ -309,17 +342,29 @@
 }
 
 .minus,.plus{
-    text-align: center;
-    margin: 0 15px;
-    border-radius: 5px;
-    background-color: #495278;
-    color: white;
+   text-align: center;
     height: 30px;
     line-height: 30px;
     width: 40px;
-    font-size: 16px;
     transition: 0.5s;
     cursor: pointer;
+}
+
+.homeStaRippleBtnContainer{
+  overflow: hidden;
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  width: 60px;
+  text-align: center;
+  margin: 0 15px;
+  border-radius: 5px;
+  background-color: #495278;
+  color: white;
+  height: 30px;
+  line-height: 30px;
+  width: 40px;
+  font-size: 16px;
 }
 
 .minus:hover,.plus:hover{
@@ -329,8 +374,15 @@
 
 .timeBlock{
       display: flex;
-    min-width: 400px;
+    min-width: 460px;
     justify-content: center;
+}
+
+.dashQuizRippleBtnContainer{
+    overflow: hidden;
+    position: relative;
+    margin-top: 15px;
+    border-radius: 3px;
 }
 
 .statisTitle{

@@ -26,6 +26,7 @@ html, body {
   cursor: pointer;
 }
 
+
 .menuItem{
   margin-right:20px;
 }
@@ -42,7 +43,7 @@ html, body {
   width: 100px;
   height: 30px;
   border-bottom-style: solid;
-  border-bottom-color: black;
+  border-bottom-color: #0d0e13;
   border-bottom-width: 5px;
   text-align: center;
   line-height: 30px;
@@ -53,13 +54,12 @@ html, body {
   transition: 1s;
 } 
 
-.menuPopFirstRippleBtnContainer, .menuPopSecondRippleBtnContainer{
+.menuPopFirstRippleBtnContainer, .menuPopSecondRippleBtnContainer, .homeMemLogRippleBtnContainer{
   overflow: hidden;
   position: relative;
   cursor: pointer;
   transition: 0.3s;
 }
-
 
 .menuPopFirstRippleBtnContainer:hover, .menuPopSecondRippleBtnContainer:hover, .memPop>div:hover{
   font-weight: 500;
@@ -87,7 +87,7 @@ html, body {
 
 @keyframes type
 {
-  0%{ border-bottom-color:black;}
+  0%{ border-bottom-color:#0d0e13;}
 	100%{ border-bottom-color:orange;}
 }
 

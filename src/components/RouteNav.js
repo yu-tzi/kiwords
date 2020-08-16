@@ -15,8 +15,10 @@ import BookDetailRouter from "./BookDetailRouter"
 import Quiz from "./Quiz"
 import '../style/RouteNav.scss';
 import Loading from './Loading.js';
-import { firebase } from "../utility/firebaseConfig"
+import { firebase } from "../utility/firebaseConfig";
 import { RippleButton } from './Effect.js'
+
+
 
 let rootURL = window.location.href.substr(0, window.location.href.indexOf("/", 9))
 
@@ -117,21 +119,7 @@ class RoutePage extends React.Component{
 
 
 class MemberPop extends React.Component { 
-  /* 
-  onClick=
-            {() => {
-              setTimeout((() => { window.location.href = rootURL + "/dashboard" }), 600)
-            }}
 
-            onClick={() => {
-                setTimeout((() => {
-                  firebase.auth().signOut()
-                  .then(() => {
-                    window.location.href = rootURL
-                })}), 600)
-              }}
-
-   */
   render() {
     return (
       <div> 
@@ -139,12 +127,25 @@ class MemberPop extends React.Component {
         </span>
         <div className="memPop">
           <RippleButton effectClass={"homeMemLogRippleBtnContainer"}>
-            <div>Profile
+            <div
+              onClick=
+                {() => {
+                  setTimeout((() => { window.location.href = rootURL + "/dashboard" }), 600)
+                }}
+            >Profile
             </div>
           </RippleButton>
           <RippleButton effectClass={"homeMemLogRippleBtnContainer"}>
             <div className="signOut"
-              >Log Out
+              onClick={() => {
+                setTimeout((() => {
+                  firebase.auth().signOut()
+                    .then(() => {
+                      window.location.href = rootURL
+                    })
+                }), 600)
+              }}>
+              Log Out
             </div>
           </RippleButton>
         </div>

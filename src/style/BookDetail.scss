@@ -25,6 +25,8 @@
   font-weight: 600;
 }
 
+
+
 .upperPart{
   display: flex;
   justify-content: space-between;
@@ -222,6 +224,7 @@
 
 .takeQuizTitle{
   font-size: 22px;
+  margin-bottom: 10px;
 }
 
 .addWordsBtn:hover,.viewAllBookBtn:hover,.takeQuizBtn:hover{
@@ -250,7 +253,7 @@
 
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
 
 .takeQuizTitle{
   width: 80%;
