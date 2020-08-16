@@ -18,7 +18,7 @@ KiWords is a language learning tools.
   - React
   - React Hook
   - React Router
-  - ReactTransitionGroup
+  - React Transition Group
 
 - Third-party API
   - [Word-finding query engine : Datamuse](https://www.datamuse.com/api/)
