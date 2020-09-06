@@ -1,4 +1,5 @@
-.myBookBlock, .saveBookBlock{
+.myBookBlock,
+.saveBookBlock {
   width: 80%;
   margin: auto;
   max-width: 1000px;
@@ -6,20 +7,18 @@
   padding-bottom: 40px;
 }
 
-.myBookRender, .saveBookRender{
+.myBookRender,
+.saveBookRender {
   display: grid;
   grid-template-columns: 33% 33% 33%;
 }
 
-.saveBookRender{
+.saveBookRender {
   margin: -110px;
 }
 
-
-
-
-.popBookBlock{
-  display:flex;
+.popBookBlock {
+  display: flex;
   flex-direction: column;
   width: 80%;
   margin: 0 auto 0;
@@ -27,31 +26,32 @@
   padding: 0px 0px 80px;
 }
 
-.renderSearchData, .getPopData{
+.renderSearchData,
+.getPopData {
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  
 }
 
-.toggleOption{
-  color:white;
+.toggleOption {
+  color: white;
 }
 
-.toggleOption:last-child{
-  display:none;
+.toggleOption:last-child {
+  display: none;
 }
 
-.wordbookImg, .wordbookN{
-  color:white;
+.wordbookImg,
+.wordbookN {
+  color: white;
 }
 
-.wordbookImg{
+.wordbookImg {
   background-color: #19295e;
   border-radius: 50%;
   width: 120px;
   height: 120px;
   text-align: center;
-  line-height: 100px;
+  line-height: 120px;
   font-size: 100px;
   border-width: 2px;
   border-style: solid;
@@ -60,30 +60,32 @@
   font-weight: 100;
 }
 
-.addbookTopArea{
+.addbookTopArea {
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
 }
 
-.wordbookN{
+.wordbookN {
   font-size: 45px;
   padding-bottom: 15px;
 }
 
-.noBookTitle,.noLikedTitle{
+.noBookTitle,
+.noLikedTitle {
   color: white;
   font-size: 30px;
 }
 
-.noBookSubtitle,.noLikedSubtitle{
+.noBookSubtitle,
+.noLikedSubtitle {
   color: white;
   font-weight: 200;
   padding-top: 15px;
 }
 
-.noBookBtn{
+.noBookBtn {
   color: #303545;
   margin-top: 30px;
   background-color: orange;
@@ -94,7 +96,7 @@
   line-height: 40px;
 }
 
-.bookSend{
+.bookSend {
   color: orange;
   margin-top: 30px;
   background-color: #303545;
@@ -106,16 +108,16 @@
   position: absolute;
   right: 10px;
   bottom: 15px;
-  cursor:pointer;
+  cursor: pointer;
   font-size: 16px;
   transition: 0.5s;
 }
 
-.addbookblank{
+.addbookblank {
   margin: 130px 0px;
 }
 
-.newBookHide{
+.newBookHide {
   background-color: #da9c2a;
   width: 280px;
   height: 180px;
@@ -129,20 +131,20 @@
   cursor: pointer;
 }
 
-
-.bookEnter{
+.bookEnter {
   width: 230px;
   position: absolute;
-  background-color: rgb(0,0,0,0);
+  background-color: rgb(0, 0, 0, 0);
   border-width: 0px;
   top: 50px;
   left: 30px;
   border-bottom-width: 2px;
   border-bottom-color: #303545;
-  font-size:16px;
+  font-size: 16px;
 }
 
-.noBookInfor,.noLikedInfor{
+.noBookInfor,
+.noLikedInfor {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -150,7 +152,7 @@
   margin-top: 50px;
 }
 
-.addbookpop{
+.addbookpop {
   display: block;
   background-color: rgb(48, 53, 69);
   height: 120px;
@@ -160,11 +162,11 @@
   position: relative;
 }
 
-.addbookpopEnter{
+.addbookpopEnter {
   color: white;
   width: 400px;
   border-style: none;
-  background-color: rgb(0,0,0,0);
+  background-color: rgb(0, 0, 0, 0);
   border-bottom-color: white;
   border-bottom-style: solid;
   letter-spacing: 1px;
@@ -174,7 +176,7 @@
   font-size: 16px;
 }
 
-.addbookpopSend{
+.addbookpopSend {
   border-style: none;
   background-color: #13141b;
   padding: 5px 10px;
@@ -186,28 +188,28 @@
   font-size: 16px;
 }
 
-.addbookpopEnter:focus{
+.addbookpopEnter:focus {
   border-bottom-color: orange;
 }
 
-.addbookpopX{
+.addbookpopX {
   color: white;
   position: absolute;
   right: 15px;
   top: 10px;
 }
 
-.addbookShowPopX{
+.addbookShowPopX {
   color: #303545;
   position: absolute;
   right: 5px;
 }
 
-.newBookHide:hover{
+.newBookHide:hover {
   border-bottom-color: #646f90;
 }
 
-.newBookShow{
+.newBookShow {
   background-color: #646f90;
   width: 280px;
   height: 180px;
@@ -221,51 +223,47 @@
   cursor: pointer;
 }
 
-.newBookShow:hover{
+.newBookShow:hover {
   border-bottom-color: orange;
 }
 
-
-
-.toggleContainer{
+.toggleContainer {
   //border-radius: 4px;
   display: flex;
   border-color: #646f90;
   border-style: solid;
   border-width: 2px;
   overflow: hidden;
-  display:none;
+  display: none;
 }
 
-.toggleOption{
+.toggleOption {
   padding: 10px;
-  transform:0.5s;
+  transform: 0.5s;
 
   /* background-color: #303545; */
 }
 
-.addbookTopArea{
+.addbookTopArea {
   padding-top: 50px;
 }
 
-
-
-.mainTitle{
+.mainTitle {
   text-align: center;
-  padding:25px 0 0;
+  padding: 25px 0 0;
   margin: 25px auto 10px;
   font-size: 22px;
   letter-spacing: 5px;
   width: 80%;
   max-width: 1000px;
-  display:none;
+  display: none;
 }
 
-.mainTitle:first-child{
+.mainTitle:first-child {
   border-top-width: 0px;
 }
 
-.bookformat{
+.bookformat {
   background-color: #24293c;
   width: 280px;
   height: 180px;
@@ -274,16 +272,16 @@
   position: relative;
   border-style: solid;
   border-width: 5px;
-  border-color: #24293c;  
-  transition:0.3s;
+  border-color: #24293c;
+  transition: 0.3s;
   cursor: pointer;
 }
 
-.bookformat:hover{
+.bookformat:hover {
   border-bottom-color: orange;
 }
 
-.likedSubtitle{
+.likedSubtitle {
   color: white;
   font-weight: 200;
   display: block;
@@ -291,14 +289,13 @@
   padding-top: 60px;
 }
 
-
-
-.searchTitle, .bookSearchFrame{
+.searchTitle,
+.bookSearchFrame {
   text-align: center;
   margin: 30px auto;
 }
 
-.bookSearchFrame{
+.bookSearchFrame {
   text-align: center;
   margin: 30px auto;
   border-color: white;
@@ -309,32 +306,32 @@
   padding: 3px;
 }
 
-.searchImg{
+.searchImg {
   width: 20px;
   padding-top: 4px;
   position: relative;
   top: 3px;
 }
 
-.searchBook{
+.searchBook {
   background-color: #24293c;
-    width: 280px;
-    height: 180px;
-    border-radius: 5px;
-    margin: 20px auto;
-    position: relative;
-    border-style: solid;
-    border-width: 5px;
-    border-color: #24293c;
-    transition: 0.3s;
-    cursor: pointer;
+  width: 280px;
+  height: 180px;
+  border-radius: 5px;
+  margin: 20px auto;
+  position: relative;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #24293c;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
-.bookformat:hover{
-    border-bottom-color: orange;
+.bookformat:hover {
+  border-bottom-color: orange;
 }
 
-.viewBookBtn{
+.viewBookBtn {
   font-size: 16px;
   background-color: orange;
   width: 150px;
@@ -348,7 +345,7 @@
   cursor: pointer;
 }
 
-.bookSearch{
+.bookSearch {
   border-right-style: none;
   border-left-style: none;
   border-bottom-style: none;
@@ -361,14 +358,13 @@
   height: 30px;
 }
 
-
-
-.bookSearchSend{
+.bookSearchSend {
   margin: 0 5px;
   letter-spacing: 3px;
 }
 
-.bookTitle,.searchResultTitle{
+.bookTitle,
+.searchResultTitle {
   font-size: 18px;
   width: 85%;
   margin: 10px auto 10px;
@@ -376,11 +372,11 @@
   line-height: 30px;
 }
 
-.searchResultTitle{
+.searchResultTitle {
   margin: 10px auto 5px;
 }
 
-.searchAuthor{
+.searchAuthor {
   font-size: 16px;
   color: white;
   font-size: 16px;
@@ -388,8 +384,7 @@
   font-weight: 300;
 }
 
-
-.bookStar{
+.bookStar {
   padding: 5px 0;
   color: white;
   font-size: 16px;
@@ -397,7 +392,7 @@
   font-weight: 300;
 }
 
-.bookBtnPlus{
+.bookBtnPlus {
   font-size: 16px;
   background-color: orange;
   width: 150px;
@@ -411,7 +406,7 @@
   cursor: pointer;
 }
 
-.bookBtnView{
+.bookBtnView {
   font-size: 16px;
   background-color: orange;
   width: 70px;
@@ -425,130 +420,133 @@
   cursor: pointer;
 }
 
-.bookBtn,.saveBookBtn{
+.bookBtn,
+.saveBookBtn {
   position: absolute;
-    bottom: 30px;
-    left: calc(50% - 125px);
-    height: 30px;
-    width: 250px;
-    background-color: #3a3a3a;
-    color: white;
-    letter-spacing: 3px;
-    text-align: center;
-    border-radius: 5px;
-    font-size: 16px;
+  bottom: 30px;
+  left: calc(50% - 125px);
+  height: 30px;
+  width: 250px;
+  background-color: #3a3a3a;
+  color: white;
+  letter-spacing: 3px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-.bookBtn{
+.bookBtn {
   line-height: 30px;
 }
 
-.searchHintTitle{
+.searchHintTitle {
   color: rgb(119, 221, 221);
   font-weight: 800;
   padding-left: 20px;
-
 }
 
-.noSreachResult{
+.noSreachResult {
   color: white;
   text-align: center;
   padding-bottom: 50px;
 }
 
-.searchHintTitle:last-child{
-  padding-top:20px;
+.searchHintTitle:last-child {
+  padding-top: 20px;
 }
 
-.saveBookRender{
-      margin-left: 0px;
-    margin-right: 0px;
+.saveBookRender {
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
-
-
-.addBookTitle{
+.addBookTitle {
   color: white;
   font-size: 20px;
   text-align: center;
   margin-top: 70px;
 }
 
-
-.addBookTitle{
+.addBookTitle {
   color: white;
   font-size: 20px;
   text-align: center;
 }
 
-.noBookBtn:hover{
+.noBookBtn:hover {
   background-color: #303545;
   color: orange;
 }
 
-
-
-
 //==============
 
 @media (max-width: 1200px) {
-
-
- .myBookRender, .saveBookRender{
-  grid-template-columns: 50% 50%;
-} 
-
-
-}
-
-@media (max-width: 500px) {
-
-.addbookTopArea{
-  flex-direction: column;
-}
-
-
+  .myBookRender,
+  .saveBookRender {
+    grid-template-columns: 50% 50%;
+  }
 }
 
 @media (max-width: 780px) {
+  .myBookRender,
+  .saveBookRender {
+    grid-template-columns: 100%;
+  }
 
-
- .myBookRender, .saveBookRender{
-  grid-template-columns: 100%;
-} 
-
-.wordbookImg{
-  margin-right: 20px;
+  .wordbookImg {
+    margin-right: 20px;
     width: 100px;
     height: 100px;
-    line-height: 100px;
+    line-height: 80px;
     font-size: 80px;
+  }
+
+  .wordbookN {
+    font-size: 40px;
+    padding-bottom: 0px;
+  }
 }
 
-.wordbookN{
-  font-size: 40px;
-  padding-bottom: 0px;
+@media (max-width: 500px) {
+  .addbookTopArea {
+    flex-direction: column;
+  }
+
+  .wordbookImg {
+    margin-right: 0px;
+  }
 }
 
+@media (max-width: 768px) {
+  .addbookpop {
+    width: 320px;
+  }
+
+  .addbookpopEnter {
+    width: 280px;
+    left: 20px;
+    top: 40px;
+  }
+
+  .addbookpopSend {
+    left: 125px;
+    top: 80px;
+  }
 }
-
-
 
 @media (max-width: 375px) {
-
-
- .newBookHide,.newBookShow{
-   width: 250px;
+  .newBookHide,
+  .newBookShow {
+    width: 250px;
     height: 170px;
- }
+  }
 
- .bookEnter{
-   left: 10px;
- }
+  .bookEnter {
+    left: 10px;
+  }
 
- .bookformat{
-       width: 250px;
+  .bookformat {
+    width: 250px;
     height: 170px;
- }
-
+  }
 }

@@ -1,5 +1,5 @@
-.addCardBox{
-  color:white;
+.addCardBox {
+  color: white;
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -7,19 +7,19 @@
   max-width: 1000px;
 }
 
-.popMenuX{
+.popMenuX {
   position: relative;
   right: -60px;
 }
 
-.addBookSubTitle{
+.addBookSubTitle {
   color: #77dddd;
   font-weight: 800;
   padding-top: 30px;
 }
 
-.nowBookBlock{
- background-color: #24293c;
+.nowBookBlock {
+  background-color: #24293c;
   width: 100%;
   height: 80px;
   border-radius: 5px;
@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 
-.selectBlock{
+.selectBlock {
   background-color: #24293c;
   width: 40%;
   height: 60px;
@@ -45,21 +45,23 @@
   left: 30%;
 }
 
-.selectBlockX,.bookSelectOpt,.selectBlockSend{
+.selectBlockX,
+.bookSelectOpt,
+.selectBlockSend {
   position: absolute;
   cursor: pointer;
 }
 
-.bookSelectOpt{
+.bookSelectOpt {
   top: 20px;
   left: 30px;
-  background: rgb(0,0,0,0);
+  background: rgb(0, 0, 0, 0);
   color: white;
   border-color: white;
   border-style: solid;
 }
 
-.selectBlockSend{
+.selectBlockSend {
   border-style: solid;
   top: 19px;
   left: 450px;
@@ -68,7 +70,7 @@
   line-height: 19px;
 }
 
-.addWordBlocks{
+.addWordBlocks {
   background-color: #24293c;
   border-radius: 5px;
   text-align: center;
@@ -81,15 +83,16 @@
   padding: 15px 5px 0px 20px;
 }
 
-
-
-
-.upper,.mid{
+.upper,
+.mid {
   display: flex;
   align-items: center;
 }
 
-.word,.meaning,.synonyms,.antonym{
+.word,
+.meaning,
+.synonyms,
+.antonym {
   width: 50%;
   margin-bottom: 10px;
   line-height: 40px;
@@ -98,25 +101,30 @@
   align-items: start;
 }
 
-.word>div,.meaning>div,.synonyms>div,.antonym>div{
+.word > div,
+.meaning > div,
+.synonyms > div,
+.antonym > div {
   line-height: 20px;
   font-weight: 100;
   font-size: 14px;
-
 }
 
-.addWordBlocks{
+.addWordBlocks {
   display: flex;
   padding-top: 15px;
 }
 
-.word{
+.word {
   line-height: 40px;
 }
 
-.word>input,.meaning>textarea,.synonyms>textarea,.antonym>textarea{
+.word > input,
+.meaning > textarea,
+.synonyms > textarea,
+.antonym > textarea {
   width: 90%;
-  background-color: rgb(0,0,0,0);
+  background-color: rgb(0, 0, 0, 0);
   border-style: solid;
   border-color: white;
   color: white;
@@ -124,27 +132,31 @@
   font-size: 16px;
 }
 
-.meaning>textarea,.synonyms>textarea,.antonym>textarea{
+.meaning > textarea,
+.synonyms > textarea,
+.antonym > textarea {
   cursor: text;
   border-color: grey;
 }
 
-.word>input{
+.word > input {
   font-size: 20px;
   border-width: 0px;
   border-bottom-width: 2px;
   padding: 0px;
 }
 
-.word>input:focus{
+.word > input:focus {
   border-bottom-color: orange;
 }
 
-.meaning>textarea:focus,.synonyms>textarea:focus,.antonym>textarea:focus{
+.meaning > textarea:focus,
+.synonyms > textarea:focus,
+.antonym > textarea:focus {
   border-color: orange;
 }
 
-.searchPopMenu{
+.searchPopMenu {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -155,18 +167,18 @@
   left: 2.5%;
 }
 
-.addWordBlocks{
+.addWordBlocks {
   position: relative;
 }
 
-.sendBox{
+.sendBox {
   width: 100%;
   margin-top: 20px;
   height: 60px;
   border-radius: 5px;
 }
 
-.viewCard{
+.viewCard {
   width: 100%;
   margin-top: 20px;
   height: 60px;
@@ -177,8 +189,8 @@
   cursor: pointer;
 }
 
-.sendCard{
-  background-color: rgb(0,0,0,0);
+.sendCard {
+  background-color: rgb(0, 0, 0, 0);
   border-style: none;
   width: 100%;
   font-size: 18px;
@@ -187,22 +199,21 @@
   cursor: pointer;
 }
 
-.cited{
+.cited {
   padding: 20px 0px 50px;
   margin: auto;
   color: grey;
 }
 
-
-.searchPopMenu>li{
+.searchPopMenu > li {
   line-height: 20px;
 }
 
-.searchPopMenu>li:not(:first-child):hover{
-  background-color:orange;
+.searchPopMenu > li:not(:first-child):hover {
+  background-color: orange;
 }
 
-.moreWordsBlock{
+.moreWordsBlock {
   background-color: #24293c;
   width: 100%;
   height: 80px;
@@ -212,73 +223,76 @@
   margin-top: 20px;
 }
 
-.moreWords{
+.moreWords {
   cursor: pointer;
 }
 
-.moreWords:hover{
-  color:orange;
+.moreWords:hover {
+  color: orange;
 }
 
 @media (max-width: 1000px) {
-
-.selectBlock{
-  width: 50%;
-  left: 20%;
-}
-
+  .selectBlock {
+    width: 50%;
+    left: 20%;
+  }
 }
 
 @media (max-width: 760px) {
+  .upper,
+  .mid {
+    flex-direction: column;
+  }
 
-.upper, .mid{
-  flex-direction: column;
-}
+  .word > input {
+    font-size: 16px;
+  }
 
-.word > input{
-  font-size: 16px;
-}
+  .word > input,
+  .meaning > textarea,
+  .synonyms > textarea,
+  .antonym > textarea {
+    width: 100%;
+    margin-top: 20px;
+  }
 
-.word > input, .meaning > textarea, .synonyms > textarea, .antonym > textarea{
-  width:100%;
-  margin-top: 20px;
-}
+  .word,
+  .meaning,
+  .synonyms,
+  .antonym {
+    width: 80%;
+  }
 
-.word, .meaning, .synonyms, .antonym{
-  width: 80%;
-}
+  .addWordBlocks {
+    padding: 0px;
+    height: 440px;
+  }
 
-.addWordBlocks{
-  padding: 0px;
-  height: 440px;
-}
+  .searchPopMenu {
+    top: 55px;
+    left: 10%;
+  }
 
-.searchPopMenu{
-  top: 55px;
-  left: 10%;
-}
+  .word {
+    margin-top: 10px;
+  }
 
-.word{
-  margin-top: 10px;
-}
+  .selectBlock {
+    width: 80%;
+    height: 60px;
+    top: 140px;
+    left: 10%;
+  }
 
-.selectBlock{
-  width: 80%;
-  height: 60px;
-  top: 140px;
-  left: 10%;
-}
+  .bookSelectOpt {
+    top: 10px;
+    left: 30px;
+    width: 200px;
+  }
 
-.bookSelectOpt{
-  top: 10px;
-  left: 30px;
-  width: 200px;
-}
-
-.selectBlockSend{
-  top: 35px;
-  left: 100px;
-  width: 50px;
-}
-
+  .selectBlockSend {
+    top: 35px;
+    left: 100px;
+    width: 50px;
+  }
 }

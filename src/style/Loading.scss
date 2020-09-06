@@ -1,4 +1,4 @@
-.loadingAnimate >li{
+.loadingAnimate > li {
   background-color: #657197;
   height: 6px;
   width: 6px;
@@ -7,7 +7,7 @@
   animation: LOADING 1.5s infinite;
 }
 
-.loadingAnimateBigger >li{
+.loadingAnimateBigger > li {
   background-color: #657197;
   height: 15px;
   width: 15px;
@@ -16,7 +16,7 @@
   animation: LOADING 1.5s infinite;
 }
 
-.loadingAnimateBigger{
+.loadingAnimateBigger {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -25,8 +25,7 @@
   margin-left: 15px;
 }
 
-
-.loadingAnimate{
+.loadingAnimate {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -36,33 +35,33 @@
 }
 
 @keyframes LOADING {
-  0%   { 
+  0% {
     transform: scale(0.5);
   }
-  50%   { 
+  50% {
     transform: scale(1);
   }
-  100% { 
+  100% {
     transform: scale(0.5);
   }
 }
 
-.loadingAnimate >li:nth-child(1) {
+.loadingAnimate > li:nth-child(1) {
   animation-delay: 0s;
 }
-.loadingAnimate >li:nth-child(2) {
+.loadingAnimate > li:nth-child(2) {
   animation-delay: 0.2s;
 }
-.loadingAnimate >li:nth-child(3) {
+.loadingAnimate > li:nth-child(3) {
   animation-delay: 0.5s;
 }
 
-.loadingAnimateBigger >li:nth-child(1) {
+.loadingAnimateBigger > li:nth-child(1) {
   animation-delay: 0s;
 }
-.loadingAnimateBigger >li:nth-child(2) {
+.loadingAnimateBigger > li:nth-child(2) {
   animation-delay: 0.2s;
 }
-.loadingAnimateBigger >li:nth-child(3) {
+.loadingAnimateBigger > li:nth-child(3) {
   animation-delay: 0.5s;
 }

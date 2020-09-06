@@ -1,6 +1,4 @@
-
-
-.logContainer{
+.logContainer {
   background-color: rgb(187, 187, 187);
   width: 300px;
   height: 450px;
@@ -10,27 +8,35 @@
   background-color: #fafafa;
 }
 
-
-
-.signUpComtainer{
-
+.signUpComtainer {
   background-color: #fafafa;
 }
 
-.logClose,.signInComtainer form>div>span>input:last-child, .signInSend, .signUpBtn, .signInComtainer>button, .signInBtn, .loginRippleBtnContainer{
-  transition:0.3s;
+.logClose,
+.signInComtainer form > div > span > input:last-child,
+.signInSend,
+.signUpBtn,
+.signInComtainer > button,
+.signInBtn,
+.loginRippleBtnContainer {
+  transition: 0.3s;
 }
 
-.signInComtainer form>div>span>input:last-child:hover, .signInSend:hover, .signUpBtn:hover, .signInComtainer>button:hover, .signInBtn:hover, .loginRippleBtnContainer:hover{
+.signInComtainer form > div > span > input:last-child:hover,
+.signInSend:hover,
+.signUpBtn:hover,
+.signInComtainer > button:hover,
+.signInBtn:hover,
+.loginRippleBtnContainer:hover {
   transform: scale(1.02);
 }
 
-.logClose:hover{
+.logClose:hover {
   transform: scale(1.2);
-  transform:rotate(90deg)
+  transform: rotate(90deg);
 }
 
-.logBackground{
+.logBackground {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   min-height: 100%;
@@ -39,20 +45,21 @@
   position: fixed;
 }
 
-.logBtnBlock{
+.logBtnBlock {
   display: flex;
   justify-content: center;
 }
 
-.logTitle{
+.logTitle {
   font-size: 23px;
-  font-weight:500;
+  font-weight: 500;
   text-align: center;
   margin: 25px 0 15px 0;
   cursor: default;
 }
 
-.signInComtainer form,.signUpComtainer form{
+.signInComtainer form,
+.signUpComtainer form {
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -60,92 +67,90 @@
   align-items: center;
 }
 
-.loginRippleBtnContainer{
+.loginRippleBtnContainer {
   overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    transition: 0.3s;
-    width: 216px;
-    color: white;
-    font-size: 16px;
-    border-style: none;
-    cursor: pointer;
-    background-color: #3a3a3a;
-    border-radius: 7px;
-    width: 90%;
-    margin: 20px auto;
-    color: white;
-    font-size: 16px;
-    border-style: none;
-    cursor: pointer;
-    text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 216px;
+  color: white;
+  font-size: 16px;
+  border-style: none;
+  cursor: pointer;
+  background-color: #3a3a3a;
+  border-radius: 7px;
+  width: 90%;
+  margin: 20px auto;
+  color: white;
+  font-size: 16px;
+  border-style: none;
+  cursor: pointer;
+  text-align: center;
 }
 
-.signInComtainer form>input{
+.signInComtainer form > input {
   margin: 10px 0;
   border-width: 0px;
   padding: 10px;
-  width:216px;
+  width: 216px;
 }
 
-.signInComtainer form>input:focus,.signInComtainer form > input:focus, .signInInput:focus{
+.signInComtainer form > input:focus,
+.signInComtainer form > input:focus,
+.signInInput:focus {
   border-color: orange;
   border-width: 2px;
   border-style: solid;
   border-radius: 5px;
 }
 
-.signInComtainer form>div>span>input:last-child,.signInSend{
-  
-
-    border-style: none;
-    text-align: center;
-    background-color: #2a2f7200;
-    border-style: none;
-    width: 216px;
-    color: white;
-    font-size: 16px;
-    height: 32px;
+.signInComtainer form > div > span > input:last-child,
+.signInSend {
+  border-style: none;
+  text-align: center;
+  background-color: #2a2f7200;
+  border-style: none;
+  width: 216px;
+  color: white;
+  font-size: 16px;
+  height: 32px;
 }
 
-.signInInput{
+.signInInput {
   margin: 10px 0;
   border-width: 0px;
   padding: 5px;
-  width:216px;
+  width: 216px;
 }
 
-.thirdPartRippleBtnContainer{
+.thirdPartRippleBtnContainer {
   display: block;
-    background-color: #c54138;
-    border-style: none;
-    border-radius: 7px;
-    width: 216px;
-    margin: 10px auto;
-    color: white;
-    font-size: 16px;
-    height: 32px;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    transition: 0.3s;
-    
+  background-color: #c54138;
+  border-style: none;
+  border-radius: 7px;
+  width: 216px;
+  margin: 10px auto;
+  color: white;
+  font-size: 16px;
+  height: 32px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-
-    
-.signUpBtn,.signInBtn{
+.signUpBtn,
+.signInBtn {
   font-size: 14px;
   text-align: center;
   color: rgb(16, 72, 145);
   font-weight: 500;
   cursor: pointer;
-  text-decoration:underline;
-
+  text-decoration: underline;
 }
 
-.normal{
+.normal {
   color: rgb(113, 113, 113);
   margin: 10px 0 15px;
   font-weight: 400;
@@ -153,52 +158,52 @@
   text-decoration: none;
 }
 
-.signInComtainer button{
+.signInComtainer button {
   background-color: #2a2f7200;
   border-style: none;
   width: 216px;
-  color:white;
+  color: white;
   font-size: 16px;
   height: 32px;
 }
 
-.signInComtainer button:last-child{
+.signInComtainer button:last-child {
   background-color: #2a2f7200;
 }
 
-.logClose{
+.logClose {
   position: absolute;
-    right: 12px;
-    font-size: 26px;
-    top: 8px;
-    cursor: pointer;
+  right: 12px;
+  font-size: 26px;
+  top: 8px;
+  cursor: pointer;
 }
 
-.thirdPartRippleBtnContainer:last-child{
+.thirdPartRippleBtnContainer:last-child {
   background-color: #1c4282;
 }
 
 .thirdPartRippleBtnContainer:hover {
-    transform: scale(1.02);
-    cursor: pointer;
+  transform: scale(1.02);
+  cursor: pointer;
 }
 
-.thirdPartRippleBtnContainer>.childContent>button{
+.thirdPartRippleBtnContainer > .childContent > button {
   transform: scale(1.02);
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .logblock--appear-active {
-   transform: scale(0.1); 
-   opacity: 0.5;
-  }
+  transform: scale(0.1);
+  opacity: 0.5;
+}
 
 .logblock--appear-done {
-   animation: 1s ease 1 forwards pop-effect;
-   transition-timing-function: ease-in;
-  }
+  animation: 1s ease 1 forwards pop-effect;
+  transition-timing-function: ease-in;
+}
 
-  @keyframes pop-effect {
+@keyframes pop-effect {
   0% {
     transform: scale(1);
     opacity: 0.8;

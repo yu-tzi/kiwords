@@ -1,25 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Auth from "./components/Auth"
-
+import Auth from "./components/Auth";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
-
+    this.state = {};
   }
 
   render() {
-    return (
-      <Auth/>
-    )
+    return <Auth />;
   }
 }
 
 //=========================
-ReactDOM.render(
-  <App />,
-  document.querySelector("#root"));
+ReactDOM.render(<App />, document.querySelector("#root"));

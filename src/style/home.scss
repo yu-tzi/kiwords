@@ -1,8 +1,7 @@
 $background: #0d0e13;
 $darkblue: #131a32;
 
-
-*{
+* {
   margin: 0px;
   padding: 0px;
   font-family: verdana, Arial, Helvetica, sans-serif;
@@ -10,19 +9,18 @@ $darkblue: #131a32;
   text-decoration: none;
 }
 
-
-.p5{
+.p5 {
   overflow: hidden;
   width: 100vw;
 }
 
-.p5two{
+.p5two {
   height: 45vh;
   overflow: hidden;
   width: 100vw;
 }
 
-.mktArea{
+.mktArea {
   position: relative;
   height: 100%;
   width: 90%;
@@ -31,7 +29,7 @@ $darkblue: #131a32;
   max-width: 1200px;
 }
 
-.homeRippleBtnContainer{
+.homeRippleBtnContainer {
   border-radius: 50px;
   background: orange;
   overflow: hidden;
@@ -47,12 +45,11 @@ $darkblue: #131a32;
   transition: 0.3s;
 }
 
-.homeRippleBtnContainer:hover{
-  transform: scale(1.05)
+.homeRippleBtnContainer:hover {
+  transform: scale(1.05);
 }
 
-
-.rippleCir{
+.rippleCir {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -63,10 +60,9 @@ $darkblue: #131a32;
   animation: 1.2s ease 1 forwards ripple-effect;
 }
 
-.start{
-
+.start {
   position: relative;
-  color:black;
+  color: black;
 }
 
 @keyframes ripple-effect {
@@ -88,21 +84,13 @@ $darkblue: #131a32;
   }
 }
 
-.head{
+.head {
   position: absolute;
   top: 120px;
   left: 5%;
 }
 
-
-
-
-
-
-
-
-
-.subtitle{
+.subtitle {
   padding: 30px 0px;
   color: white;
   letter-spacing: 3px;
@@ -110,81 +98,76 @@ $darkblue: #131a32;
   width: 70%;
 }
 
-
-
-.logoH{
-  font-size:60px;
-  color:white;
+.logoH {
+  font-size: 60px;
+  color: white;
 }
 
-.middle{
+.middle {
   position: absolute;
   left: calc(50% - 60px);
   color: white;
   top: 90%;
 }
 
-.head>a:hover{
-  text-decoration:none; 
-  cursor:pointer;  
-  color:black;
+.head > a:hover {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
 }
 
-.head>a:visited{
-  text-decoration:none; 
-  color:black;
+.head > a:visited {
+  text-decoration: none;
+  color: black;
 }
 
-.head>a{
-   text-decoration: none;
-    color: black;
+.head > a {
+  text-decoration: none;
+  color: black;
 }
 
-.btnBox{
+.btnBox {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.editTitle{
+.editTitle {
   width: 80px;
   margin: 0 10px;
   height: 60px;
 }
 
-.editImg{
+.editImg {
   width: 80px;
   height: 60px;
 }
 
-
-.carouselContainer{
+.carouselContainer {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.cardContainer{
+.cardContainer {
   display: flex;
   width: 80vw;
   max-width: 1000px;
   overflow: hidden;
 }
 
-
-.flexContainer{
-  display:flex;
+.flexContainer {
+  display: flex;
   flex-flow: row nowrap;
-  
 }
 
-.container{
+.container {
   padding: 100px 0 80px;
-/*   background-color: #f8f8f8; */
+  /*   background-color: #f8f8f8; */
   background-color: $background;
 }
 
-.arrowLeft{
+.arrowLeft {
   width: 30px;
   height: 30px;
   border-top: 3px solid #42b883;
@@ -195,13 +178,13 @@ $darkblue: #131a32;
   margin: 0 10px;
 }
 
-.arrowLeft:active{
+.arrowLeft:active {
   transform: rotate(-135deg) scale(0.8);
   border-top: 3px solid #4289b8;
   border-right: 3px solid #4289b8;
 }
 
-.arrowRigth{
+.arrowRigth {
   width: 30px;
   height: 30px;
   border-top: 3px solid #42b883;
@@ -212,41 +195,35 @@ $darkblue: #131a32;
   margin: 0 10px;
 }
 
-.arrowRigth:active{
+.arrowRigth:active {
   transform: rotate(45deg) scale(0.8);
   border-top: 3px solid #4289b8;
   border-right: 3px solid #4289b8;
 }
 
-.flexContainer> .card{
+.flexContainer > .card {
   height: 200px;
   width: 200px;
   background-color: rgb(183, 233, 181);
   margin: 0 10px;
   border-radius: 5px;
-  box-shadow: 0 4px 15px 0 rgba(40,44,53,0.08);
+  box-shadow: 0 4px 15px 0 rgba(40, 44, 53, 0.08);
 }
 
-.flexContainer> .card:hover{
+.flexContainer > .card:hover {
   background-color: rgba(176, 235, 174, 0.7);
   transform: scale(0.99);
-   
 }
 
-
-
-.bottomArea{
+.bottomArea {
   height: 43vh;
   /* background: linear-gradient(135deg, #11fa7a 0%,#1b7e7e 100%); */
   background-color: rgb(43, 43, 43);
   position: relative;
   margin: 0 0 50px 0;
-
 }
 
-
-
-.journey{
+.journey {
   width: 300px;
   height: 30px;
   background-color: #3a3a3a;
@@ -256,49 +233,32 @@ $darkblue: #131a32;
   text-align: center;
   position: absolute;
   left: calc(50% - 150px);
-  top: calc(50% - 15px)
-  
+  top: calc(50% - 15px);
 }
 
-
-
-
 @media (max-width: 500px) {
-
-
   .bottomArea {
     height: 450px;
   }
 
-
-
- 
-
-  .head{
+  .head {
     width: 80%;
     top: 150px;
   }
 
- /*  .start{
+  /*  .start{
     margin: 0;
     color: black;
     transition: 0.5s;
 } */
 
- /* .mktArea{
+  /* .mktArea{
   height: 450px;
  } */
 
- 
-
- .journey{
-  width: 250px;
-  left: calc(50% - 125px); 
-  top: calc(50% - 15px);
- }
-
-
-
-
+  .journey {
+    width: 250px;
+    left: calc(50% - 125px);
+    top: calc(50% - 15px);
+  }
 }
-

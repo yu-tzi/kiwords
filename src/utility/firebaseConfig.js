@@ -1,8 +1,7 @@
-import * as firebase from 'firebase';
-import 'firebase/firestore';
-import 'firebase/auth';
+import * as firebase from "firebase";
+import "firebase/firestore";
+import "firebase/auth";
 import "firebase/storage";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyAgpVLf1iNb1RJmq3QBIuHdDnMUYObYqKo",
@@ -12,17 +11,12 @@ const firebaseConfig = {
   storageBucket: "kiwords-c058b.appspot.com",
   messagingSenderId: "959153092087",
   appId: "1:959153092087:web:278807305aad9aa00caaf2",
-  measurementId: "G-1GYNCR5WYZ"
+  measurementId: "G-1GYNCR5WYZ",
 };
 
 firebase.initializeApp(firebaseConfig);
 
-
-
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-
-export { db, firebase, storage }
-
-
+export { db, firebase, storage };

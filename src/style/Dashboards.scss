@@ -1,9 +1,9 @@
-.content{
+.content {
   height: 100%;
   background-color: rgb(250, 248, 248);
 }
 
-.profileImg{
+.profileImg {
   background-color: #19295e;
   border-radius: 50%;
   width: 120px;
@@ -19,7 +19,7 @@
   color: white;
 }
 
-.profileInforBox{
+.profileInforBox {
   color: white;
   display: flex;
   flex-direction: column;
@@ -28,44 +28,44 @@
   align-items: center;
 }
 
-.profileTitle{
+.profileTitle {
   font-size: 45px;
 }
 
-.uploadPictureLoad{
+.uploadPictureLoad {
   justify-content: center;
   margin-top: 80px;
   padding-right: 20px;
 }
 
-.profileInfor{
+.profileInfor {
   padding: 5px 0px;
 }
 
-.profileImgBox{
+.profileImgBox {
   position: relative;
 }
 
-.dashboardLoadContainer{
+.dashboardLoadContainer {
   display: flex;
   justify-content: center;
   margin: 50px 0px;
 }
 
-.changePassword{
+.changePassword {
   border-radius: 5px;
   background-color: rgb(227, 227, 227);
   padding: 5px;
-  margin-top:20px;
+  margin-top: 20px;
 }
 
-.editImg{
+.editImg {
   margin: 10px 0;
   border-radius: 5px;
   color: rgb(109, 109, 109);
 }
 
-.editUploadTitle{
+.editUploadTitle {
   border-radius: 5px;
   color: rgb(109, 109, 109);
   font-size: 16px;
@@ -74,27 +74,28 @@
   height: 60px;
 }
 
-.editUploadTitle:hover, .editImg:hover{
+.editUploadTitle:hover,
+.editImg:hover {
   background-color: #2b2b2b;
-  color:white;
+  color: white;
   transition: 0.5s;
 }
 
-.uploadTitleForm>input:first-child{
+.uploadTitleForm > input:first-child {
   border-bottom-color: grey;
   border-width: 0px;
   border-bottom-width: 2px;
   background-color: #e8e8e8;
   border-style: none;
 }
-.uploadTitleForm > input:first-child:focus{
-border-color: orange;
+.uploadTitleForm > input:first-child:focus {
+  border-color: orange;
   border-width: 2px;
   border-style: solid;
   border-radius: 5px;
 }
 
-.uploadTitleForm > input:last-child{
+.uploadTitleForm > input:last-child {
   border-style: none;
   padding: 3px 15px;
   background-color: orange;
@@ -104,18 +105,19 @@ border-color: orange;
   width: 100px;
   text-align: center;
   margin-top: 15px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.titleUploadPop{
+.titleUploadPop {
   position: relative;
 }
 
-.uploadTitleForm{
+.uploadTitleForm {
   position: relative;
 }
 
-.titleUploadClose, .imgUploadClose{
+.titleUploadClose,
+.imgUploadClose {
   top: 0px;
   position: relative;
   right: 0px;
@@ -123,36 +125,37 @@ border-color: orange;
   width: 10px;
 }
 
-.edit{
+.edit {
   padding: 5px;
 }
 
-.imageUploadPop:first-child{
+.imageUploadPop:first-child {
   margin: 20px 0px 0px;
 }
 
-.titleUploadPop{
+.titleUploadPop {
   margin-bottom: 10px;
 }
 
-.profileBox{
+.profileBox {
   justify-content: center;
   display: flex;
   align-items: center;
   padding-top: 50px;
 }
 
-.editImgBox,.editTitleBox{
+.editImgBox,
+.editTitleBox {
   font-size: 16px;
-  background-color: rgb(0,0,0,0);
+  background-color: rgb(0, 0, 0, 0);
   width: 200px;
   text-align: center;
   margin: 0px 5px;
   height: 35px;
-  line-height: 35px; 
+  line-height: 35px;
 }
 
-.editTitleRippleBtnContainer{
+.editTitleRippleBtnContainer {
   font-size: 16px;
   background-color: orange;
   /* width: 150px; */
@@ -167,12 +170,13 @@ border-color: orange;
   position: relative;
 }
 
-.editTitleRippleBtnContainer:hover{
+.editTitleRippleBtnContainer:hover {
   color: orange;
   background-color: #303545;
 }
 
-.titleUploadPop,.imageUploadPop{
+.titleUploadPop,
+.imageUploadPop {
   left: 0;
   display: block;
   position: fixed;
@@ -180,9 +184,11 @@ border-color: orange;
   height: 100%;
   width: 100%;
   top: 0;
+  z-index: 2;
 }
 
-.imageUploadPopbox,.titleUploadPopbox{
+.imageUploadPopbox,
+.titleUploadPopbox {
   background-color: #24293c;
   height: 200px;
   width: 320px;
@@ -192,22 +198,24 @@ border-color: orange;
   top: 200px;
 }
 
-.imageUploadclose,.titleUploadclose{
+.imageUploadclose,
+.titleUploadclose {
   font-size: 25px;
   right: 15px;
   width: 20px;
   position: absolute;
   top: 10px;
   color: white;
-  transition:0.3s;
+  transition: 0.3s;
 }
 
-.imageUploadclose:hover, .titleUploadclose:hover{
+.imageUploadclose:hover,
+.titleUploadclose:hover {
   transform: scale(1.2);
-  transform:rotate(90deg)
+  transform: rotate(90deg);
 }
 
-.imageUploadPopbox>input{
+.imageUploadPopbox > input {
   position: absolute;
   top: 80px;
   left: 70px;
@@ -216,7 +224,7 @@ border-color: orange;
   color: white;
 }
 
-.uploadTitleForm{
+.uploadTitleForm {
   position: absolute;
   top: 60px;
   left: 55px;
@@ -226,31 +234,33 @@ border-color: orange;
   align-items: center;
 }
 
-.uploadTitleForm>input:first-child{
-      border-radius: 5px;
-    height: 23px;
-    width: 230px;
+.uploadTitleForm > input:first-child {
+  border-radius: 5px;
+  height: 23px;
+  width: 230px;
 }
 
-
-.uploadBtnBox{
-      display: flex;
-    justify-content: center;
-    padding-top: 20px;
+.uploadBtnBox {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
 }
 
-.profileTitle, .profileInfor, .timeBlock, .statisTitle, .takeQuizTitle{
+.profileTitle,
+.profileInfor,
+.timeBlock,
+.statisTitle,
+.takeQuizTitle {
   cursor: default;
 }
 
-.takeQuizBtn{
-      margin-top: 0px !important;
+.takeQuizBtn {
+  margin-top: 0px !important;
 }
 
 /* @media (max-width: 1000px) { */
 @media (max-width: 700px) {
-  
-  .profileImg{
+  .profileImg {
     margin: 0px 0px 10px 0px;
     width: 100px;
     height: 100px;
@@ -258,81 +268,73 @@ border-color: orange;
     line-height: 100px;
   }
 
-  .profileBox{
+  .profileBox {
     width: 90%;
     margin: auto;
     flex-direction: column;
   }
 
-  .profileTitle{
+  .profileTitle {
     font-size: 35px;
-
   }
-
 }
 
-
 @media (max-width: 400px) {
-
-  .uploadBtnBox{
+  .uploadBtnBox {
     flex-direction: column;
     align-items: center;
   }
 
-  .editTitleRippleBtnContainer{
+  .editTitleRippleBtnContainer {
     margin-bottom: 10px;
   }
-
 }
 
-
-.color{
-  width:200px;
-  height:10px;
-  background: linear-gradient(to right, #24293c 0%, #ffffff 100%)
-  
+.color {
+  width: 200px;
+  height: 10px;
+  background: linear-gradient(to right, #24293c 0%, #ffffff 100%);
 }
 
-.svgContainer>div{
-  display:flex;
+.svgContainer > div {
+  display: flex;
   width: 100%;
   margin: auto;
-  
 }
 
-.statistics{
+.statistics {
   padding: 50px 0 80px;
 }
 
-.bottomPart{
-  color: white  !important;
+.bottomPart {
+  color: white !important;
   max-width: 700px !important;
-    width: 60%  !important;
-    margin-top: 70px  !important;
+  width: 60% !important;
+  margin-top: 70px !important;
 }
 
-
-.svgContainer>div>svg:first-child{
+.svgContainer > div > svg:first-child {
   margin: auto;
 }
 
-.svgContainer>div>svg:not(:first-child){
+.svgContainer > div > svg:not(:first-child) {
   display: none;
 }
 
-.colorBar{
+.colorBar {
   margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.colorStart,.colorEnd{
+.colorStart,
+.colorEnd {
   color: white;
-    padding: 0 5px;
+  padding: 0 5px;
 }
 
-.timeSelector{
+.timeSelector {
   color: white;
   display: flex;
   padding-top: 40px;
@@ -341,16 +343,17 @@ border-color: orange;
   font-size: 22px;
 }
 
-.minus,.plus{
-   text-align: center;
-    height: 30px;
-    line-height: 30px;
-    width: 40px;
-    transition: 0.5s;
-    cursor: pointer;
+.minus,
+.plus {
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  width: 40px;
+  transition: 0.5s;
+  cursor: pointer;
 }
 
-.homeStaRippleBtnContainer{
+.homeStaRippleBtnContainer {
   overflow: hidden;
   position: relative;
   height: 30px;
@@ -367,80 +370,68 @@ border-color: orange;
   font-size: 16px;
 }
 
-.minus:hover,.plus:hover{
+.minus:hover,
+.plus:hover {
   background-color: white;
   color: #495278;
 }
 
-.timeBlock{
-      display: flex;
-    min-width: 460px;
-    justify-content: center;
+.timeBlock {
+  display: flex;
+  min-width: 460px;
+  justify-content: center;
 }
 
-.dashQuizRippleBtnContainer{
-    overflow: hidden;
-    position: relative;
-    margin-top: 15px;
-    border-radius: 3px;
+.dashQuizRippleBtnContainer {
+  overflow: hidden;
+  position: relative;
+  margin-top: 15px;
+  border-radius: 3px;
 }
 
-.statisTitle{
+.statisTitle {
   font-weight: 800;
-    color: #3ccfcf;
-    text-align: center;
-    margin: 10px;
+  color: #3ccfcf;
+  text-align: center;
+  margin: 10px;
 }
 
-.statisSubHour{
-      color: white;
+.statisSubHour {
+  color: white;
   position: absolute;
-    right: 10%;
-    top: -10px;
+  right: 10%;
+  top: -10px;
 }
 
-
-.statisBox{
+.statisBox {
   max-width: 900px;
-    position: relative;
-    width: 80%;
+  position: relative;
+  width: 80%;
 }
 
 @media (max-width: 1100px) {
-
-  .statisBox{
+  .statisBox {
     width: 100%;
   }
 
-  .statisSubHour{
+  .statisSubHour {
     right: 50px;
     top: -10px;
   }
-
-
-
 }
 
-
-
-
 @media (max-width: 1000px) {
-
-  .svgContainer > div{
+  .svgContainer > div {
     width: 100%;
   }
-
-
 }
 
 @media (max-width: 765px) {
-
-  .svgContainer > div{
+  .svgContainer > div {
     width: 100%;
   }
 
-  .statistics{
-    display:none;
+  .statistics {
+    display: none;
   }
-
 }

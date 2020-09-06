@@ -1,45 +1,42 @@
 $background: #1a1d28;
 $darkblue: #131a32;
 
-
-*{
+* {
   margin: 0px;
   padding: 0px;
-  font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+  font-family: "Ubuntu", Arial, Helvetica, sans-serif;
   list-style: none;
   text-decoration: none;
-
 }
 
 *:focus {
-    outline: none;
+  outline: none;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
 
-.menuBtn{
+.menuBtn {
   color: white;
   margin: 0 13px;
   cursor: pointer;
 }
 
-
-.menuItem{
-  margin-right:20px;
+.menuItem {
+  margin-right: 20px;
 }
 
-
-.content{
+.content {
   min-height: 100vh;
   margin: 0 auto -10px;
   background-color: #0d0e13;
   padding: 0px;
 }
 
-.navRippleBtnContainer{
+.navRippleBtnContainer {
   width: 100px;
   height: 30px;
   border-bottom-style: solid;
@@ -52,71 +49,74 @@ html, body {
   position: relative;
   cursor: pointer;
   transition: 1s;
-} 
+}
 
-.menuPopFirstRippleBtnContainer, .menuPopSecondRippleBtnContainer, .homeMemLogRippleBtnContainer{
+.menuPopFirstRippleBtnContainer,
+.menuPopSecondRippleBtnContainer,
+.homeMemLogRippleBtnContainer {
   overflow: hidden;
   position: relative;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.menuPopFirstRippleBtnContainer:hover, .menuPopSecondRippleBtnContainer:hover, .memPop>div:hover{
+.menuPopFirstRippleBtnContainer:hover,
+.menuPopSecondRippleBtnContainer:hover,
+.memPop > div:hover {
   font-weight: 500;
 }
 
-.memberImgFrame{
-  transition:0.3s;
+.memberImgFrame {
+  transition: 0.3s;
 }
 
-.memberImgFrame:hover{
-  transform: scale(1.05)
+.memberImgFrame:hover {
+  transform: scale(1.05);
 }
 
-.navRippleBtnContainer:hover{
+.navRippleBtnContainer:hover {
   animation: type 0.2s steps(10) forwards;
 }
 
-.decolineLog:hover{
+.decolineLog:hover {
   white-space: nowrap;
   overflow: hidden;
   animation: type 0.2s steps(10) forwards;
-  -moz-animation:type 0.2s steps(10) forwards;  
-  -webkit-animation:type 0.2s steps(10) forwards;
+  -moz-animation: type 0.2s steps(10) forwards;
+  -webkit-animation: type 0.2s steps(10) forwards;
 }
 
-@keyframes type
-{
-  0%{ border-bottom-color:#0d0e13;}
-	100%{ border-bottom-color:orange;}
+@keyframes type {
+  0% {
+    border-bottom-color: #0d0e13;
+  }
+  100% {
+    border-bottom-color: orange;
+  }
 }
 
-
-
-.navBox{
+.navBox {
   background-color: #0d0e13;
   width: 90%;
   margin: auto;
   max-width: 1200px;
-
 }
 
-.nav{
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width:90%;
+  width: 90%;
   margin: auto;
-
 }
 
-.menu{
+.menu {
   display: flex;
   color: white;
   width: 40%;
 }
 
-.rippleBtnContainer{
+.rippleBtnContainer {
   border-radius: 50px;
   background: orange;
   overflow: hidden;
@@ -132,35 +132,29 @@ html, body {
   transition: 1s;
 }
 
-
-.decolineLog{
+.decolineLog {
   height: 32px;
   width: 120px;
   position: absolute;
   top: 20px;
   border-bottom-style: solid;
   border-bottom-color: orange;
-  border-bottom-width:0px;
-  
+  border-bottom-width: 0px;
 }
 
-.decolineLog:hover{
+.decolineLog:hover {
   white-space: nowrap;
   overflow: hidden;
   animation: type 0.2s steps(10) forwards;
 }
 
-
-
-.memberImgFrame{
-
+.memberImgFrame {
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
   cursor: pointer;
 }
 
-
-.memberImg{
+.memberImg {
   height: 25px;
   width: 25px;
   border-radius: 25px;
@@ -174,88 +168,84 @@ html, body {
   position: relative;
 }
 
-.memberImgWord{
+.memberImgWord {
   color: rgb(40, 40, 40);
   margin: 0 3px 0 10px;
   line-height: 30px;
   position: relative;
 }
 
-.memberImgWord:hover{
+.memberImgWord:hover {
   color: rgb(72, 72, 72);
   transition: 0.5s;
 }
 
-
-.memberLogin{
+.memberLogin {
   color: white;
 }
 
-.memberLogImg{
+.memberLogImg {
   display: none;
 }
 
-
-.menuHam{
+.menuHam {
   display: none;
   cursor: pointer;
 }
 
-.member{
+.member {
   display: flex;
   width: 40%;
   justify-content: flex-end;
 }
 
-
-.memberFrame{
+.memberFrame {
   display: flex;
 }
 
-.memberImgFrame{
+.memberImgFrame {
   display: flex;
 }
 
-.share{
+.share {
   padding-bottom: 20px;
 }
 
-.logo{
+.logo {
   font-size: 35px;
   color: white;
   padding: 20px 0;
   cursor: pointer;
 }
 
-.memPop{
+.memPop {
   display: flex;
   flex-direction: column;
   position: absolute;
   right: 10vw;
-  top:80px;
+  top: 80px;
   background-color: #e4e4e4;
-  z-index: 10; 
+  z-index: 10;
   border-radius: 10px;
   padding: 10px 0;
   cursor: pointer;
-
 }
 
-.menuPop{
+.menuPop {
   display: flex;
   flex-direction: column;
   position: absolute;
   left: 9vw;
-  top:80px;
+  top: 80px;
   background-color: #e4e4e4;
   /* box-shadow: 2px 2px 5px rgb(213, 213, 213); */
-  z-index: 10; 
+  z-index: 10;
   border-radius: 10px;
   padding: 10px 0;
   cursor: pointer;
 }
 
-.trianglePop{
+.trianglePop {
   width: 0;
   height: 0;
   border-style: solid;
@@ -267,7 +257,7 @@ html, body {
   z-index: 15;
 }
 
-.trianglePopMenu{
+.trianglePopMenu {
   width: 0;
   height: 0;
   border-style: solid;
@@ -275,11 +265,13 @@ html, body {
   border-color: transparent transparent #e4e4e4 transparent;
   position: absolute;
   left: 10vw;
-  top:55px;
+  top: 55px;
   z-index: 15;
 }
 
-.memPop div, .signOut, .menuPop>div{
+.memPop div,
+.signOut,
+.menuPop > div {
   color: rgb(43, 43, 43);
   text-align: center;
   border-radius: 10px;
@@ -288,86 +280,69 @@ html, body {
   line-height: 40px;
 }
 
-
-
-.memPop a:hover, .signOut:hover, .menuPop a:hover{
+.memPop a:hover,
+.signOut:hover,
+.menuPop a:hover {
   color: rgb(72, 72, 72);
   transition: 0.5s;
 }
 
-/* .signOut{
-  background-color: rgb(63, 63, 63);
-  color: white;
-} */
-
-.tri{
-
-border-style: solid;
-border-width: 15px 20px 0 20px;
-border-color: #ffffff transparent transparent transparent;
-position: absolute;
-left: calc(50% - 15px);
-bottom: 0px;
+.tri {
+  border-style: solid;
+  border-width: 15px 20px 0 20px;
+  border-color: #ffffff transparent transparent transparent;
+  position: absolute;
+  left: calc(50% - 15px);
+  bottom: 0px;
 }
-
-
-
 
 @media (max-width: 1000px) {
+  .menuHam {
+    display: block;
+    height: 20px;
+  }
 
-.menuHam{
-  display: block;
-  height: 20px;
-}
+  .navRippleBtnContainer {
+    display: none;
+  }
 
-.navRippleBtnContainer{
-  display:none;
-}
+  .menuItem {
+    display: none;
+  }
 
-.menuItem{
-  display: none;
-}
+  .memberImgWord {
+    display: none;
+  }
 
-.memberImgWord{
-  display: none;
-}
+  .memberImgFrame {
+    width: 30px;
+    border-width: 3px;
+  }
 
-.memberImgFrame{
-  width: 30px;
-  border-width: 3px;
+  .memberImg {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+  }
 
-}
+  .triangle {
+    border-style: solid;
+    border-width: 10px 6px 0 6px;
+    border-color: #ffffff transparent transparent transparent;
+    margin-top: 15px;
+    margin-left: 5px;
+  }
 
-.memberImg{
-  font-weight: 500;
-  font-size: 20px;
-}
+  .memberLogin {
+    display: none;
+  }
 
-.triangle{
-border-style: solid;
-border-width: 10px 6px 0 6px;
-border-color: #ffffff transparent transparent transparent;
-margin-top:15px;
-margin-left: 5px;
-}
+  .memberLogImg {
+    display: block;
+    height: 35px;
+  }
 
-.memberLogin{
-  display: none;
-}
-
-.memberLogImg{
-  display: block;
-  height: 35px;
-}
-
-.memLoginFrame{
-  display: flex;
-}
-
-
-}
-
-@media (max-width: 500px) {
-
-
+  .memLoginFrame {
+    display: flex;
+  }
 }
