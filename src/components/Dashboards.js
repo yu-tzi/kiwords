@@ -194,7 +194,7 @@ const Statistics = (props) => {
                 let isDifferentData = true;
 
                 for (let j = 0; j < nowDataLength; j++) {
-                  const isDataTimeRepeated =
+                  let isDataTimeRepeated =
                     moment(dataTimeCode).day() + 1 === data[j].day &&
                     moment(dataTimeCode).hour() === data[j].hour;
                   if (isDataTimeRepeated) {

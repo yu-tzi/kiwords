@@ -23,12 +23,9 @@ const RippleButton = (props) => {
   }, [rippling]);
 
   const clickBottom = (e) => {
-    console.log("click!");
     let btnViewDistance = e.target.getBoundingClientRect();
     let x = e.clientX - btnViewDistance.left;
     let y = e.clientY - btnViewDistance.bottom;
-    console.log(x + 10);
-    console.log(y + 15);
     setCircle({ x: x + 10, y: y + 15 });
   };
 

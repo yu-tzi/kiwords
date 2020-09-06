@@ -27,7 +27,7 @@ class BookDetail extends React.Component {
   }
 
   componentDidMount() {
-    let url =
+    const url =
       /* "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500" */ window
         .location.href;
 
@@ -218,7 +218,7 @@ class BookDetail extends React.Component {
   }
 
   renewWordList(data) {
-    let url =
+    const url =
       /* "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500" */ window
         .location.href;
     let bookID;
@@ -275,11 +275,11 @@ class BookDetail extends React.Component {
   }
 
   render() {
-    let rootURL = window.location.href.substr(
+    const rootURL = window.location.href.substr(
       0,
       window.location.href.indexOf("/", 9)
     );
-    let url =
+    const url =
       /* "https://kiwords-c058b.web.app/details/159592106485385aFFbQvKxZmidyhpfaKGrl2uPL2?SAT%202500"  */ window
         .location.href;
     let bookID;

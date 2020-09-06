@@ -9,10 +9,6 @@ import Loading from "./Loading.js";
 import { CSSTransition } from "react-transition-group";
 
 class Quiz extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
   render() {
     return (
       <DndProvider backend={MultiBackend} options={HTML5toTouch}>
@@ -125,7 +121,7 @@ const QuizContext = createContext({
 });
 
 const QuizContainer = (props) => {
-  let url = window.location.href;
+  const url = window.location.href;
   let defalutValue = "";
   let defalutBook = "";
   let hasDefaultOption = false;

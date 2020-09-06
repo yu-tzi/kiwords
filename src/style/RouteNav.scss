@@ -36,6 +36,10 @@ body {
   padding: 0px;
 }
 
+.memPopContainer {
+  position: relative;
+}
+
 .navRippleBtnContainer {
   width: 100px;
   height: 30px;
@@ -222,8 +226,8 @@ body {
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 10vw;
-  top: 80px;
+  right: 40px;
+  top: 55px;
   background-color: #e4e4e4;
   z-index: 10;
   border-radius: 10px;
@@ -252,8 +256,8 @@ body {
   border-width: 0 10px 30px 10px;
   border-color: transparent transparent #e4e4e4 transparent;
   position: absolute;
-  right: 12vw;
-  top: 60px;
+  right: 50px;
+  top: 35px;
   z-index: 15;
 }
 
@@ -344,5 +348,13 @@ body {
 
   .memLoginFrame {
     display: flex;
+  }
+
+  .trianglePop {
+    right: 25px;
+  }
+
+  .memPop {
+    right: 15px;
   }
 }

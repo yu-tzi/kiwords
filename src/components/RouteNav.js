@@ -12,16 +12,12 @@ import Loading from "./Loading.js";
 import { firebase } from "../utility/firebaseConfig";
 import { RippleButton } from "./Effect.js";
 
-let rootURL = window.location.href.substr(
+const rootURL = window.location.href.substr(
   0,
   window.location.href.indexOf("/", 9)
 );
 
 class RoutePage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Router>
@@ -105,7 +101,7 @@ class RoutePage extends React.Component {
 class MemberPop extends React.Component {
   render() {
     return (
-      <div>
+      <div className="memPopContainer">
         <span className="trianglePop"></span>
         <div className="memPop">
           <RippleButton effectClass={"homeMemLogRippleBtnContainer"}>

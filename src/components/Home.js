@@ -4,16 +4,12 @@ import P5Wrapper from "react-p5-wrapper";
 import Sketch from "./Sketch.js";
 import { RippleButton } from "./Effect.js";
 
-let rootURL = window.location.href.substr(
+const rootURL = window.location.href.substr(
   0,
   window.location.href.indexOf("/", 9)
 );
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div>

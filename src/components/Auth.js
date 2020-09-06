@@ -2,7 +2,7 @@ import React from "react";
 import RouteNav from "./RouteNav";
 import { db, firebase, storage } from "../utility/firebaseConfig";
 
-let rootURL = window.location.href.substr(
+const rootURL = window.location.href.substr(
   0,
   window.location.href.indexOf("/", 9)
 );
@@ -194,7 +194,7 @@ class Auth extends React.Component {
   }
 
   storeImg(res) {
-    let uid = this.state.userData[0].uid;
+    const uid = this.state.userData[0].uid;
     db.collection("users")
       .doc(uid)
       .update({
@@ -237,7 +237,7 @@ class Auth extends React.Component {
   }
 
   changeName() {
-    let uid = this.state.userData[0].uid;
+    const uid = this.state.userData[0].uid;
     event.preventDefault();
 
     db.collection("users")

@@ -4,7 +4,7 @@ import { firebase } from "../utility/firebaseConfig";
 import { RippleButton } from "./Effect.js";
 import { CSSTransition } from "react-transition-group";
 
-let rootURL = window.location.href.substr(
+const rootURL = window.location.href.substr(
   0,
   window.location.href.indexOf("/", 9)
 );
